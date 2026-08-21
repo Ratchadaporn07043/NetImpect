@@ -44,7 +44,7 @@ using Docker + `tc netem` to inject delay/loss/jitter and collect results as JSO
 - `logs_tierN/`: raw JSON logs for each Tier — located inside that Tier's own folder, not at the root
   (e.g. `Tier1_ExistingAxisRefinement/logs_tier1/`, `Tier5_Mitigation/logs_tier5_none/`,
   `Tier8_EnsureScopeClosure/results_completed/`, `Tier9_CriticalThresholdRecalibration/logs_tier9_*`, etc.)
-  — **Tier1-9 have all finished running** (see section 6 below for the detailed status of each Tier)
+  — **Tier1-9 have all finished running** (see section 6 below for the summary status of each Tier)
 - `results/`: CSV tables summarizing results at the phase/task/main-effect/combined level, exported from raw logs
   (`results_three_day_combined.csv`, `results_three_day_main_effect.csv`,
   `results_three_day_phase.csv`, `results_three_day_task.csv`)
@@ -53,90 +53,42 @@ using Docker + `tc netem` to inject delay/loss/jitter and collect results as JSO
 Sub-structure: `scripts/` (code run to produce results — `parse_logs.py`, `generate_charts.py`, `generate_charts_tier1.py`),
 `data/` (parsed CSVs — `netimpact_master.csv`, `tier1_master.csv`), `charts/three_day/` and `charts/tier1/`
 (resulting chart images) — the results-interpretation file (`findings.md`) and the folder overview (`README.md`)
-have been moved and consolidated with all project documentation under `Paper/`
-(see `Paper/NetImpact.md/Archive_Legacy/NetImpact_14_Analysis_Folder_Overview.md` and
-`Paper/NetImpact.md/Archive_Legacy/NetImpact_15_Findings_List.md`)
+have been moved and consolidated with all project documentation (not part of this public repository — see below).
 
 ### 6. Extended experiments — `Tier1_ExistingAxisRefinement/` through `Tier9_CriticalThresholdRecalibration/`
-- ✅ Tier1: additional points on the existing axis (finer-grained delay/loss/jitter) — **completed**
-  (320 trials, narrowed the loss degradation region from the original 50-75% down to 70-75% —
-  this region is specific to the time window measured in this run, see Tier8/9)
-- ✅ Tier2: new axis (bandwidth throttling, multi-round strict reviewer) — **completed**
-  (272 trials, found a real network effect in multi-round mode — this result is exploratory and
-  did not reproduce under later controlled conditions, see Tier6)
-- ✅ Tier3: infrastructure (dual LLM-judge, GPU logging) — **dual-judge portion completed**
-  (200-sample, agreement very low due to judge bias — heuristic evaluation retained going forward),
-  GPU logging has no new logs to review yet
-- ✅ Tier4: Replication (temporal + cross-model) — **completed**
-  (2,384 trials, main results reproduce across time, but the heuristic evaluator was found not to
-  transfer across agent models)
-- ✅ Tier5: Mitigation (adaptive timeout + context caching) — **completed**
-  (660 trials, adaptive_timeout gave significantly higher completion at loss=75% for the time window
-  measured — 14/20→20/20, p=0.020; context_cache was not significant — this result is specific to the
-  time window measured, see Tier9 which found the opposite result at the critical point of a later time window)
-- ✅ Tier6: Mitigation × Multi-Round (optional stretch) — **completed**
-  (120 trials, 0 corrupted files — tested whether adaptive_timeout/context_cache can fix the multi-round
-  problem at moderate_delay, which Tier2 found to be the worst case: no comparison pair reached statistical
-  significance, and the falsification check failed — the no-mitigation arm at the no-impairment scenario
-  itself showed a 15-20pp completion difference, meaning this design cannot separate the mitigation effect
-  from between-block variance)
-- ✅ Tier7: attempt to close 3 gaps (fixed-long-timeout arm, bidirectional shaping, agent attribution in logs)
-  — **all 3 parts completed** (7A 60/60, 7B 80/80, 7C retrospective review of 38 events) but **7A and 7B are
-  unusable** due to a logging bug / a failed falsification check, respectively — both gaps were later
-  successfully closed by Tier9 (7A) and Tier8 item 4 (7B); 7C partially succeeded
-- ✅ Tier8: closing 5 scope gaps + an additional 80-trial diagnostic — **fully completed**
-  (1,020+80=1,100 trials — confirmed by counting actual raw log files: item1=80, item2=180
-  (including reference arms), item3=660, item4=80, item5=20). Closed the following gaps, each partially
-  or fully as noted: achieved-path measurement, fixed-timeout arm, randomized-order mitigation comparison,
-  bidirectional (ingress+egress) shaping, and jitter delay-floor control — and made an unplanned key finding:
-  **75% configured loss no longer causes completion to drop in the later-period environment** (inference is
-  about 2x faster, and this was verified separately not to be caused by thinking mode)
-- ✅ Tier9: locating the new critical loss threshold in the current environment + comparing mitigations at
-  that point — **completed** (120 trials: 60 exploratory scan + 60 critical comparison). Found a new critical
-  point at **80%** (not the original 75%), and at this point **fixed timeout performs significantly better
-  than adaptive timeout scaling** (65% vs 5% completion, p<0.001) — this is the opposite ordering from the
-  original Tier5 result; it does not overwrite the Tier5 result (which remains correct for the time window
-  measured) but is the latest evidence for the current environment
-- Each folder has its own `README.md` describing how to run it and its status/summary — detailed results for
-  each Tier with full statistics are in `Paper/NetImpact.md/Current/` (see section 8 below). A quick-read
-  summary of all Tier results combined (results only, no narrative) is in `Docs/NetImpact_Summary_All_Tiers.md`
 
-### 7. Supporting documentation (images/initial draft files) — `Docs/`
-- `Docs/Diagram/`: `.svg` diagrams (architecture, agent workflow, experiment design, analysis pipeline)
-- `Docs/Draft_Idea/`: initial draft/idea documents (`.pdf`)
-- The `.md` files that used to live here (project description, in-depth results, experiment expansion plan,
-  AINTEC2026 readiness) have been moved and consolidated with all project documentation under `Paper/`
-  (files 10-13)
+Each Tier folder has its own `README.md` describing how to run it and its status. A high-level, non-technical
+summary of all Tiers is provided in the table below. **Full statistical detail (test statistics, effect sizes,
+confidence intervals, and trial-level result decomposition) is documented in the paper manuscript and is not
+part of this public repository.**
 
-### 8. All project documentation (centralized) — `Paper/`
-Consolidates all research documentation for the project in one place, split into 2 sub-folders by status —
-**files in `Archive_Legacy/` must no longer be referenced as a source for the manuscript.** All files
-currently in use are exclusively in `Current/`.
+| Tier | Focus | Trials | Status | Summary |
+|---|---|---|---|---|
+| **Tier1** | Finer-grained points on the existing delay/loss/jitter axis | 320 | ✅ Completed | Narrowed the observed loss-degradation region for the time window measured; region is time-window-specific (see Tier8/9) |
+| **Tier2** | New axis: bandwidth throttling + multi-round strict reviewer | 272 | ✅ Completed | Found an exploratory network effect in multi-round mode; did not reproduce under later controlled conditions (see Tier6) |
+| **Tier3** | Infrastructure: dual LLM-judge, GPU logging | 200 (dual-judge sample) | ✅ Dual-judge portion completed | Judge agreement too low to use; heuristic evaluation retained; GPU logging has no new logs to review yet |
+| **Tier4** | Replication: temporal + cross-model | 2,384 | ✅ Completed | Main results reproduce across time; heuristic evaluator does not transfer across agent models |
+| **Tier5** | Mitigation: adaptive timeout + context caching | 660 | ✅ Completed | Adaptive timeout improved completion at the measured critical loss point for that time window; context caching not effective; result is time-window-specific (see Tier9) |
+| **Tier6** | Mitigation × Multi-Round (optional stretch) | 120 | ✅ Completed | No mitigation pair reached significance; design could not separate the mitigation effect from between-block variance |
+| **Tier7** | Closing 3 scope gaps (fixed-long-timeout arm, bidirectional shaping, agent attribution in logs) | 60 + 80 + 38 (retrospective) | ⚠️ Partially usable | 7A and 7B unusable (logging bug / failed falsification check, respectively); both gaps later closed by Tier9 (7A) and Tier8 item 4 (7B); 7C partially succeeded |
+| **Tier8** | Closing 5 scope gaps + additional diagnostic | 1,100 | ✅ Completed | Closed measurement/design gaps identified in earlier tiers; unplanned finding — the previously observed critical loss point no longer causes degradation in the later-period environment |
+| **Tier9** | Recalibrating the critical loss threshold for the current environment | 120 | ✅ Completed | Found a new, higher critical loss point; fixed timeout outperforms adaptive timeout scaling at this new point — the opposite ordering from the original Tier5 result (both remain valid for their respective time windows) |
 
-- **`Paper/NetImpact.md/Current/`** — the current, highest-authority document set for the project (files
-  00-09 and 16-22): `00` (table of contents/reading order), `01` (baseline + architecture), `02` (Tier1+Tier2),
-  `03` (Tier3 evaluator validity), `04` (Tier4 replication), `05` (Tier5 mitigation), `06` (Tier6 — results
-  are now fully in, the filename still says "Pending" to keep reference links stable, but the content is the
-  actual results), `07` (paper positioning/related work/checklist), `08` (end-to-end summary across all
-  Tiers), `09` (paper-writing rules — no dates/no Tier labels, narrative arc, forbidden terms such as
-  "loss cliff"/"controlled"/"pre-registered", no overclaiming, etc.), `16` (figure placement/captions),
-  `17` (Claim Calibration Spec — sets the allowed strength of every claim that may be written), `18`
-  (Implementation Verification Addendum — **has the highest authority in this set; if it conflicts with any
-  other file, defer to this one**), `19` (related work reference list), `20` (Tier7 scope closure), `21`
-  (Tier8 scope closure + current-environment finding), `22` (Tier9 critical threshold recalibration)
-- **`Paper/NetImpact.md/Archive_Legacy/`** — older Thai-language process/analysis documents (files 10-15)
-  that have been superseded by the documents in `Current/`; kept for historical record only: `10` (AINTEC2026
-  readiness — old version), `11` (detailed project explanation), `12` (in-depth results), `13` (complete
-  experiment expansion plan), `14` (analysis folder overview), `15` (findings list — superseded by
-  `Docs/NetImpact_Summary_All_Tiers.md`, which now covers through Tier9)
-- Priority order when documents conflict: `18` > `17` > (`01`-`08`, `16`) — `09` governs writing rules
-  separately (applies to all files); `20`/`21`/`22` are Tier-specific documents that have the highest
-  authority within their own scope
-- Tier6-9 all have complete real results — files `06`, `20`, `21`, `22`, and every place `00`/`07`/`08`
-  reference Tier6-9 have been fully updated. No file in `Current/` is still written as a pending plan
-  awaiting execution.
+**Notes:**
+- Trial counts above match the counts already used elsewhere in this README.
+- "Time-window-specific" findings mean the same experiment run at a different point in time may show different
+  results, since the underlying infrastructure/models were observed to change performance characteristics
+  between tiers.
+- Statistical methodology used across tiers includes ANOVA, Kruskal-Wallis, Fisher's exact test, and effect-size
+  reporting; the full results (test statistics, p-values, confidence intervals, and trial-level decomposition)
+  are in the paper manuscript, not in this repository.
 
-### 9. Test suite — `tests_extended/`
+### 7. Supporting documentation (diagrams, drafts, detailed results) — not in this repository
+Supporting materials (architecture/workflow diagrams, initial draft documents, and the consolidated project
+documentation with in-depth Tier-by-Tier results) are maintained separately from this repository and are not
+tracked here.
+
+### 8. Test suite — `tests_extended/`
 - pytest suite covering all of Tier1-6 (82 tests), using a `fake_autogen.py` stub so no real Ollama/GPU/tc
   is required
 - Run: `python -m pytest tests_extended/ -v`
