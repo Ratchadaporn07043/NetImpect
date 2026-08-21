@@ -1,13 +1,11 @@
 """
-run_tier1.py — ตัวรัน Tier 1 (เจาะจุดในแกนที่มีอยู่แล้ว)
+run_tier1.py - Tier 1 runner for targeted existing-axis refinement.
 ================================================================
-ไม่แก้ไขไฟล์ต้นฉบับของโปรเจกต์เลย (scenarios.py, run_experiment.py, multi_agent.py
-, logger.py, controller.py, evaluator.py, tasks.py ทั้งหมดเหมือนเดิม 100%)
-ใช้ฟังก์ชันเดิมทั้งหมดจาก experiment/run_experiment.py (run_single_trial, checkpoint
-ฯลฯ) เพื่อให้พฤติกรรมการรันจริง (LLM call, logging, network apply) เหมือนกับ
-three-day experiment เดิมทุกประการ — ต่างกันแค่ "scenario ไหนถูกเลือกมารัน"
+This runner does not modify the original project files. It reuses the original
+experiment functions so LLM calls, logging, and network application remain
+identical to the three-day experiment; only the selected scenarios differ.
 
-วิธีติดตั้ง/วางไฟล์:
+Installation and placement:
   1. คัดลอกโฟลเดอร์นี้ทั้งโฟลเดอร์ไปวางไว้ "ข้างใน" root ของโปรเจกต์ NetImpact จริง
      (ตำแหน่งเดียวกับที่มีไฟล์ multi_agent.py, logger.py, และโฟลเดอร์ experiment/)
      เช่น:
@@ -27,13 +25,11 @@ three-day experiment เดิมทุกประการ — ต่างก
      python3 Tier1_เจาะจุดในแกนที่มีอยู่/run_tier1.py --part jitter_extended
      python3 Tier1_เจาะจุดในแกนที่มีอยู่/run_tier1.py --part all --resume
 
-  หมายเหตุ: ถ้าจะรันจาก path อื่น ให้ตั้ง env var NETIMPACT_PROJECT_ROOT ชี้ไปที่ root
-  ของโปรเจกต์ก่อน เช่น:
+    Note: when running from another path, set NETIMPACT_PROJECT_ROOT to the project root:
      NETIMPACT_PROJECT_ROOT=/root/NetImpact python3 run_tier1.py --part all
 
-log จะถูกเขียนไปที่ logs_tier1/ (แยกจาก logs_three_day/ เดิมโดยสิ้นเชิง ไม่มีทางชนกัน)
-checkpoint แยกเป็นของตัวเอง (logs_tier1/_checkpoint/checkpoint.json) รองรับ --resume
-เหมือน run_experiment.py เดิม
+Logs are written to logs_tier1/, separate from logs_three_day/. A separate checkpoint
+supports --resume in the same way as the original run_experiment.py.
 """
 import argparse
 import os

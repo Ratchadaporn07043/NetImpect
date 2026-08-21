@@ -2,14 +2,14 @@
 """
 Tier 7B — Bidirectional (ingress + egress) impairment subset
 =============================================================
-คำถามที่การทดลองนี้ตอบ
-----------------------
-การทดลองทุกชุดก่อนหน้านี้ผูก qdisc ไว้ที่ `root` ของ interface ซึ่งควบคุม
+Question addressed by this experiment
+--------------------------------------
+All previous experiments attached qdisc to the interface `root`, which controls
 **egress เท่านั้น** จึงหน่วง/ทิ้ง/จำกัดแบนด์วิดท์เฉพาะ inference request และ
 TCP ACK ขาออก ส่วน response body จากโมเดล — ซึ่งมักใหญ่กว่า request มาก —
 เดินทางเข้ามาโดยไม่ถูก shape เลย
 
-ผลคือ null result สองข้อของโปรเจกต์มีเงื่อนไขแฝงอยู่:
+This means the two null results in the project have a hidden condition:
 
   * bandwidth cap ลงไปถึง 50 kbit/s ไม่กระทบ completion
         -> แต่ cap นั้นจำกัดเฉพาะ payload ฝั่งที่เล็กกว่า
@@ -20,8 +20,8 @@ TCP ACK ขาออก ส่วน response body จากโมเดล — 
 แล้ว shape ที่นั่นด้วยค่าเดียวกับ egress) เพื่อตอบว่า null ทั้งสองรอดจาก
 symmetric shaping ไหม
 
-จุดที่เลือก (80 trials, ~8 ชั่วโมง)
------------------------------------
+Selected points (80 trials, approximately 8 hours)
+--------------------------------------------------
   1. t7in_baseline        ไม่มี impairment  — ยืนยันว่า IFB path เองไม่ทำให้พัง
   2. t7in_bw50            bandwidth 50 kbit/s  — จุดที่ egress-only ให้ null
   3. t7in_delay1000       delay 1,000 ms       — จุดที่ egress-only ให้ null
@@ -30,19 +30,19 @@ symmetric shaping ไหม
                                                   ถ้าไม่เห็น แปลว่าการตั้งค่า
                                                   ingress ไม่ทำงานจริง
 
-จุดที่ 1 และ 4 คือ falsification check ของตัวการทดลองเอง — ถ้าสองจุดนี้ให้ผล
+Points 1 and 4 are falsification checks for the experiment itself. If either point
 ผิดคาด ห้ามตีความจุดที่ 2 และ 3 เลย
 
-⚠️ ข้อกำหนดของสภาพแวดล้อม (ตรวจอัตโนมัติก่อนรัน)
-------------------------------------------------
+Environment requirements (checked automatically before running)
+----------------------------------------------------------------
   * kernel module ifb ต้องโหลดบน **host** ก่อน:  sudo modprobe ifb numifbs=0
   * container ต้องมี NET_ADMIN (docker-compose ของโปรเจกต์มีให้แล้ว)
   * container ต้องมี iproute2 (`ip`)
-สคริปต์จะเรียก probe_ingress_support() ก่อนเสมอ และหยุดทันทีพร้อมบอกวิธีแก้
+The script always calls probe_ingress_support() first and stops immediately with
 ถ้าไม่ผ่าน — ดีกว่าไปพบตอนตี 3 ว่ารันทั้งคืนแล้วไม่ได้ impair ingress จริง
 
-การใช้งาน
----------
+Usage
+-----
     python3 Tier7_ScopeClosure/run_tier7_ingress.py --probe-only
     python3 Tier7_ScopeClosure/run_tier7_ingress.py --dry-run
     python3 Tier7_ScopeClosure/run_tier7_ingress.py --resume
@@ -125,8 +125,8 @@ def run_single_trial(net, scenario, task_name, task_prompt, run_index, log_dir, 
         loss_pct=scenario["loss_pct"],
         bandwidth_kbit=scenario.get("bandwidth_kbit"),
     )
-    # เก็บคำสั่ง tc ทั้งหมดไว้ในไฟล์ log — รวมสาขา ingress ด้วย เพื่อให้ตรวจ
-    # ย้อนหลังได้ว่า trial นี้ถูก shape สองทางจริง ไม่ต้องเชื่อชื่อโฟลเดอร์
+    # Store every tc command in the log, including the ingress branch, so that
+    # bidirectional shaping can be verified later without relying on the folder name.
     logger.data.setdefault("network_commands", []).append({"action": "apply", "result": apply_result})
     logger.data["impairment_direction"] = net.direction
 

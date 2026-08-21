@@ -1,10 +1,10 @@
 """
 AutoGen Multi-Agent System
 ==========================
-Planner -> Worker -> Reviewer คุยกันผ่าน GroupChat (Round-based communication)
-ตรงตาม diagram: docker/AutoGen Multi-Agent System
+Planner -> Worker -> Reviewer communicate through GroupChat (round-based communication).
+Matches the diagram: docker/AutoGen Multi-Agent System.
 
-ใช้งาน:
+Usage:
     from multi_agent import run_multi_agent_task
     result = run_multi_agent_task("เขียนฟังก์ชัน python สำหรับ..." )
 """
@@ -17,12 +17,12 @@ from experiment.evaluator import evaluate_answer
 OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://host.docker.internal:11434/v1")
 MODEL_NAME = os.environ.get("MODEL_NAME", "qwen3:8b")
 
-# จำนวนรอบสนทนา "สูงสุด" (safety cap กันไม่ให้ loop ไม่จบเมื่อ network แย่มาก
-# หรือ Reviewer ไม่ยอม APPROVED สักที) ปกติบทสนทนาจะจบเร็วกว่านี้อยู่แล้ว
-# เพราะมี early-termination เมื่อ Reviewer พูด APPROVED (ดู _is_reviewer_approved)
+# Maximum conversation rounds. This safety cap prevents an endless loop when the
+# network is poor or the Reviewer never returns APPROVED. Conversations normally
+# end earlier through early termination in _is_reviewer_approved.
 MAX_ROUNDS = int(os.environ.get("MAX_ROUNDS", 6))
 
-# จำนวนครั้งที่ retry ทั้ง task ใหม่ ถ้าเจอ timeout/connection error (ไม่นับ attempt แรก)
+# Number of full-task retries after a timeout or connection error, excluding the first attempt.
 MAX_RETRIES = int(os.environ.get("MAX_RETRIES", 2))
 
 
@@ -36,19 +36,18 @@ def _llm_config(temperature: float = 0.3):
             }
         ],
         "temperature": temperature,
-        # timeout ระดับ request เดียว (วินาที) — สำคัญมากตอนจำลอง network แย่
-        # ปรับผ่าน env LLM_TIMEOUT ถ้าโมเดลตอบช้ากว่านี้ (เช่นเครื่องรันช้า)
+        # Timeout for one request, in seconds. This matters when simulating poor networks.
+        # Override it with LLM_TIMEOUT when the model responds more slowly.
         "timeout": int(os.environ.get("LLM_TIMEOUT", 120)),
-        # ปิด cache เด็ดขาด! ถ้าไม่ปิด AutoGen จะ cache คำตอบไว้ตาม (prompt+model+temperature)
-        # แล้วครั้งถัดไปถ้า prompt เดิม (เช่น task เดียวกันคนละ scenario) จะไม่ยิง
-        # request ไปหา LLM จริงเลย แต่ดึงคำตอบเก่าจาก disk มาใช้แทน (เร็วผิดปกติ,
-        # token/quality เหมือนเป๊ะทุกครั้ง) ทำให้ผลการทดลองเรื่อง network ไม่มีความหมาย
+        # Disable caching completely. Otherwise AutoGen may reuse a response for the
+        # same prompt, model, and temperature instead of sending a real LLM request,
+        # making network results invalid.
         "cache_seed": None,
     }
 
 
 def build_agents():
-    """สร้าง 3 agent ตาม diagram: Planner, Worker, Reviewer"""
+    """Create three agents according to the diagram: Planner, Worker, and Reviewer."""
 
     planner = ConversableAgent(
         name="Planner",
@@ -89,7 +88,7 @@ def build_agents():
 
 
 def _parse_quality_score(reviewer_text: str):
-    """ดึงคะแนน 1-5 จากข้อความ Reviewer เช่น 'SCORE: 4' -> คืน 4 หรือ None ถ้าไม่เจอ"""
+    """Extract a score from 1 to 5 from Reviewer text, or None if absent."""
     match = re.search(r"SCORE\s*[:：]\s*(\d)", reviewer_text, re.IGNORECASE)
     if match:
         score = int(match.group(1))
@@ -100,15 +99,14 @@ def _parse_quality_score(reviewer_text: str):
 
 def _is_reviewer_approved(msg) -> bool:
     """
-    ใช้เป็น is_termination_msg ของ GroupChatManager
+    Used as the is_termination_msg callback for GroupChatManager.
 
-    แก้บั๊ก: เดิม speaker_selection_method="round_robin" วนไปจนครบ
-    max_round เสมอ ไม่มี logic ให้หยุดทันทีที่ Reviewer อนุมัติงานแล้ว
-    ผลคือ "rounds" ที่ log ไว้เป็นค่าคงที่ (=MAX_ROUNDS) ทุก trial ไม่ได้
-    สะท้อนอะไรจากการทดลองจริง แถมยังเสียเวลา/token คุยต่อทั้งที่งานเสร็จแล้ว
+    Previously, round_robin always continued until max_round because there was
+    no immediate stop when the Reviewer approved the work. This made the logged
+    round count constant and wasted time and tokens after completion.
 
-    ตอนนี้เช็คว่าข้อความล่าสุดมาจาก Reviewer และขึ้นต้นด้วย "APPROVED"
-    หรือไม่ ถ้าใช่ -> ให้ GroupChatManager หยุดบทสนทนาทันที
+    Now stop when the latest message is from the Reviewer and starts with
+    "APPROVED".
     """
     if not isinstance(msg, dict):
         return False
@@ -120,37 +118,31 @@ def _is_reviewer_approved(msg) -> bool:
 
 def _attempt_once(task_prompt: str, max_rounds: int, logger=None):
     """
-    รัน 1 ครั้ง (1 attempt) ของ Planner -> Worker -> Reviewer
-    ใช้ agent ชุดใหม่ทุกครั้ง เพื่อไม่ให้ state เก่าค้างข้ามรอบ retry
+    Run one attempt of Planner -> Worker -> Reviewer using fresh agents so that
+    state does not leak across retries.
 
-    คืนค่า: (success, final_answer, rounds_seen, rejections, quality_score, error_or_None)
+    Returns: (success, final_answer, rounds_seen, rejections, quality_score, error_or_None)
     """
     planner, worker, reviewer = build_agents()
 
-    # แก้บั๊ก: เดิม logger.log_message() ถูกเรียกใน loop `for msg in
-    # groupchat.messages` หลังบทสนทนาทั้งหมดจบแล้วเท่านั้น (ใน finally block)
-    # ทำให้ timestamp ของทุก message ในบทสนทนาเกาะติดกันเป็นก้อนเดียว
-    # (ต่างกันแค่เสี้ยววินาที ซึ่งคือเวลาที่ใช้ loop เขียน log ไม่ใช่เวลาจริง
-    # ที่แต่ละ message ถูกส่ง) ทำให้วัด latency ต่อ message จาก network delay
-    # ไม่ได้เลย
+    # Record timestamps when messages are sent rather than after the conversation
+    # finishes. Logging all messages in a final loop would give them nearly
+    # identical timestamps and would make per-message network latency unmeasurable.
     #
-    # ตอนนี้ hook เข้า "process_message_before_send" ของแต่ละ agent เพื่อ
-    # บันทึกเวลาจริง ณ ตอนที่ agent นั้นส่งข้อความออกไปจริงๆ แล้วค่อยจับคู่
-    # กับ groupchat.messages ทีหลังตามลำดับ (index ต่อ index)
+    # Hook each agent's process_message_before_send event, then pair timestamps
+    # with groupchat.messages by index.
     message_timestamps = []
 
     def _record_send_timestamp(sender, message, recipient, silent):
         message_timestamps.append(time.time())
-        return message  # ต้องคืนค่า message เดิม ไม่แก้ไขเนื้อหา
+        return message  # Return the original message unchanged.
 
     for agent in (planner, worker, reviewer):
         try:
             agent.register_hook("process_message_before_send", _record_send_timestamp)
         except AttributeError:
-            # autogen เวอร์ชันเก่าบางเวอร์ชันอาจไม่มี register_hook นี้
-            # ถ้าไม่มี ให้ข้ามไป (fallback: message_timestamps จะว่างเปล่า
-            # ทุก message จะ fallback ไปใช้ time.time() ตอน log แทน เหมือน
-            # พฤติกรรมเดิมก่อนแก้ ไม่ทำให้โปรแกรม crash)
+            # Older AutoGen versions may not provide register_hook. In that case,
+            # leave timestamps empty and fall back to time.time() during logging.
             break
 
     groupchat = GroupChat(
@@ -176,15 +168,13 @@ def _attempt_once(task_prompt: str, max_rounds: int, logger=None):
     except Exception as e:
         caught_error = e
     finally:
-        # สำคัญ: log message ที่เกิดขึ้นจริงเสมอ ไม่ว่าจะจบปกติหรือ error กลางทาง
-        # (แก้บั๊กเดิมที่ messages ว่างเปล่าเมื่อเกิด timeout กลางทาง)
+        # Always log messages produced before normal completion or an error.
         for idx, msg in enumerate(groupchat.messages):
             speaker = msg.get("name", "")
             content = msg.get("content", "") or ""
 
-            # จับคู่ timestamp จริงตามลำดับ ถ้าจำนวนไม่ตรงกัน (เช่น hook ไม่ทำงาน
-            # เพราะ autogen เวอร์ชันเก่าไม่รองรับ register_hook) ให้ fallback
-            # เป็นเวลาปัจจุบัน กันโปรแกรม crash แต่ผลลัพธ์จะกลับไปเป็นแบบเดิม
+            # Pair timestamps by order. If the hook is unavailable in an older
+            # AutoGen version, fall back to the current time.
             real_timestamp = message_timestamps[idx] if idx < len(message_timestamps) else time.time()
 
             if logger is not None:
@@ -196,9 +186,8 @@ def _attempt_once(task_prompt: str, max_rounds: int, logger=None):
                 if score is not None:
                     quality_score = score
 
-                # success = คำตัดสิน "ล่าสุด" ของ Reviewer เสมอ (overwrite ทุกครั้ง
-                # เหมือน quality_score) แก้บั๊กเดิมที่ success ค้างเป็น True แม้
-                # Reviewer จะ REVISE ในรอบหลัง
+                # success always reflects the Reviewer's latest decision, just
+                # like quality_score, so a later REVISE clears an earlier approval.
                 if content.strip().upper().startswith("REVISE"):
                     rejections += 1
                     success = False
@@ -215,15 +204,14 @@ def _attempt_once(task_prompt: str, max_rounds: int, logger=None):
 
 def run_multi_agent_task(task_prompt: str, logger=None, max_rounds: int = None, task_name: str = None):
     """
-    รัน 1 task ผ่าน Planner -> Worker -> Reviewer
-    มี retry อัตโนมัติถ้าเจอ timeout/connection error (สูงสุด MAX_RETRIES ครั้ง)
+    Run one task through Planner -> Worker -> Reviewer.
+    Retry automatically after timeout or connection errors.
 
     Args:
-        task_prompt: โจทย์งานที่จะให้ทีม agent ทำ
-        logger: instance ของ ExperimentLogger (ถ้ามี จะ log ทุก message อัตโนมัติ)
-        max_rounds: override MAX_ROUNDS ถ้าต้องการ (safety cap เท่านั้น
-                    บทสนทนาจะหยุดเร็วกว่านี้ถ้า Reviewer APPROVED ก่อนถึง cap)
-        task_name: ชื่อ benchmark task สำหรับ ground-truth evaluator
+        task_prompt: Task prompt for the agent team.
+        logger: Optional ExperimentLogger that records every message.
+        max_rounds: Optional MAX_ROUNDS override used only as a safety cap.
+        task_name: Benchmark task name for the ground-truth evaluator.
 
     Returns:
         dict: {"success", "final_answer", "rounds", "rejections", "quality_score",
@@ -244,9 +232,9 @@ def run_multi_agent_task(task_prompt: str, logger=None, max_rounds: int = None, 
         )
 
         if error is None:
-            break  # สำเร็จ (ไม่มี exception) ไม่ต้อง retry ต่อ
+            break  # No exception; no retry is needed.
 
-        # แยกประเภท error ให้ถูกต้อง (แก้บั๊กเดิมที่ TimeoutError ไม่ถูกนับเป็น timeout)
+        # Classify timeout errors explicitly so TimeoutError is counted correctly.
         is_timeout = "timeout" in type(error).__name__.lower() or "timeout" in str(error).lower()
 
         if logger is not None:
@@ -255,7 +243,7 @@ def run_multi_agent_task(task_prompt: str, logger=None, max_rounds: int = None, 
             else:
                 logger.log_error(error_type=type(error).__name__, detail=str(error)[:300])
 
-        retries_used = attempt - 1  # จำนวนครั้งที่ retry ไปแล้ว (ไม่นับ attempt แรก)
+        retries_used = attempt - 1  # Number of retries completed, excluding the first attempt.
 
         if attempt <= MAX_RETRIES:
             if logger is not None:
@@ -295,6 +283,6 @@ def run_multi_agent_task(task_prompt: str, logger=None, max_rounds: int = None, 
 
 
 if __name__ == "__main__":
-    # ทดสอบเดี่ยวๆ โดยไม่มี logger (รันตรงจาก: python3 multi_agent.py)
+    # Run a standalone smoke test without a logger.
     r = run_multi_agent_task("เขียนฟังก์ชัน python คำนวณเลข fibonacci ตัวที่ N")
     print(r)

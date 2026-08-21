@@ -1,44 +1,37 @@
 #!/usr/bin/env python3
 """
-Tier 8, ข้อ 5 — jitter-floor matched control (delay=50ms คงที่, jitter=0)
+Tier 8, Item 5 - Jitter-Floor Matched Control (fixed delay=50ms, jitter=0)
 ================================================================================
-คำถามที่การทดลองนี้ตอบ
+Question addressed by this experiment
 ----------------------
-sigconf.tex (`sec:modelservingpath`) ระบุไว้ว่า: เพราะ netem ต้องมี delay > 0
-ถึงจะใส่ jitter ได้ ทุกระดับ jitter ที่ไม่ใช่ศูนย์ในชุดข้อมูลเดิมจึงถูกบวก delay
-พื้นฐาน 50ms เข้าไปด้วยเสมอ (`_netem_delay_for()` ใน `experiment/scenarios.py`)
-ขณะที่ระดับ jitter=0 เอง ใช้ delay=0 จริง (ไม่มี floor) ทำให้แกน jitter เดิม
-เปรียบเทียบ "ไม่มี impairment เลย" กับ "delay 50ms + jitter" ไม่ใช่ "delay 50ms"
-กับ "delay 50ms + jitter" ที่ตัดผลของ floor ออกไปแล้ว — จึงแยกผลของ floor เองกับ
-ผลของ jitter เองไม่ออก
+sigconf.tex (`sec:modelservingpath`) notes that netem requires delay > 0 before
+jitter can be applied. Every nonzero jitter level in the original dataset therefore
+received a 50ms base delay through `_netem_delay_for()` in `experiment/scenarios.py`.
+The jitter=0 level used delay=0, so the original axis compared no impairment with
+delay 50ms plus jitter rather than comparing matched 50ms delay conditions. The
+floor effect and jitter effect could therefore not be separated.
 
-ตรวจยืนยันก่อนเขียนสคริปต์นี้ (Tier 8 ข้อ 5): ไม่มี scenario ไหนในทั้งโปรเจกต์
-(`experiment/scenarios.py`, ทุก Tier ก่อนหน้า) เคยทดสอบ delay=50ms คงที่ +
-jitter=0 แยกเป็นจุดของตัวเอง — ทุก main-effect jitter scenario เรียกผ่าน
-`_netem_delay_for(0, jitter_ms)` เสมอ (requested_delay_ms=0 คงที่) scenario นี้
-จึงเป็นจุดใหม่จริง ไม่ซ้ำของเดิม
+Before writing this script, we verified that no scenario in the project had tested
+fixed delay=50ms with jitter=0 as its own point. Every prior main-effect jitter
+scenario called `_netem_delay_for(0, jitter_ms)`, so this is a genuinely new control.
 
-การออกแบบ
+Design
 ----------
-scenario เดียว: delay_ms=50 (ตรงกับ MIN_DELAY_FOR_JITTER_MS ใน
-experiment/scenarios.py), jitter_ms=0, loss_pct=0, bandwidth=None — รันด้วย
-direction="egress" (ค่าเริ่มต้น) เพื่อให้เทียบตรงกับตาราง Table 2
-(`tab:nondetection`) ในเปเปอร์ได้แบบไม่มีตัวแปรที่สองเปลี่ยนไปด้วย
+One scenario uses delay_ms=50 (matching MIN_DELAY_FOR_JITTER_MS), jitter_ms=0,
+loss_pct=0, and bandwidth=None. It uses the default direction="egress" so it can
+be compared directly with Table 2 (`tab:nondetection`) without another variable changing.
 
-4 tasks x 5 repeats = 20 trials (n=20 เท่ากับทุกจุดเดี่ยวอื่นในเปเปอร์)
+4 tasks x 5 repeats = 20 trials (n=20, matching the other single-point experiments)
 
-วิธีอ่านผล
+How to interpret the result
 -----------
-เทียบ completion ของจุดนี้ (delay=50, jitter=0) กับ 2 จุดที่มีอยู่แล้ว:
-  - configured จริงที่ jitter=0 เดิม (delay=0, jitter=0, จาก main-effect เดิม) 20/20
-  - configured ที่ jitter=100ms (delay=50 floor + jitter=100) จาก precision
-    remeasurement เดิม 19/20 (Table 2 แถว jitter)
-ถ้าจุดใหม่นี้ (delay=50, jitter=0) ก็ยัง ~20/20 เหมือน delay=0 เดิม แปลว่า floor
-เองไม่ใช่ตัวขับ completion ที่สังเกตได้ที่ jitter=100ms — สนับสนุนการอ่านผลเดิมว่า
-jitter axis ไม่ถูกกระทบจาก floor ในแง่ completion (แม้ methodology จะยังไม่ใช่
-matched control ที่สมบูรณ์แบบในแง่อื่น เช่น elapsed time)
+Compare completion at delay=50, jitter=0 with two existing points: the original
+jitter=0 configuration (delay=0, 20/20) and the original jitter=100ms configuration
+(50ms floor plus jitter, 19/20). If the new control remains approximately 20/20,
+the floor itself is not driving completion at jitter=100ms. This supports the original
+interpretation, although elapsed time and other measures are not perfectly matched.
 
-การใช้งาน
+Usage
 ---------
     python3 Tier8_EnsureScopeClosure/run_tier8_jitter_floor.py --dry-run
     python3 Tier8_EnsureScopeClosure/run_tier8_jitter_floor.py --resume
@@ -51,12 +44,12 @@ import time
 _THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 _PROJECT_ROOT = os.path.dirname(_THIS_DIR)
 sys.path.insert(0, _PROJECT_ROOT)
-sys.path.insert(0, _THIS_DIR)  # ต้อง insert หลัง _PROJECT_ROOT เพื่อให้ _THIS_DIR อยู่ตำแหน่ง 0 จริง
+sys.path.insert(0, _THIS_DIR)  # Insert after _PROJECT_ROOT so this directory has priority.
 
 from controller import NetworkController  # noqa: E402
 from logger import ExperimentLogger  # noqa: E402
 from checkpoint_utils import load_checkpoint, mark_completed, should_skip  # noqa: E402
-from experiment.scenarios import MIN_DELAY_FOR_JITTER_MS  # noqa: E402  (=50, ค่าเดียวกับที่ project ใช้จริง)
+from experiment.scenarios import MIN_DELAY_FOR_JITTER_MS  # noqa: E402  (the project's actual 50ms floor)
 from experiment.tasks import TASKS  # noqa: E402
 
 REPEATS = 5
@@ -66,13 +59,13 @@ JITTER_FLOOR_SCENARIO = {
     "scenario_type": "matched_control",
     "main_effect_axis": "jitter_floor_control",
     "delay_ms": MIN_DELAY_FOR_JITTER_MS,
-    "requested_delay_ms": 0,  # เหมือนกับทุกจุดอื่นบนแกน jitter: "ขอ" delay=0 แต่ต้องปัดขึ้นเพราะ floor
+    "requested_delay_ms": 0,  # All jitter points request delay=0, then apply the floor.
     "jitter_ms": 0,
     "loss_pct": 0,
     "bandwidth_kbit": None,
     "note": (
-        f"matched control: delay={MIN_DELAY_FOR_JITTER_MS}ms คงที่ (ค่า floor เดียวกับที่ทุกระดับ "
-        "jitter>0 ได้รับ) แต่ jitter=0 เพื่อแยกผลของ floor เองออกจากผลของ jitter เอง"
+        f"matched control: fixed delay={MIN_DELAY_FOR_JITTER_MS}ms (the floor applied to all "
+        "jitter>0 levels), with jitter=0 to isolate the floor from jitter itself"
     ),
 }
 
@@ -131,13 +124,13 @@ def main():
 
     tasks = TASKS
     total = len(tasks) * REPEATS
-    print("Tier 8, ข้อ 5 — jitter-floor matched control")
+    print("Tier 8, Item 5 - jitter-floor matched control")
     print(f"  1 scenario (delay={JITTER_FLOOR_SCENARIO['delay_ms']}ms, jitter=0) "
           f"x {len(tasks)} tasks x {REPEATS} repeats = {total} trials")
-    print(f"  ประมาณเวลา ~{total * 60 / 3600:.2f} ชั่วโมง")
+    print(f"  Estimated time: ~{total * 60 / 3600:.2f} hours")
 
     if args.dry_run:
-        print("\nDRY RUN: ยังไม่ apply network, ยังไม่เรียก LLM, ยังไม่เขียน log")
+        print("\nDRY RUN: no network impairment, LLM call, or log write will occur")
         return
 
     import multi_agent as multi_agent_module  # noqa: E402
@@ -157,9 +150,9 @@ def main():
             if checkpoint is not None:
                 mark_completed(args.log_dir, checkpoint, key, log_file)
 
-    print(f"\nเสร็จสิ้น ใช้เวลารวม {(time.time() - start) / 60:.1f} นาที")
-    print("ขั้นตอนถัดไป: เทียบ completion ของจุดนี้กับ jitter=0 เดิม (delay=0) และ "
-          "jitter=100ms เดิม (Table 2 ในเปเปอร์)")
+    print(f"\nCompleted in {(time.time() - start) / 60:.1f} minutes")
+    print("Next step: compare completion with the original jitter=0 (delay=0) and "
+          "jitter=100ms points in Table 2")
 
 
 if __name__ == "__main__":

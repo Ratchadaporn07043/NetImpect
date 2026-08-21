@@ -1,15 +1,15 @@
 """
 Ground Truth Evaluator
 ======================
-ตรวจ final answer หลังจบ Planner -> Worker -> Reviewer แล้วเท่านั้น
-เพื่อแยกคุณภาพจริงออกจาก reviewer ภายใน workflow
+Evaluate the final answer only after Planner -> Worker -> Reviewer completes,
+separating actual quality from the workflow Reviewer.
 
-โหมด:
-  - heuristic (default): เช็กตาม rubric/keyword เร็ว ไม่เพิ่มเวลาทดลองมาก
-  - llm: ใช้ LLM judge เทียบ rubric แบบละเอียดขึ้น
-  - both: รัน heuristic ก่อน แล้วให้ LLM judge ตรวจซ้ำ
+Modes:
+    - heuristic (default): Fast rubric/keyword checks with minimal experiment overhead.
+    - llm: Use an LLM judge for a more detailed rubric comparison.
+    - both: Run the heuristic check, then verify it with an LLM judge.
 
-ตั้งค่าผ่าน env:
+Configure through environment variables:
   ENABLE_GROUND_TRUTH_EVAL=1/0
   GROUND_TRUTH_EVAL_MODE=heuristic|llm|both
 """
@@ -43,8 +43,8 @@ def _heuristic_evaluate(task_name: str, task_prompt: str, final_answer: str) -> 
             "passed": None,
             "coverage": None,
             "matched_points": [],
-            "missing_points": ["ไม่มี ground truth spec สำหรับ task นี้"],
-            "rationale": "ยังไม่ได้กำหนด rubric",
+            "missing_points": ["No ground-truth specification exists for this task."],
+            "rationale": "No rubric has been defined.",
         }
 
     checks = spec.get("checks", [])
@@ -114,9 +114,9 @@ def _llm_evaluate(task_name: str, task_prompt: str, final_answer: str) -> Dict:
         evaluator = ConversableAgent(
             name="GroundTruthEvaluator",
             system_message=(
-                "คุณคือ external ground-truth evaluator ที่ตรวจคำตอบสุดท้ายเท่านั้น "
-                "ห้ามช่วยแก้งาน ห้ามสนทนาต่อกับ agent อื่น ให้ตัดสินจากโจทย์ rubric และคำตอบสุดท้าย "
-                "ตอบเป็น JSON เท่านั้นตาม schema: "
+                "You are an external ground-truth evaluator that checks only the final answer. "
+                "Do not help revise the work or continue a conversation with other agents. "
+                "Judge using the task rubric and final answer. Return JSON only with schema: "
                 "{\"score\": 1-5, \"passed\": true/false, "
                 "\"missing_points\": [string], \"rationale\": string}"
             ),
@@ -129,7 +129,7 @@ def _llm_evaluate(task_name: str, task_prompt: str, final_answer: str) -> Dict:
             f"TASK_PROMPT:\n{task_prompt}\n\n"
             f"GROUND_TRUTH_RUBRIC:\n{rubric_text}\n\n"
             f"FINAL_ANSWER:\n{final_answer}\n\n"
-            f"ให้คะแนน 1-{max_score}; ผ่านเมื่อ score >= {pass_score}. ตอบ JSON เท่านั้น."
+            f"Score from 1-{max_score}; pass when score >= {pass_score}. Return JSON only."
         )
         response = evaluator.generate_reply(messages=[{"role": "user", "content": prompt}])
         raw = response if isinstance(response, str) else str(response)

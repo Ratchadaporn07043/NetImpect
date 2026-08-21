@@ -1,11 +1,9 @@
 """
-Tier8 multi_agent.py — เทส end-to-end ว่าจุดที่ทำให้ 7A ของ Tier 7 พังไม่เกิดซ้ำ
+Tier8 multi_agent.py - end-to-end regression tests for the Tier7 7A failure.
 ================================================================================
-ต่างจาก tests_extended/test_tier5_multi_agent_mitigation.py ตรงที่ไฟล์นี้ตั้งใจ
-ใช้ **Tier8_EnsureScopeClosure/logger.py ตัวจริง** (ไม่ mock) คู่กับ fake_autogen ที่
-จำลอง exception — เพื่อพิสูจน์แบบ end-to-end ว่า multi_agent.py เรียก
-logger.log_timeout(..., agent=...) ได้จริงโดยไม่ throw TypeError (คือบั๊กที่พบใน
-Tier 7 7A ทุกตัวอักษร) ไม่ใช่แค่เทส logger.py กับ multi_agent.py แยกกันคนละไฟล์
+Unlike the Tier5 test, this uses the real Tier8 logger with fake_autogen exceptions
+to prove end-to-end that multi_agent.py calls logger.log_timeout(..., agent=...)
+without TypeError. It tests the integrated path rather than isolated modules.
 """
 import inspect
 import os
@@ -23,10 +21,10 @@ def _fresh_logger(tmp_log_dir):
     )
 
 
-# ---------- ยืนยันว่าไม่พังแบบ 7A อีก (เทสสำคัญที่สุดของไฟล์นี้) ----------
+# ---------- Regression check for the Tier7 7A failure ----------
 
 def test_timeout_with_real_tier8_logger_does_not_raise_typeerror(tmp_log_dir):
-    """นี่คือเทสที่ตรงกับบั๊กของ 7A เป๊ะ: multi_agent.py เรียก
+    """This directly reproduces the Tier7 7A bug: multi_agent.py calls
     logger.log_timeout(detail=..., agent=blamed_agent) — ถ้า logger.py ไม่รองรับ
     agent= จะได้ TypeError หลุดออกมาจากตรงนี้ทันที (เหมือนที่เกิดใน 7A จริง)"""
     fake_autogen.set_script("Worker", [TimeoutError("simulated timeout"), "คำตอบสุดท้ายหลัง retry"])

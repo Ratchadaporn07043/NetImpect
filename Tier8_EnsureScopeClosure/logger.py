@@ -1,24 +1,15 @@
 """
 Logging Module — Tier 8 (Scope Closure, fresh-environment build)
 ==================================================================
-สำเนาของ `logger.py` ที่ root โปรเจกต์ บวก 2 อย่างที่ Tier 8 ต้องใช้ ซึ่งทั้งคู่
-เป็น additive ล้วนๆ (ของเดิมที่ root/`Tier3_.../logger.py` ยังไม่มีอะไรพวกนี้เลย
-— ตรวจยืนยันแล้วก่อนเริ่มเขียนไฟล์นี้):
+Copy of the root `logger.py` plus two additive Tier8 features absent from the
+root and Tier3 implementations.
 
-TIER8 CHANGE 1 — พารามิเตอร์ `agent=None` ใน log_error()/log_retry()/log_timeout()
-    นี่คือจุดที่ Tier 7 (7A) พังจริง: `Tier7_ScopeClosure/multi_agent.py` เรียก
-    `logger.log_timeout(..., agent=blamed_agent)` แต่ `logger.py` ที่ root
-    ไม่มีพารามิเตอร์นี้เลย ทำให้ทุก timeout/error จริงกลายเป็น TypeError ที่หลุด
-    ออกจาก try/except ของ attempt เดี่ยว ตัด retry ทิ้งทั้งหมด (ดูรายละเอียดเต็ม
-    ที่ `Paper/NetImpact.md/Current/NetImpact_20_Tier7_Scope_Closure.md` §3.1)
-    ที่นี่เพิ่มพารามิเตอร์จริง มี default เป็น None จึงเรียกแบบเดิมได้เป๊ะ
-    (backward compatible) — และมีเทสยืนยันเป็นการเฉพาะใน tests_tier8/ ว่า
-    เรียกทั้งแบบมี agent= และไม่มี agent= ก็ไม่ throw
+TIER8 CHANGE 1 - add `agent=None` to log_error()/log_retry()/log_timeout().
+    This fixes the Tier7 7A TypeError that bypassed retry handling. The default
+    preserves backward compatibility and is covered by tests_tier8/.
 
-TIER8 CHANGE 2 — log_achieved() สำหรับข้อมูล achieved-path (ข้อ 1 ใน 5 ข้อ)
-    เก็บผลจาก NetworkController.snapshot_achieved()/measure_rtt_ms()/
-    background_transfer_probe() ไว้คนละ key จาก network_condition (ซึ่งเป็นค่า
-    configured เท่านั้น) เพื่อไม่ให้ configured กับ achieved ปนกันในไฟล์เดียว
+TIER8 CHANGE 2 - add log_achieved() for achieved-path measurements.
+    Store controller measurements separately from configured network_condition.
 """
 import json
 import os
@@ -28,7 +19,7 @@ import psutil
 
 
 def _estimate_tokens(text: str) -> int:
-    """ประมาณ token คร่าวๆ (ไม่ต้องพึ่ง tiktoken/network) ~1 token ทุก 4 ตัวอักษร"""
+    """Estimate tokens without requiring tiktoken or network access."""
     if not text:
         return 0
     return max(1, len(text) // 4)
@@ -38,7 +29,7 @@ class ExperimentLogger:
     def __init__(self, scenario: dict, task_name: str, run_index: int, log_dir: str = "logs"):
         """
         Args:
-            scenario: dict ของ configured network condition เช่น {"name": ...,
+            scenario: configured network condition, such as {"name": ...,
                 "delay_ms": ..., "loss_pct": ..., "jitter_ms": ..., "bandwidth_kbit": ...}
             task_name: ชื่อ task ที่กำลังทดสอบ เช่น "coding_task"
             run_index: รอบที่เท่าไหร่ (สำหรับ repeat N >= 1 ครั้ง)

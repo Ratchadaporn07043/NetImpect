@@ -1,9 +1,8 @@
 """
-ยืนยัน probe_ingress_support() (ข้อ 4 — preflight check ก่อนรัน ingress shaping
-จริง) ทั้งเส้นทาง "ผ่าน" และ "ไม่ผ่าน" แต่ละจุดที่อาจล้มเหลว — สำคัญเพราะ
-run_tier8_ingress.py พึ่งฟังก์ชันนี้เป็นประตูด่านแรกก่อนรันอะไรทั้งคืน ถ้าฟังก์ชัน
-นี้รายงานผิดพลาด (บอกว่า supported=True ทั้งที่จริงไม่รองรับ) จะเจอปัญหาแบบ
-เดียวกับความพยายามก่อนหน้าที่ falsification check ไม่ผ่าน
+Verify probe_ingress_support() for Tier8 item 4, including every supported and
+unsupported preflight path. This is important because run_tier8_ingress.py relies
+on it before an overnight run; a false supported=True result would repeat the
+earlier failed falsification check.
 """
 import subprocess
 
@@ -20,8 +19,8 @@ class _FakeResult:
 
 
 def _patch_subprocess(monkeypatch, rules):
-    """rules: list ของ (substring, returncode, stderr) ตามลำดับที่ควรถูกเช็ค
-    คำสั่งไหนไม่ match rule ไหนเลย -> returncode=0 ว่าง (ผ่านเป็นค่าเริ่มต้น)"""
+    """Rules are (substring, returncode, stderr) tuples checked in order.
+    Unmatched commands return an empty successful result by default."""
     calls = []
 
     def _fake_run(cmd, capture_output=True, text=True, timeout=None):
@@ -37,7 +36,7 @@ def _patch_subprocess(monkeypatch, rules):
 
 
 def test_probe_supported_when_every_step_succeeds(monkeypatch):
-    _patch_subprocess(monkeypatch, [])  # ทุกคำสั่งสำเร็จ (returncode=0)
+    _patch_subprocess(monkeypatch, [])  # Every command succeeds (returncode=0).
     net = NetworkController(iface="eth0", direction="both", ifb_dev="ifb0")
     probe = net.probe_ingress_support()
     assert probe["supported"] is True
@@ -63,8 +62,7 @@ def test_probe_fails_when_ifb_module_not_loaded(monkeypatch):
 
 
 def test_probe_treats_existing_ifb_device_as_success_not_failure(monkeypatch):
-    """ifb0 มีอยู่แล้วจากการรันครั้งก่อน (RTNETLINK answers: File exists) ต้องไม่
-    ถือเป็นความล้มเหลว (idempotent)"""
+    """An existing ifb0 from an earlier run must not be treated as failure (idempotent)."""
     _patch_subprocess(monkeypatch, [
         ("ip link add ifb0 type ifb", 2, "RTNETLINK answers: File exists"),
     ])
@@ -94,8 +92,7 @@ def test_probe_fails_when_mirred_filter_rejected(monkeypatch):
 
 
 def test_probe_only_runs_read_or_idempotent_commands(monkeypatch):
-    """probe ต้องไม่ยิง netem/tbf จริง (ไม่ใช่การ apply impairment) — แค่ตรวจว่า
-    โครงสร้างพื้นฐานพร้อมไหม"""
+    """The probe must not apply real netem/tbf impairment; it only checks readiness."""
     calls = _patch_subprocess(monkeypatch, [])
     net = NetworkController(iface="eth0", direction="both")
     net.probe_ingress_support()

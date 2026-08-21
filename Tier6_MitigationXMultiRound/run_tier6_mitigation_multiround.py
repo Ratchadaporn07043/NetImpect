@@ -102,11 +102,11 @@ from experiment.run_experiment import (  # noqa: E402
 from logger import ExperimentLogger  # noqa: E402
 import experiment.tasks as experiment_tasks  # noqa: E402
 
-# ดึง hard tasks + ground truth ของ Tier2 มาใช้ตรงๆ (ไม่ duplicate นิยามซ้ำ)
+# Reuse Tier2 hard tasks and ground truth without duplicating definitions.
 from tier2_tasks_multiround import TIER2_HARD_TASKS, TIER2_HARD_TASK_GROUND_TRUTH  # noqa: E402
 
 CONDITIONS = ["none", "adaptive_timeout", "context_cache"]
-REPEATS = 10  # เท่ากับ Tier2's run_tier2_multiround.py เพื่อให้เทียบ n ต่อ scenario/task ตรงกันได้
+REPEATS = 10  # Match Tier2 so n is comparable per scenario and task.
 
 # scenario เดียวกับ Tier2's TEST_SCENARIOS (ค่า delay/jitter/loss เป๊ะ) — เอา
 # แค่ baseline (control) กับ moderate_delay (จุดที่ Tier2 พบว่า multi-round

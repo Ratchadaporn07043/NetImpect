@@ -1,21 +1,19 @@
 #!/usr/bin/env python3
 """
-Tier 8, ข้อ 1 — achieved-path measurement ที่ 4 จุดตัวแทนซึ่งเปเปอร์อ้างอิงอยู่แล้ว
+Tier 8, Item 1 - Achieved-path measurement at four representative paper points.
 ========================================================================================
-คำถามที่การทดลองนี้ตอบ
+Question addressed by this experiment
 ----------------------
-ทั้ง 5,300 trials เดิมบันทึกเฉพาะ "configured" impairment (ค่าที่สั่ง tc/netem)
-กับ `tc` return code เท่านั้น ไม่เคยวัด achieved path จริงเลย (sigconf.tex,
+The original 5,300 trials recorded only configured impairment values from tc/netem
+and the tc return code; they never measured the achieved path. This experiment
 `sec:modelservingpath` และ `sec:scopelimitations`: "a return code verifies
 installation, not behavior" / "the highest priority addition here") การทดลองนี้
 ปิดช่องว่างนั้น "ที่จุดเดิมที่เปเปอร์อ้างอิงอยู่แล้ว" แทนที่จะรันใหม่ทั้ง 5,300
 trial (ซึ่งไม่จำเป็นและใช้เวลาเกินจำเป็นมาก) โดยแนบการวัด achieved 4 อย่างเข้า
-ไปกับแต่ละ trial:
+alongside each trial:
 
-  1. `tc -s qdisc` counters (egress) ก่อน/หลัง trial — ดูว่า drop/overlimits ที่
-     เคอร์เนลนับจริงตรงกับ loss ที่ configured ไว้แค่ไหน
-  2. RTT probe จริงด้วย ICMP ping ไปยัง Ollama host ก่อน/หลัง trial — วัด delay
-     ที่ achieved จริง ไม่ใช่แค่ค่าที่สั่ง
+  1. `tc -s qdisc` counters before and after each trial, measuring kernel drops and overlimits.
+  2. ICMP RTT probes to the Ollama host before and after each trial, measuring achieved delay.
   3. TCP retransmission counter จาก /proc/net/snmp ก่อน/หลัง trial — สัญญาณ
      ทางอ้อมของ loss/congestion ที่เกิดขึ้นจริงระดับ transport
   4. background throughput probe ด้วย curl ไปยัง Ollama endpoint ก่อน/หลัง

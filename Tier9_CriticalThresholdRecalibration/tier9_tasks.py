@@ -1,31 +1,31 @@
 """
 Test Tasks (Benchmarks)
 =========================
-แยกออกมาจาก scenarios.py เพื่อให้ scenarios.py เก็บเฉพาะเรื่อง network scenario
-ส่วนไฟล์นี้เก็บเฉพาะ task prompt ที่ใช้ทดสอบ multi-agent workflow
+Separated from scenarios.py so that scenarios.py contains only network scenarios.
+This file contains the task prompts used to test the multi-agent workflow.
 
-เพิ่ม Ground Truth / Rubric สำหรับ evaluator หลังจบ workflow:
-- Reviewer ยังตรวจ Worker ระหว่างคุยตามปกติ
-- Ground-truth evaluator ตรวจ final answer หลังจบเท่านั้น ไม่ช่วยแก้งานระหว่างรัน
+Adds Ground Truth / Rubric data for post-workflow evaluation:
+- The Reviewer still checks the Worker during the conversation.
+- The ground-truth evaluator checks only the final answer and does not assist during execution.
 """
 
 TASKS = {
     "coding_task": (
-        "เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False "
-        "ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ"
+        "Write a Python function named `is_prime(n)` that accepts an integer and returns True/False "
+        "to indicate whether it is prime, with a brief explanation."
     ),
     "research_summary": (
-        "สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) "
-        "เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ"
+        "Summarize the advantages and disadvantages of Retrieval-Augmented Generation (RAG) "
+        "compared with directly fine-tuning a model, in no more than 5 points."
     ),
     "data_analysis": (
-        "สมมติมีข้อมูลยอดขายรายเดือน 12 เดือน ให้เสนอวิธีการวิเคราะห์ trend "
-        "และบอกว่าควรใช้กราฟประเภทไหนถึงจะสื่อสารได้ดีที่สุด"
+        "Assume 12 months of monthly sales data. Propose a trend-analysis method "
+        "and identify the chart type that communicates the result best."
     ),
     "planning_decision": (
-        "ทีมมีงบ 3 อย่างให้เลือกลงทุนอย่างใดอย่างหนึ่ง: (1) ปรับปรุง UX, "
-        "(2) เพิ่ม feature ใหม่, (3) แก้ bug ค้างเก่า ช่วยวางแผนว่าควรเลือกอะไรก่อน "
-        "พร้อมเหตุผลสั้นๆ"
+        "A team can invest in one of three options: (1) improve UX, "
+        "(2) add a new feature, or (3) fix existing bugs. Recommend what to prioritize "
+        "and give a brief rationale."
     ),
 }
 
@@ -34,76 +34,76 @@ TASK_GROUND_TRUTH = {
         "max_score": 5,
         "pass_score": 4,
         "rubric": [
-            "มีฟังก์ชันชื่อ is_prime(n)",
-            "คืนค่า boolean True/False",
-            "จัดการ n <= 1 เป็น False",
-            "จัดการ 2 เป็น True และเลขคู่มากกว่า 2 เป็น False",
-            "ตรวจตัวหารถึง sqrt(n) หรือ i*i <= n เพื่อประสิทธิภาพ",
-            "มีคำอธิบายหลักการสั้นๆ",
+            "Defines a function named is_prime(n)",
+            "Returns boolean True/False",
+            "Handles n <= 1 as False",
+            "Handles 2 as True and even numbers greater than 2 as False",
+            "Checks divisors through sqrt(n) or i*i <= n for efficiency",
+            "Includes a brief explanation",
         ],
         "checks": [
-            {"id": "function_name", "description": "ระบุฟังก์ชัน is_prime", "any": ["is_prime"]},
-            {"id": "boolean_return", "description": "คืนค่า True/False", "any": ["True", "False", "boolean", "บูลีน"]},
-            {"id": "n_le_1", "description": "อธิบาย/จัดการ n <= 1", "any": ["<= 1", "< 2", "น้อยกว่า 2", "1 ไม่", "0 ไม่"]},
-            {"id": "two_case", "description": "จัดการเลข 2", "any": ["n == 2", "เท่ากับ 2", "2 เป็น", "2 คือ"]},
-            {"id": "sqrt_bound", "description": "ตรวจถึงรากที่สองหรือ i*i <= n", "any": ["sqrt", "ราก", "i * i", "i*i", "** 0.5", "กำลังสอง"]},
-            {"id": "explanation", "description": "มีคำอธิบายหลักการ", "any": ["หลักการ", "เพราะ", "ตัวหาร", "จำนวนเฉพาะ"]},
+            {"id": "function_name", "description": "Identifies the is_prime function", "any": ["is_prime"]},
+            {"id": "boolean_return", "description": "Returns True/False", "any": ["True", "False", "boolean"]},
+            {"id": "n_le_1", "description": "Explains or handles n <= 1", "any": ["<= 1", "< 2", "less than 2", "1 is not", "0 is not"]},
+            {"id": "two_case", "description": "Handles the number 2", "any": ["n == 2", "equal to 2", "2 is", "2 ="]},
+            {"id": "sqrt_bound", "description": "Checks through the square root or i*i <= n", "any": ["sqrt", "square root", "i * i", "i*i", "** 0.5", "squared"]},
+            {"id": "explanation", "description": "Includes a principle explanation", "any": ["principle", "because", "divisor", "prime"]},
         ],
     },
     "research_summary": {
         "max_score": 5,
         "pass_score": 4,
         "rubric": [
-            "เปรียบเทียบ RAG กับ fine-tuning โดยตรง",
-            "กล่าวถึงข้อดีของ RAG เช่น อัปเดตความรู้ได้ง่าย/ลด hallucination/อ้างอิงแหล่งข้อมูล",
-            "กล่าวถึงข้อเสียของ RAG เช่น latency, retrieval quality, infrastructure complexity",
-            "กล่าวถึงข้อดีของ fine-tuning เช่น ปรับ style/behavior/domain pattern ได้ดี",
-            "กล่าวถึงข้อเสียของ fine-tuning เช่น ค่าใช้จ่าย/ข้อมูลฝึก/อัปเดตความรู้ยาก",
-            "อยู่ในกรอบประมาณ 5 ข้อและสรุปเป็นใจความ",
+            "Compares RAG with fine-tuning directly",
+            "Mentions RAG advantages such as easy knowledge updates, reduced hallucination, or source citations",
+            "Mentions RAG disadvantages such as latency, retrieval quality, or infrastructure complexity",
+            "Mentions fine-tuning advantages such as adapting style, behavior, or domain patterns",
+            "Mentions fine-tuning disadvantages such as cost, training data, or difficult knowledge updates",
+            "Stays within approximately five points and summarizes the key message",
         ],
         "checks": [
-            {"id": "rag_mentioned", "description": "กล่าวถึง RAG", "any": ["RAG", "Retrieval-Augmented", "retrieval"]},
-            {"id": "fine_tune_mentioned", "description": "กล่าวถึง fine-tune", "any": ["fine-tune", "fine tune", "fine-tuning", "ปรับจูน"]},
-            {"id": "rag_advantage", "description": "มีข้อดีของ RAG", "any": ["อัปเดต", "update", "แหล่งข้อมูล", "อ้างอิง", "ลด hallucination", "ความรู้ใหม่"]},
-            {"id": "rag_disadvantage", "description": "มีข้อเสียของ RAG", "any": ["latency", "retrieval", "ค้นคืน", "ซับซ้อน", "infrastructure", "คุณภาพข้อมูล"]},
-            {"id": "finetune_advantage", "description": "มีข้อดีของ fine-tuning", "any": ["style", "พฤติกรรม", "domain", "เฉพาะทาง", "รูปแบบ"]},
-            {"id": "finetune_disadvantage", "description": "มีข้อเสียของ fine-tuning", "any": ["ค่าใช้จ่าย", "ข้อมูลฝึก", "train", "อัปเดตยาก", "ล้าสมัย"]},
+            {"id": "rag_mentioned", "description": "Mentions RAG", "any": ["RAG", "Retrieval-Augmented", "retrieval"]},
+            {"id": "fine_tune_mentioned", "description": "Mentions fine-tuning", "any": ["fine-tune", "fine tune", "fine-tuning"]},
+            {"id": "rag_advantage", "description": "Includes a RAG advantage", "any": ["update", "source", "citation", "reduced hallucination", "new knowledge"]},
+            {"id": "rag_disadvantage", "description": "Includes a RAG disadvantage", "any": ["latency", "retrieval", "complex", "infrastructure", "data quality"]},
+            {"id": "finetune_advantage", "description": "Includes a fine-tuning advantage", "any": ["style", "behavior", "domain", "specialized", "pattern"]},
+            {"id": "finetune_disadvantage", "description": "Includes a fine-tuning disadvantage", "any": ["cost", "training data", "train", "hard to update", "outdated"]},
         ],
     },
     "data_analysis": {
         "max_score": 5,
         "pass_score": 4,
         "rubric": [
-            "เสนอการจัดเรียงข้อมูลยอดขายรายเดือน 12 เดือนตามเวลา",
-            "วิเคราะห์ trend ภาพรวม เช่น เพิ่มขึ้น/ลดลง/seasonality/outlier",
-            "แนะนำ line chart เป็นกราฟหลักสำหรับ time series",
-            "อาจเสริม moving average หรือเปรียบเทียบเดือนต่อเดือน",
-            "สื่อสารขั้นตอนวิเคราะห์อย่างเป็นระบบ",
+            "Orders 12 months of sales data chronologically",
+            "Analyzes the overall trend, such as growth, decline, seasonality, or outliers",
+            "Recommends a line chart as the primary time-series chart",
+            "May add a moving average or month-over-month comparison",
+            "Communicates the analysis steps systematically",
         ],
         "checks": [
-            {"id": "time_order", "description": "กล่าวถึงข้อมูลรายเดือน/ลำดับเวลา", "any": ["รายเดือน", "12 เดือน", "เวลา", "time series", "เดือน"]},
-            {"id": "trend", "description": "กล่าวถึง trend", "any": ["trend", "แนวโน้ม", "เพิ่มขึ้น", "ลดลง"]},
-            {"id": "line_chart", "description": "แนะนำ line chart", "any": ["line chart", "กราฟเส้น", "line graph"]},
-            {"id": "seasonality_outlier", "description": "พิจารณา seasonality หรือ outlier", "any": ["season", "ฤดูกาล", "outlier", "ผิดปกติ", "ยอดพุ่ง", "ยอดตก"]},
-            {"id": "moving_average", "description": "กล่าวถึง moving average/เปรียบเทียบ MoM", "any": ["moving average", "ค่าเฉลี่ยเคลื่อนที่", "MoM", "เดือนต่อเดือน", "เปอร์เซ็นต์เปลี่ยนแปลง"]},
+            {"id": "time_order", "description": "Mentions monthly data or chronological order", "any": ["monthly", "12 months", "time", "time series", "month"]},
+            {"id": "trend", "description": "Mentions trend", "any": ["trend", "increase", "decrease", "growth", "decline"]},
+            {"id": "line_chart", "description": "Recommends a line chart", "any": ["line chart", "line graph"]},
+            {"id": "seasonality_outlier", "description": "Considers seasonality or outliers", "any": ["season", "outlier", "anomal", "spike", "drop"]},
+            {"id": "moving_average", "description": "Mentions moving average or month-over-month comparison", "any": ["moving average", "MoM", "month-over-month", "percentage change"]},
         ],
     },
     "planning_decision": {
         "max_score": 5,
         "pass_score": 4,
         "rubric": [
-            "เลือกทางลงทุนหนึ่งอย่างอย่างชัดเจน หรือจัดลำดับความสำคัญพร้อมตัวเลือกแรก",
-            "ให้เหตุผลเชิง impact/urgency/risk/customer value",
-            "พิจารณา trade-off ระหว่าง UX, feature ใหม่, bug ค้างเก่า",
-            "มีแผนปฏิบัติสั้นๆ เช่น ประเมินข้อมูล วัดผล ทำ sprint",
-            "คำตอบเป็น actionable และเหมาะกับการตัดสินใจทีม",
+            "Clearly selects one investment or provides a prioritized list with a first choice",
+            "Provides reasoning based on impact, urgency, risk, or customer value",
+            "Considers trade-offs among UX, a new feature, and existing bugs",
+            "Provides a short action plan such as assessing data, measuring results, or running a sprint",
+            "The answer is actionable and suitable for team decision-making",
         ],
         "checks": [
-            {"id": "clear_choice", "description": "มีการเลือก/จัดลำดับชัดเจน", "any": ["ควรเลือก", "อันดับแรก", "ก่อน", "prioritize", "เลือก"]},
-            {"id": "mentions_options", "description": "กล่าวถึงตัวเลือกหลัก", "any": ["UX", "feature", "bug", "บั๊ก"]},
-            {"id": "impact_reason", "description": "มีเหตุผลด้านผลกระทบ/ลูกค้า", "any": ["impact", "ผลกระทบ", "ลูกค้า", "ผู้ใช้", "value", "คุณค่า"]},
-            {"id": "risk_urgency", "description": "มีเหตุผลด้านความเสี่ยงหรือความเร่งด่วน", "any": ["เสี่ยง", "risk", "เร่งด่วน", "ค้าง", "เสียหาย", "technical debt"]},
-            {"id": "action_plan", "description": "มีแผนดำเนินการ", "any": ["แผน", "ขั้นตอน", "sprint", "วัดผล", "ประเมิน", "roadmap"]},
+            {"id": "clear_choice", "description": "Makes a clear choice or prioritization", "any": ["recommend", "first", "before", "prioritize", "choose"]},
+            {"id": "mentions_options", "description": "Mentions the main options", "any": ["UX", "feature", "bug"]},
+            {"id": "impact_reason", "description": "Provides impact or customer reasoning", "any": ["impact", "customer", "user", "value"]},
+            {"id": "risk_urgency", "description": "Provides risk or urgency reasoning", "any": ["risk", "urgency", "blocked", "damage", "technical debt"]},
+            {"id": "action_plan", "description": "Provides an action plan", "any": ["plan", "step", "sprint", "measure", "assess", "roadmap"]},
         ],
     },
 }

@@ -1,9 +1,8 @@
 """
-Checkpoint utilities — ใช้ร่วมกันโดย run_tier8_*.py ทุกตัว
+Checkpoint utilities shared by all run_tier8_*.py scripts.
 ================================================================
-รูปแบบเดียวกับที่ Tier7_ScopeClosure ใช้ (JSON file เก็บ dict ของ key ที่ทำ
-เสร็จแล้ว) แยกออกมาเป็นไฟล์กลางที่นี่เพื่อไม่ให้ต้อง copy-paste ซ้ำ 5 รอบใน
-สคริปต์ run_tier8_*.py ทั้ง 5 ตัว — ลด surface ที่อาจพิมพ์ผิด/ลืมแก้ไม่ตรงกัน
+Uses the Tier7_ScopeClosure JSON format for completed keys. Centralizing it avoids
+five copies and reduces typo or synchronization risks.
 """
 import json
 import os

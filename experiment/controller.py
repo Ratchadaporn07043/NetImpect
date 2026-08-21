@@ -1,19 +1,19 @@
 """
 Network Controller
 ===================
-Wrapper รอบคำสั่ง tc/netem
+Wrapper around tc/netem commands.
 
-หมายเหตุสำคัญเรื่องทิศทางของการ impair (ตรวจสอบยืนยันแล้วจากโค้ดชุดนี้เอง):
-qdisc ที่ผูกไว้ที่ `root` ของ interface ควบคุม **egress** (ขาออก) เท่านั้น
+Important note about impairment direction, verified from this implementation:
+A qdisc attached to an interface's `root` controls **egress** only.
 ดังนั้น `tc qdisc add dev eth0 root netem ...` ด้านล่างหน่วง/ทิ้ง/แกว่ง/จำกัด
 แบนด์วิดท์เฉพาะแพ็กเก็ตที่ **ออกจาก** container คือ inference request และ TCP
 ACK ขาออก ส่วน response body จากโมเดล (ซึ่งมักใหญ่กว่า request มาก) เดินทางเข้า
 มาทาง ingress ที่ **ไม่ถูก shape เลย** และได้รับผลกระทบทางอ้อมผ่าน transport
 coupling เท่านั้น
 
-ไฟล์นี้ **ไม่มี** ingress qdisc, ไม่มี IFB device, ไม่มี mirred redirect —
-การวัดทั้งหมดในโปรเจกต์นี้จึงเป็นการวัดแบบ egress-only และต้องรายงานเช่นนั้น
-เสมอ ห้ามอ้างว่าเป็น symmetric shaping (ดู
+This file has no ingress qdisc, IFB device, or mirred redirect. All measurements
+in this project are therefore egress-only and must be reported as such; do not
+describe them as symmetric shaping (see
 `Paper/NetImpact.md/Current/NetImpact_18_Implementation_Verification_Addendum.md` §1)
 การเพิ่ม ingress+IFB เป็นรายการ future work ที่ระบุไว้ใน
 `Paper/NetImpact.md/Current/NetImpact_07_Paper_Positioning.md`
@@ -36,7 +36,7 @@ class NetworkController:
         }
 
     def clear(self):
-        """ล้าง netem/tbf rule ทั้งหมด กลับสู่ baseline"""
+        """Remove all netem/tbf rules and return to baseline."""
         result = self._run(["tc", "qdisc", "del", "dev", self.iface, "root"])
 
         harmless_errors = [

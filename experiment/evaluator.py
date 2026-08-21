@@ -1,10 +1,10 @@
 """
 Ground Truth Evaluator
 ======================
-ตรวจ final answer หลังจบ Planner -> Worker -> Reviewer แล้วเท่านั้น
-เพื่อแยกคุณภาพจริงออกจาก reviewer ภายใน workflow
+Evaluate the final answer only after Planner -> Worker -> Reviewer completes,
+separating actual quality from the workflow's internal Reviewer.
 
-โหมด:
+Modes:
   - heuristic (default): เช็กตาม rubric/keyword เร็ว ไม่เพิ่มเวลาทดลองมาก
   - llm: ใช้ LLM judge เทียบ rubric แบบละเอียดขึ้น
   - both: รัน heuristic ก่อน แล้วให้ LLM judge ตรวจซ้ำ

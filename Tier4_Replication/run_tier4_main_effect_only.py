@@ -1,14 +1,14 @@
 """
-run_tier4_main_effect_only.py — รัน main-effect ซ้ำด้วยโมเดลอื่น (multi-model replication)
+run_tier4_main_effect_only.py - Replicate main effects with another model.
 ====================================================================================================
-เป้าหมาย: ผลการทดลองเดิมทั้งหมดใช้ Qwen3:8b ตัวเดียว — reviewer AINTEC จะถามว่า
+Goal: The original experiment used only Qwen3:8b. Reviewers may ask whether the
 "finding นี้เป็น general pattern ของ multi-agent LLM system หรือเป็นแค่ quirk
 เฉพาะของโมเดลนี้" การรันซ้ำด้วยโมเดลอื่น (ขนาดใกล้เคียงกัน) บนแกน main-effect
 เดิม (delay/loss/jitter) คือหลักฐานที่ตรงจุดที่สุดสำหรับคำถามนี้
 
-ไม่แก้ experiment/scenarios.py หรือ run_experiment.py เลย — สคริปต์นี้ import
+Do not modify experiment/scenarios.py or run_experiment.py. This script imports
 MAIN_EFFECT_SCENARIOS ตรงๆ จากของเดิม แล้วรันผ่าน _run_scenario (ฟังก์ชันเดิม)
-ตัวแปรที่เปลี่ยนคือ MODEL_NAME (env var ที่ multi_agent.py อ่านตอน import)
+The only changed variable is MODEL_NAME, read by multi_agent.py at import time.
 
 ⚠️ สำคัญ: MODEL_NAME ต้องตั้งก่อนรันสคริปต์ (เป็น env var ระดับ process เพราะ
 multi_agent.py อ่านค่านี้ตอน import module) — ตั้งผ่าน env var ตรงๆ เวลาเรียก
@@ -16,7 +16,7 @@ multi_agent.py อ่านค่านี้ตอน import module) — ตั
 หลัง multi_agent ถูก import ไปแล้วจะไม่มีผลอะไรเลย)
 
 วิธีรัน:
-    ollama pull llama3.1:8b     # เตรียมโมเดลที่สองไว้ก่อน (ต้องมีขนาดใกล้เคียง 8b)
+    ollama pull llama3.1:8b     # Prepare a second model of similar size.
 
     MODEL_NAME=llama3.1:8b python3 "Tier4_Replication/run_tier4_main_effect_only.py" --dry-run
     MODEL_NAME=llama3.1:8b python3 "Tier4_Replication/run_tier4_main_effect_only.py" --resume

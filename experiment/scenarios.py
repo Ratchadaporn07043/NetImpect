@@ -1,7 +1,7 @@
 """
 Experimental Scenarios
 ========================
-มี 2 ชุดการทดลองหลัก:
+Contains two main experiment sets:
   1. FACTORIAL_SCENARIOS + TOURNAMENT_MATCHES
      factorial 2x2x2 จำนวน 8 scenarios แล้วจับคู่ tournament พบกันหมด 28 คู่
   2. COMBINED_SCENARIOS
@@ -18,12 +18,12 @@ FACTOR_LEVELS = {
     "jitter_ms": {"off": 0, "on": 30},
 }
 
-# tc netem ต้องมี delay > 0 ถึงจะใส่ jitter ได้
+# tc netem requires delay > 0 before jitter can be applied.
 MIN_DELAY_FOR_JITTER_MS = 50
 
 
 def _netem_delay_for(delay_ms: int, jitter_ms: int) -> tuple[int, str]:
-    """คืนค่า delay ที่ใช้ apply จริง พร้อม note ถ้าต้องปรับเพราะ netem constraint"""
+    """Return the applied delay and a note when netem constraints require adjustment."""
     if delay_ms == 0 and jitter_ms > 0:
         return (
             MIN_DELAY_FOR_JITTER_MS,
@@ -63,7 +63,7 @@ def _build_factorial_scenarios():
 
 
 # ============================================================
-# COMBINED SCENARIOS — delay x packet loss x jitter พบกันหมด
+# COMBINED SCENARIOS - all delay x packet loss x jitter combinations.
 # ============================================================
 DELAY_LEVELS_MS = list(range(0, 1001, 50))
 PACKET_LOSS_LEVELS_PCT = [0, 1, 5, 10, 15, 20, 25, 30, 40, 50, 75]
@@ -76,8 +76,8 @@ def _format_pct(value):
 
 def _build_combined_scenarios():
     """
-    สร้าง combined scenarios จากทุก combination ของ delay, packet loss, jitter
-    ตามระดับที่กำหนดไว้ด้านบน
+    Build combined scenarios from every configured delay, packet loss, and jitter
+    combination.
     """
     scenarios = []
 
@@ -106,12 +106,12 @@ def _build_combined_scenarios():
 
 
 # ============================================================
-# TOURNAMENT SCHEDULE — จับคู่ factorial scenarios แบบพบกันหมด
+# TOURNAMENT SCHEDULE - pair factorial scenarios in a complete round robin.
 # ============================================================
 def _build_round_robin_rounds(scenarios):
     """
-    จัด tournament แบบพบกันหมดด้วย circle method
-    มี 8 scenarios -> 7 rounds, round ละ 4 matches, รวม 28 คู่ไม่ซ้ำ
+    Build a complete tournament with the circle method: eight scenarios produce
+    seven rounds, four matches per round, and 28 unique pairs.
     """
     if len(scenarios) % 2 != 0:
         raise ValueError("round-robin schedule requires an even number of scenarios")

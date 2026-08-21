@@ -41,9 +41,9 @@ from experiment.tasks import TASK_GROUND_TRUTH
 ENABLE_GROUND_TRUTH_EVAL = os.environ.get("ENABLE_GROUND_TRUTH_EVAL", "1").lower() not in ("0", "false", "no")
 GROUND_TRUTH_EVAL_MODE = os.environ.get("GROUND_TRUTH_EVAL_MODE", "heuristic").lower()
 
-# TIER3 CHANGE: MODEL_NAME ของ agent (อ่านจาก env เดียวกับ multi_agent.py เพื่อ fallback)
+# TIER3 CHANGE: Agent MODEL_NAME, read from the same environment variable as multi_agent.py.
 AGENT_MODEL_NAME = os.environ.get("MODEL_NAME", "qwen3:8b")
-# TIER3 CHANGE: judge model แยกต่างหาก — ถ้าไม่ตั้งจะ fallback เป็น AGENT_MODEL_NAME
+# TIER3 CHANGE: Separate judge model; fall back to AGENT_MODEL_NAME when unset.
 JUDGE_MODEL_NAME = os.environ.get("JUDGE_MODEL_NAME", AGENT_MODEL_NAME)
 OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://host.docker.internal:11434/v1")
 
@@ -194,7 +194,7 @@ def _llm_evaluate(task_name: str, task_prompt: str, final_answer: str,
             "enabled": ENABLE_GROUND_TRUTH_EVAL,
             "mode": "llm",
             "task_name": task_name,
-            "judge_model_name": model_name,  # TIER3 CHANGE: บันทึกไว้ว่าโมเดลไหนตัดสิน
+            "judge_model_name": model_name,  # TIER3 CHANGE: Record the judging model.
             "score": score,
             "max_score": max_score,
             "pass_score": pass_score,

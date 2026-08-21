@@ -1,14 +1,13 @@
 """
-Sanity import test สำหรับ run_tier8_*.py ทั้ง 5 ตัว
+Sanity import tests for all five run_tier8_*.py scripts.
 ================================================================
-เป้าหมายเดียวกับ tests_extended/test_tier_runners_import.py ของโปรเจกต์เดิม:
-จับ syntax error/import error/typo ตั้งแต่ตอนนี้ ก่อนเอาไปรันจริงบนเครื่องใหม่ที่
-มี Ollama/GPU (ซึ่งกว่าจะรู้ว่าพังอาจเสียเวลาหลายชั่วโมงต่อ arm)
+The goal matches tests_extended/test_tier_runners_import.py: catch syntax, import,
+and typo errors before running on a new machine.
+has Ollama/GPU (where import failures could otherwise waste hours per arm)
 
-ทุกไฟล์ที่เทสในนี้ออกแบบให้ import ได้อย่างปลอดภัยโดยไม่เรียก network/LLM จริง —
-logic ทั้งหมดที่แตะ network/subprocess/LLM ถูกห่อไว้ใน main()/if __name__ ==
-'__main__' เท่านั้น (การ import ที่หนักสุด คือ `import multi_agent` ก็ถูกเลื่อน
-ไปเรียกข้างใน main() ไม่ใช่ตอน import module เอง)
+Every file is designed to import safely without real network/LLM calls. Network,
+subprocess, and LLM logic runs only under main(); even the heavy multi_agent import
+is deferred until main().
 """
 import os
 
@@ -27,7 +26,7 @@ RUNNER_SCRIPTS = [
 @pytest.mark.parametrize("module_name,filename", RUNNER_SCRIPTS)
 def test_runner_script_imports_without_error(module_name, filename):
     path = os.path.join(TIER8_DIR, filename)
-    assert os.path.isfile(path), f"ไม่พบไฟล์ {path}"
+    assert os.path.isfile(path), f"File not found: {path}"
     mod = load_module_from_path(module_name, path)
     assert hasattr(mod, "main")
     assert callable(mod.main)
@@ -35,7 +34,7 @@ def test_runner_script_imports_without_error(module_name, filename):
 
 def test_tier8_has_a_readme():
     readme_path = os.path.join(TIER8_DIR, "README.md")
-    assert os.path.isfile(readme_path), "Tier8_EnsureScopeClosure ขาด README.md"
+    assert os.path.isfile(readme_path), "Tier8_EnsureScopeClosure is missing README.md"
     with open(readme_path, encoding="utf-8") as f:
         content = f.read()
     assert len(content) > 500

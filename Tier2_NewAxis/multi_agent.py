@@ -1,21 +1,20 @@
 """
 AutoGen Multi-Agent System — Tier2 REPLACEMENT
 ==================================================
-ไฟล์นี้แทนที่ multi_agent.py ต้นฉบับที่ root ของโปรเจกต์ (สำรองไฟล์เดิมไว้ก่อน!)
+This file replaces the original multi_agent.py at the project root (back up the original first!).
 
-การเปลี่ยนแปลงจากต้นฉบับ (ค้นหาคำว่า "TIER2 CHANGE" เพื่อดูจุดที่แก้ทั้งหมด):
-  - เพิ่มพารามิเตอร์ `strict_reviewer: bool = False` ใน build_agents(),
+Changes from the original (search for "TIER2 CHANGE" to find every modification):
+    - Adds the `strict_reviewer: bool = False` parameter to build_agents(),
     _attempt_once(), และ run_multi_agent_task()
-  - เมื่อ strict_reviewer=False (ค่า default) พฤติกรรมเหมือนต้นฉบับ 100%
-    ทุกประการ (Reviewer ใช้ system_message เดิมเป๊ะ) — ไม่กระทบ
-    experiment เดิม (logs_three_day/) หรือ Tier1 เลย
-  - เมื่อ strict_reviewer=True: Reviewer จะใช้ system_message ที่เข้มงวดขึ้น
-    (ต้องเช็ค rubric ทีละข้อก่อนอนุมัติ, ห้าม APPROVED ถ้ายังมีข้อบกพร่อง)
-    ใช้คู่กับ tier2_tasks_multiround.py เพื่อเพิ่มโอกาสให้เกิดการคุยหลายรอบ
-    (multi-round) ในชุดข้อมูล ซึ่งชุดข้อมูลเดิมแทบไม่มีเลย (ดู
-    NetImpact_ผลการทดลองเชิงลึก.md ส่วนที่พูดถึง "distribution ของ rounds")
+    - When strict_reviewer=False (the default), behavior is exactly the same as
+        the original (the Reviewer uses the identical system_message), so the
+        original experiment (logs_three_day/) and Tier1 are unaffected.
+    - When strict_reviewer=True, the Reviewer uses a stricter system_message
+        (it checks each rubric item before approval and cannot approve incomplete work).
+        Use it with tier2_tasks_multiround.py to increase the chance of multi-round
+        conversations in the dataset, which rarely occurred in the original data.
 
-ใช้งาน:
+Usage:
     from multi_agent import run_multi_agent_task
     result = run_multi_agent_task("...", strict_reviewer=True)
 """
@@ -41,10 +40,10 @@ REVIEWER_SYSTEM_MESSAGE_DEFAULT = (
     "ถ้างานสมบูรณ์จริงๆ ค่อยให้ 5"
 )
 
-# TIER2 CHANGE: Reviewer เวอร์ชันเข้มงวด — บังคับเช็คทีละเงื่อนไขก่อนอนุมัติ
-# เป้าหมาย: เพิ่มโอกาสเกิด REVISE รอบแรก (multi-round) กับ task ที่ซับซ้อน
-# (tier2_tasks_multiround.py) เพื่อให้มีข้อมูล "บทสนทนาหลายรอบภายใต้ network
-# ที่แย่" มากพอจะวิเคราะห์ ต่างจาก default reviewer ที่มักอนุมัติง่ายเกินไป
+# TIER2 CHANGE: Strict Reviewer version; check every condition before approval.
+# Goal: Increase the chance of an initial REVISE (multi-round) for complex tasks
+# (tier2_tasks_multiround.py), producing enough data about multi-round conversations
+# under poor network conditions for analysis. The default Reviewer approves too easily.
 REVIEWER_SYSTEM_MESSAGE_STRICT = (
     "คุณคือ Reviewer agent ที่เข้มงวดมาก ตรวจงานจาก Worker แบบละเอียดทีละจุด "
     "ก่อนตัดสินใจ ให้ทำตามขั้นตอนนี้ในใจ (ไม่ต้องเขียนขั้นตอนออกมา):\n"
@@ -75,11 +74,11 @@ def _llm_config(temperature: float = 0.3):
 
 
 def build_agents(strict_reviewer: bool = False):
-    """สร้าง 3 agent ตาม diagram: Planner, Worker, Reviewer
+    """Create three agents according to the diagram: Planner, Worker, Reviewer.
 
-    TIER2 CHANGE: เพิ่มพารามิเตอร์ strict_reviewer (default False = พฤติกรรม
-    เดิมเป๊ะ). เมื่อ True จะสลับ system_message ของ Reviewer เป็นเวอร์ชัน
-    เข้มงวด (REVIEWER_SYSTEM_MESSAGE_STRICT)
+    TIER2 CHANGE: Add the strict_reviewer parameter (False by default, preserving
+    the original behavior). When True, switch the Reviewer's system_message to
+    the strict version (REVIEWER_SYSTEM_MESSAGE_STRICT).
     """
 
     planner = ConversableAgent(

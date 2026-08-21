@@ -1,25 +1,20 @@
 """
 Multi-Agent Runner — Tier 8 (Scope Closure, fresh-environment build)
 ========================================================================
-สำเนาของ `Tier7_ScopeClosure/multi_agent.py` เกือบทั้งหมด (logic การสนทนา,
-retry, mitigation modes ผ่านการตรวจสอบ/ใช้งานมาแล้วในโปรเจกต์ ไม่แตะส่วนนี้
-โดยไม่จำเป็น) มีจุดต่างจาก Tier 7 เพียงจุดเดียวที่สำคัญที่สุด:
+Nearly complete copy of `Tier7_ScopeClosure/multi_agent.py` (conversation logic,
+retries, and mitigation modes are already verified and unchanged). The key
+difference from Tier 7 is:
 
-**ตอนนี้ `logger.log_timeout(..., agent=...)` ทำงานได้จริง** เพราะไฟล์นี้ import
-`Tier8_EnsureScopeClosure/logger.py` (ผ่าน caller ที่ส่ง logger object เข้ามา — ไฟล์นี้
-เองไม่ import logger โดยตรง แต่ run_tier8_*.py ทุกตัวสร้าง logger จาก
-`Tier8_EnsureScopeClosure/logger.py` เท่านั้น ไม่ใช่ logger.py ที่ root) ซึ่งมี
-พารามิเตอร์ `agent=None` แล้วจริง — นี่คือบั๊กที่ทำให้ 7A ของ Tier 7 ใช้ไม่ได้
-(ExperimentLogger.log_timeout() got an unexpected keyword argument 'agent')
-ตรวจยืนยันก่อนเขียนไฟล์นี้ว่า Tier8_EnsureScopeClosure/logger.py มีพารามิเตอร์นี้แล้ว
-และมีเทส tests_tier8/test_logger_agent_param.py ยืนยันโดยเฉพาะ
+**`logger.log_timeout(..., agent=...)` now works** because Tier8 runners pass the
+Tier8 logger, whose methods accept `agent=None`. This fixes the Tier7 7A bug
+where the unexpected keyword argument caused timeout handling and retries to fail.
+The behavior is covered by tests_tier8/test_logger_agent_param.py.
 
-คงไว้ตามเดิมจาก Tier 7 (ไม่เปลี่ยน):
+Preserved unchanged from Tier 7:
   - mitigation modes: none / adaptive_timeout / context_cache / both / fixed_long_timeout
-  - FIXED_LONG_TIMEOUT = 345s (ค่าที่สูตร adaptive คืนที่ loss=75%: 120+int(75*3))
-  - พฤติกรรม Planner seed message ไม่นับเป็น LLM call (คงไว้ตามเดิมโดยเจตนา
-    เพื่อให้ Tier 8 เทียบกับข้อมูลเดิมทั้ง 5,300 trials ได้ตรงกัน — ดูรายละเอียด
-    ที่ `Paper/Manuscript/sigconf.tex` Section 3.1 / `sec:modelservingpath`)
+    - FIXED_LONG_TIMEOUT = 345s (the adaptive value at loss=75%: 120+int(75*3))
+    - The Planner seed message is not counted as an LLM call, preserving comparison
+        with the original 5,300 trials.
 """
 import os
 import re
@@ -36,16 +31,16 @@ BASE_LLM_TIMEOUT = int(os.environ.get("LLM_TIMEOUT", 120))
 
 VALID_MITIGATIONS = ("none", "adaptive_timeout", "context_cache", "both", "fixed_long_timeout")
 
-# ค่าเริ่มต้น = ค่าที่ _adaptive_timeout_seconds() คืนที่จุดวิกฤต loss=75%:
-# 120 (base) + int(75 * 3) = 345 วินาที ตั้งเท่ากันทุก scenario โดยเจตนา
-# เพื่อให้ arm นี้ต่างจาก adaptive arm มิติเดียวคือความ condition-aware
+# Default: the value returned by _adaptive_timeout_seconds() at loss=75%.
+# 120 (base) + int(75 * 3) = 345 seconds, deliberately equal across scenarios.
+# This isolates condition awareness from the adaptive arm.
 FIXED_LONG_TIMEOUT = int(os.environ.get("FIXED_LONG_TIMEOUT", 345))
 
 ROUND_ROBIN_ORDER = ("Planner", "Worker", "Reviewer")
 
 
 def _next_speaker(last_speaker: str):
-    """agent ที่ถึงคิวถัดจาก last_speaker ตาม round-robin (None ถ้าระบุไม่ได้)"""
+    """Return the next round-robin agent after last_speaker, or None if unknown."""
     if last_speaker not in ROUND_ROBIN_ORDER:
         return None
     idx = ROUND_ROBIN_ORDER.index(last_speaker)
@@ -53,10 +48,7 @@ def _next_speaker(last_speaker: str):
 
 
 def _blame_agent(groupchat_messages, use_cached_plan: bool = False):
-    """อนุมานว่า LLM call ของ agent ตัวไหนล้มเหลว: transcript บันทึกเฉพาะเทิร์นที่
-    ผลิตข้อความสำเร็จ เทิร์นที่ error จึงไม่มีข้อความ -> agent ที่ล้มเหลวคือตัวที่
-    ถึงคิวถัดจากข้อความล่าสุด เมื่อ use_cached_plan=True ห้องแชทมีแค่
-    (Worker, Reviewer) จึงสลับสองตัวนี้"""
+    """Infer the failed agent from the transcript and round-robin order."""
     if not groupchat_messages:
         return "Worker" if use_cached_plan else None
     last = groupchat_messages[-1].get("name", "")
@@ -66,33 +58,27 @@ def _blame_agent(groupchat_messages, use_cached_plan: bool = False):
 
 
 REVIEWER_SYSTEM_MESSAGE_DEFAULT = (
-    "คุณคือ Reviewer agent ตรวจงานจาก Worker ว่าตรงตามแผนและถูกต้องไหม "
-    "ตอบตามรูปแบบนี้เท่านั้น (2 บรรทัด):\n"
-    "บรรทัดที่ 1: 'APPROVED' หรือ 'REVISE' ตามด้วยเหตุผลสั้นๆ\n"
-    "บรรทัดที่ 2: 'SCORE: X' โดย X คือคะแนนคุณภาพงาน 1-5 "
-    "(5=ดีมาก สมบูรณ์ครบถ้วน, 1=แย่มาก ผิดหรือไม่ตรงโจทย์เลย) "
-    "ให้คะแนนตามคุณภาพจริง แม้ว่าจะ APPROVED ก็อาจได้คะแนนไม่เต็ม 5 ได้ "
-    "ถ้างานสมบูรณ์จริงๆ ค่อยให้ 5"
+    "You are a Reviewer agent. Check whether the Worker's output follows the plan and is correct. "
+    "Reply in exactly two lines:\n"
+    "Line 1: 'APPROVED' or 'REVISE' followed by a brief reason.\n"
+    "Line 2: 'SCORE: X', where X is a quality score from 1 to 5. "
+    "Score the actual quality; give 5 only for genuinely complete work."
 )
 
 REVIEWER_SYSTEM_MESSAGE_STRICT = (
-    "คุณคือ Reviewer agent ที่เข้มงวดมาก ตรวจงานจาก Worker แบบละเอียดทีละจุด "
-    "ก่อนตัดสินใจ ให้ทำตามขั้นตอนนี้ในใจ (ไม่ต้องเขียนขั้นตอนออกมา):\n"
-    "1. แตกโจทย์เป็นเงื่อนไขย่อยทั้งหมดที่โจทย์ระบุ (เช่น ต้องมี key ครบไหม, "
-    "ต้องมีตัวอย่างไหม, ต้องตอบครบทุกข้อย่อยไหม)\n"
-    "2. เช็คคำตอบของ Worker ทีละเงื่อนไขว่าผ่านหรือไม่ผ่าน\n"
-    "3. ถ้ามีเงื่อนไขใดไม่ผ่านแม้แต่ข้อเดียว ต้องตอบ REVISE เท่านั้น ห้าม APPROVED "
-    "จนกว่า Worker จะแก้ครบทุกเงื่อนไข\n"
-    "ตอบตามรูปแบบนี้เท่านั้น (2 บรรทัด):\n"
-    "บรรทัดที่ 1: 'APPROVED' หรือ 'REVISE' ตามด้วยเหตุผลสั้นๆ ระบุเงื่อนไขที่ยังขาด (ถ้ามี)\n"
-    "บรรทัดที่ 2: 'SCORE: X' โดย X คือคะแนนคุณภาพงาน 1-5 ให้คะแนนอย่างเข้มงวดตามความครบถ้วน"
+    "You are a very strict Reviewer. Check the Worker's output point by point "
+    "before deciding. Follow these steps internally (do not write them out):\n"
+    "1. Break the task into every stated requirement.\n"
+    "2. Check the Worker's answer against each requirement.\n"
+    "3. If any requirement fails, return REVISE; do not approve incomplete work.\n"
+    "Reply in exactly two lines:\n"
+    "Line 1: 'APPROVED' or 'REVISE' followed by a brief reason.\n"
+    "Line 2: 'SCORE: X', where X is a strict quality score from 1 to 5."
 )
 
 
 def _adaptive_timeout_seconds(network_condition: dict = None) -> int:
-    """ขยาย BASE_LLM_TIMEOUT ตาม delay_ms/loss_pct/jitter_ms ของ scenario
-    +10s ต่อทุก 100ms delay, +3s ต่อทุก 1% loss, +5s ต่อทุก 10ms jitter,
-    cap ที่ 10 เท่าของ base"""
+    """Scale BASE_LLM_TIMEOUT from delay_ms, loss_pct, and jitter_ms, capped at 10x."""
     if not network_condition:
         return BASE_LLM_TIMEOUT
 

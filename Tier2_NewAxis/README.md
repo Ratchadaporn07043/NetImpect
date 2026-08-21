@@ -1,47 +1,47 @@
-# Tier 2 — แกนใหม่ (Bandwidth + Multi-Round Tasks)
+# Tier 2 - New Axes (Bandwidth + Multi-Round Tasks)
 
-**เป้าหมาย:** เปิดแกนการทดลองที่โค้ดรองรับอยู่แล้วแต่ไม่เคยถูกใช้ (bandwidth) และแก้ปัญหา "แทบทุก trial จบใน 1 รอบ" ที่พบในชุดข้อมูลเดิม
+**Goal:** Activate the existing bandwidth support and address the original dataset problem in which almost every trial finished in one round.
 
-## ส่วนที่ 1: Bandwidth Axis (`run_tier2_bandwidth.py`)
+## Part 1: Bandwidth Axis (`run_tier2_bandwidth.py`)
 
-**ไม่แก้โค้ดต้นฉบับเลย** — `NetworkController.apply()` รองรับ `bandwidth_kbit` อยู่แล้ว (tc + tbf) เพียงแต่ไม่เคยมี scenario ไหนส่งค่านี้เข้ามา
+**No original code is modified.** `NetworkController.apply()` already supports `bandwidth_kbit` through tc and tbf; this tier adds scenarios that use it.
 
-- `main_effect`: bandwidth เดี่ยวๆ 6 ระดับ (2000/1000/500/250/100/50 kbit) × 4 tasks × 5 repeats = **120 trials**
-- `x_loss`: bandwidth ต่ำ (500/100) × loss กลาง-สูง (10/30/50%) × 4 tasks × 3 repeats = **72 trials**
-- รวม **192 trials** ≈ 7.8 ชั่วโมง
+- `main_effect`: six bandwidth levels (2000/1000/500/250/100/50 kbit) x 4 tasks x 5 repeats = **120 trials**
+- `x_loss`: low bandwidth (500/100) x 10/30/50% loss x 4 tasks x 3 repeats = **72 trials**
+- Total: **192 trials**, approximately 7.8 hours.
 
 ```bash
-python3 "Tier2_แกนใหม่/run_tier2_bandwidth.py" --dry-run
-python3 "Tier2_แกนใหม่/run_tier2_bandwidth.py" --part all --resume
+python3 "Tier2_NewAxis/run_tier2_bandwidth.py" --dry-run
+python3 "Tier2_NewAxis/run_tier2_bandwidth.py" --part all --resume
 ```
 
-## ส่วนที่ 2: Multi-Round Tasks + Strict Reviewer (`run_tier2_multiround.py`)
+## Part 2: Multi-Round Tasks + Strict Reviewer (`run_tier2_multiround.py`)
 
-**ปัญหาที่แก้:** จากการวิเคราะห์เชิงลึก (`Paper/NetImpact.md/Archive_Legacy/NetImpact_12_InDepth_Experiment_Results.md`) พบว่าเกือบทุก trial ใน dataset เดิมจบใน attempt เดียว (Reviewer พูด APPROVED รอบแรก) เพราะ task เดิมง่ายเกินไปสำหรับ Qwen3:8b — ทำให้แทบไม่มีข้อมูลว่า network ที่แย่ไปรบกวน "บทสนทนาหลายรอบ" อย่างไรบ้าง
+**Problem addressed:** Deep analysis found that almost every original trial ended on the first attempt because the tasks were too easy for Qwen3:8b. The dataset therefore contained little evidence about how poor networks affect multi-round conversations.
 
-**วิธีแก้ 2 ทาง (ใช้พร้อมกัน):**
-1. Task ที่ยากขึ้น (`tier2_tasks_multiround.py`): `coding_task_hard` (ต้อง parse log พร้อม edge case 4 อย่าง), `planning_decision_hard` (ต้องให้คะแนน 5 มิติ + เลือก 2/5 + วิเคราะห์ trade-off)
-2. Reviewer เข้มงวดขึ้น (`multi_agent.py` เวอร์ชันนี้, พารามิเตอร์ `strict_reviewer=True`): บังคับเช็ค rubric ทีละข้อ ห้าม APPROVED ถ้ายังขาดข้อไหน
+**Two combined solutions:**
+1. Harder tasks in `tier2_tasks_multiround.py`: `coding_task_hard` and `planning_decision_hard`.
+2. A stricter Reviewer using `strict_reviewer=True`, which checks each rubric item and cannot approve incomplete work.
 
-**⚠️ ขั้นตอนสำคัญก่อนรัน `run_tier2_multiround.py`:**
+**⚠️ Required step before running `run_tier2_multiround.py`:**
 ```bash
 cd NetImpact
-cp multi_agent.py multi_agent.py.backup_original   # สำรองไฟล์เดิมไว้ก่อนเสมอ
-cp "Tier2_แกนใหม่/multi_agent.py" multi_agent.py    # แทนที่ด้วยเวอร์ชันรองรับ strict_reviewer
+cp multi_agent.py multi_agent.py.backup_original   # Always back up the original.
+cp "Tier2_NewAxis/multi_agent.py" multi_agent.py    # Use the strict_reviewer version.
 ```
 
-ไฟล์ที่แทนที่มี `strict_reviewer: bool = False` เป็นค่า default เสมอ — ถ้าไม่ส่งพารามิเตอร์นี้ (เหมือนที่ `run_tier1.py`/`run_experiment.py` เดิมเรียก) พฤติกรรมจะ**เหมือนต้นฉบับ 100%** จึงปลอดภัยที่จะแทนที่ไฟล์นี้แล้วยังรัน Tier1 หรือ three-day เดิมต่อได้ตามปกติ (ผ่านการทดสอบใน `tests_extended/test_baseline_regression.py`)
+The replacement defaults to `strict_reviewer: bool = False`. Omitting the parameter preserves the original behavior, so Tier1 and the three-day experiment remain compatible. This is covered by `tests_extended/test_baseline_regression.py`.
 
 ```bash
-python3 "Tier2_แกนใหม่/run_tier2_multiround.py" --dry-run
-python3 "Tier2_แกนใหม่/run_tier2_multiround.py" --resume
+python3 "Tier2_NewAxis/run_tier2_multiround.py" --dry-run
+python3 "Tier2_NewAxis/run_tier2_multiround.py" --resume
 ```
 
-4 scenario ตัวแทน (baseline / moderate delay / high loss / combined-bad) × 2 hard tasks × 10 repeats = **80 trials** ≈ 3.2 ชั่วโมง (อาจนานกว่านี้เพราะ REVISE ทำให้คุยหลายรอบ)
+Four representative scenarios (baseline / moderate delay / high loss / combined-bad) x 2 hard tasks x 10 repeats = **80 trials**, approximately 3.2 hours. REVISE responses may increase runtime.
 
-## ⚠️ หมายเหตุสำคัญ: environment variable ที่ใช้จริงตอนรัน (ต่างจาก Tier อื่น)
+## ⚠️ Runtime Environment Variable
 
-การรันจริงทั้ง 2 ส่วน (bandwidth 192 trials + multiround 80 trials รวม 272 trials) ใช้ `LLM_TIMEOUT=600` (ไม่ใช่ default 120 วินาทีที่ Tier1/Tier3/Tier4/Tier5/Tier6 ใช้กันหมด) — ค่านี้**ไม่ถูกบันทึกลง JSON log เลย** (`logger.py` ไม่มี field เก็บค่า config นี้) จึงบันทึกไว้ในเอกสารนี้แทนเพื่อ reproducibility และกันถูกถามเรื่อง hyperparameter ตอน submit AINTEC2026
+Both parts use `LLM_TIMEOUT=600` (272 trials total), instead of the 120-second default used by Tier1, Tier3, Tier4, Tier5, and Tier6. This value is not stored in JSON logs, so it is documented here for reproducibility.
 
 ```bash
 LLM_TIMEOUT=600 python3 "Tier2_แกนใหม่/run_tier2_bandwidth.py" --part all --resume

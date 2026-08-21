@@ -1,9 +1,11 @@
 """
-ทดสอบว่า:
-1. Container คุยกับ Ollama บน macOS host ได้ (ผ่าน host.docker.internal:11434)
-2. AutoGen เรียกโมเดล Qwen3 (local) ผ่าน OpenAI-compatible endpoint ของ Ollama ได้
+Verify that:
+1. The container can communicate with Ollama on the macOS host
+   (through host.docker.internal:11434).
+2. AutoGen can call the local Qwen3 model through Ollama's
+   OpenAI-compatible endpoint.
 
-รันจากใน container:
+Run from inside the container:
     python3 scripts/test_connection.py
 """
 import os
@@ -30,7 +32,7 @@ def test_autogen_chat(model_name: str):
         {
             "model": model_name,
             "base_url": OLLAMA_BASE_URL,
-            "api_key": "ollama",  # ไม่ใช้จริง แต่ AutoGen ต้องการ field นี้
+            "api_key": "ollama",  # Not used, but AutoGen requires this field.
         }
     ]
 
@@ -51,5 +53,5 @@ if __name__ == "__main__":
     if not models:
         print("!! ยังไม่มีโมเดลถูก pull เข้ามาใน Ollama เลย รัน `ollama pull qwen3:8b` บน host ก่อน")
     else:
-        # ใช้โมเดลตัวแรกที่เจอในการทดสอบ (ปรับชื่อให้ตรงกับที่ pull ไว้จริง เช่น qwen3:8b)
+        # Use the first discovered model for the test. Update the name if needed.
         test_autogen_chat(models[0])

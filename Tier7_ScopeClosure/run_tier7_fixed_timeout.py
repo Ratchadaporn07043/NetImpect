@@ -2,12 +2,12 @@
 """
 Tier 7A — Fixed-long-timeout arm
 =================================
-คำถามที่การทดลองนี้ตอบ
-----------------------
+Question addressed by this experiment
+--------------------------------------
 Tier 5 พบว่า condition-aware timeout scaling เพิ่ม observed completion ที่ 75%
 configured loss จาก 14/20 เป็น 20/20 (Fisher's exact test, p = 0.0202; risk
 difference +30.0 pp, 95% CI +7.7 ถึง +51.9) — แต่ **ไม่เคยเทียบกับ timeout ยาว
-คงที่** จึงตอบไม่ได้ว่าสิ่งที่ทำให้ดีขึ้นคือ
+fixed timeout**, so it cannot determine whether the improvement comes from
 
     (ก) การปรับ timeout ตามสภาพเครือข่ายที่รู้อยู่แล้ว  (condition-awareness)
     (ข) แค่การให้เวลามากขึ้นเฉยๆ                        (more time)
@@ -17,8 +17,8 @@ adaptive คืนที่จุดวิกฤต loss=75%: 120 + int(75*3)) �
 arm นี้กับ adaptive arm ได้เวลาเท่ากันเป๊ะที่ loss=75% และต่างกันเฉพาะที่ระดับ
 loss อื่น — ถ้าผลที่ 75% เท่ากัน แปลว่าสิ่งที่ช่วยคือ (ข) ไม่ใช่ (ก)
 
-ขอบเขต (เลือกไว้ให้จบใน ~9 ชั่วโมง)
------------------------------------
+Scope (selected to finish in approximately 9 hours)
+----------------------------------------------------
 configured loss 65 / 70 / 75%  ×  4 tasks  ×  5 repeats  =  60 trials
 ครอบคลุม degradation region ทั้งช่วง และ n=20 ต่อระดับ เท่ากับ Tier 5 เป๊ะ
 จึงเทียบกับ arm `none` และ `adaptive_timeout` เดิมได้โดยตรง
@@ -31,12 +31,12 @@ confounded กับ run block อยู่** เหมือนเดิม ก
 `--include-reference-arms` เพื่อรัน none/adaptive ซ้ำในบล็อกเดียวกันนี้ด้วย
 (180 trials, ~27 ชม.) ซึ่งจะตัด confound นั้นออกได้จริง
 
-การใช้งาน
----------
-    # ตรวจก่อนว่าทุกอย่างพร้อม ไม่รันจริง
+Usage
+-----
+    # Check that everything is ready without running the experiment.
     python3 Tier7_ScopeClosure/run_tier7_fixed_timeout.py --dry-run
 
-    # รันจริง (แนะนำให้เปิด --resume ไว้เสมอ เผื่อเครื่องดับกลางทาง)
+    # Run the experiment. Keeping --resume enabled is recommended.
     python3 Tier7_ScopeClosure/run_tier7_fixed_timeout.py --resume
 """
 import argparse
@@ -79,7 +79,7 @@ TEST_SCENARIOS = build_scenarios()
 
 
 # ----------------------------------------------------------------------
-# checkpoint (รูปแบบเดียวกับ tier อื่นๆ)
+# Checkpoint format shared with the other tiers.
 # ----------------------------------------------------------------------
 def _checkpoint_path(log_dir):
     return os.path.join(log_dir, "_checkpoint", "checkpoint.json")

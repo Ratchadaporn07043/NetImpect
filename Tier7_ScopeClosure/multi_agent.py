@@ -1,32 +1,27 @@
 """
 Multi-Agent Runner — Tier 7 (Scope Closure)
 ============================================
-สำเนาสะสมของ Tier5/Tier6 (`strict_reviewer` + `mitigation` + `network_condition`)
-บวกสองสิ่งที่ Tier 7 ต้องใช้:
+Accumulated copy of Tier5/Tier6 (`strict_reviewer` + `mitigation` + `network_condition`),
+plus two features required by Tier 7:
 
-TIER7 CHANGE 1 — mitigation ตัวใหม่: "fixed_long_timeout"
-    เหตุผล: ผลของ Tier5 แสดงว่า condition-aware timeout เพิ่ม completion ที่ 75%
-    configured loss จาก 14/20 เป็น 20/20 (Fisher p = 0.0202) — แต่ **ไม่เคย
-    เทียบกับการตั้ง timeout ยาวคงที่** จึงแยกไม่ได้ว่าสิ่งที่ช่วยคือ "การปรับ
-    timeout ตามสภาพเครือข่าย" (condition-awareness) หรือแค่ "ให้เวลามากขึ้น"
-    เฉยๆ arm นี้ตั้ง timeout คงที่เท่ากับค่าที่สูตร adaptive ให้ที่จุดวิกฤต
-    (loss=75%  ->  120 + int(75*3) = 345 วินาที) กับ **ทุก** scenario เพื่อให้
-    ต่างจาก adaptive arm เพียงมิติเดียวคือความ condition-aware
+TIER7 CHANGE 1 - new mitigation: "fixed_long_timeout"
+    Tier5 showed that condition-aware timeout increased completion at 75%
+    configured loss from 14/20 to 20/20 (Fisher p = 0.0202), but it did not
+    compare against a fixed long timeout. This arm uses the same fixed timeout
+    as the adaptive formula at the critical point (loss=75% -> 345 seconds)
+    for every scenario, isolating condition awareness from simply allowing more time.
 
-TIER7 CHANGE 2 — บันทึก agent ที่ error เกิดขึ้น
-    เดิม error log ไม่มี field บอกว่า LLM call ของ agent ตัวไหน timeout ทำให้
-    คำอธิบายผลลบของ context caching เป็นเพียงสมมติฐาน ตอนนี้จำ speaker ล่าสุด
-    จาก transcript แล้วอนุมาน agent ที่ถึงคิวถัดไปตาม round-robin ส่งเข้า
-    logger.log_error(..., agent=...)
+TIER7 CHANGE 2 - record the agent where an error occurred
+    The error log previously did not identify which agent's LLM call timed out.
+    Infer the next round-robin speaker from the transcript and pass it to
+    logger.log_error(..., agent=...).
 
-หมายเหตุสำคัญเรื่องสถาปัตยกรรมที่ตรวจพบระหว่างทำ Tier 7 (ไม่ได้แก้โค้ด โดยตั้งใจ):
-    `planner.initiate_chat(manager, message=...)` ทำให้ข้อความแรกที่ติดป้ายว่า
-    "Planner" คือ **seed message ที่เป็นตัว prompt เอง ไม่ใช่ผลลัพธ์จากโมเดล**
-    จากนั้น round-robin ไป Worker ทันที ผลคือใน 95.8% ของ trial ที่ตรวจ Planner
-    **ไม่ได้เรียก LLM เลยสักครั้ง** — 1 trial ที่สำเร็จมี 2 LLM call ไม่ใช่ 3
-    และ `cached_plan` ที่ context caching เก็บไว้ก็คือตัว prompt เดิม ไม่ใช่แผน
-    พฤติกรรมนี้ **คงไว้ตามเดิมโดยเจตนา** เพื่อให้ Tier 7 เทียบกับข้อมูลเดิมทั้ง
-    5,300 trials ได้ และรายงานระบบตามที่เป็นจริงในเปเปอร์แทนการเปลี่ยนระบบกลางคัน
+Important architecture note discovered during Tier 7 (intentionally unchanged):
+    `planner.initiate_chat(manager, message=...)` labels the first prompt itself
+    as a Planner seed message rather than a model result. Round-robin then moves
+    directly to Worker. In 95.8% of reviewed trials, Planner made no LLM call;
+    a successful trial had two LLM calls rather than three. This behavior remains
+    unchanged so Tier 7 stays comparable with the original 5,300 trials.
 """
 import os
 import re
@@ -43,17 +38,17 @@ BASE_LLM_TIMEOUT = int(os.environ.get("LLM_TIMEOUT", 120))
 
 VALID_MITIGATIONS = ("none", "adaptive_timeout", "context_cache", "both", "fixed_long_timeout")
 
-# TIER7: timeout คงที่ของ arm "fixed_long_timeout"
-# ค่าเริ่มต้น = ค่าที่ _adaptive_timeout_seconds() คืนที่จุดวิกฤต loss=75%
-#   120 (base) + int(75 * 3) = 345 วินาที
-# ตั้งเท่ากันทุก scenario โดยเจตนา เพื่อให้ต่างจาก adaptive arm มิติเดียว
+# TIER7: fixed timeout for the "fixed_long_timeout" arm.
+# Default: the value returned by _adaptive_timeout_seconds() at loss=75%.
+# 120 (base) + int(75 * 3) = 345 seconds.
+# Deliberately equal across scenarios to isolate condition awareness.
 FIXED_LONG_TIMEOUT = int(os.environ.get("FIXED_LONG_TIMEOUT", 345))
 
 ROUND_ROBIN_ORDER = ("Planner", "Worker", "Reviewer")
 
 
 def _next_speaker(last_speaker: str):
-    """agent ที่ถึงคิวถัดจาก last_speaker ตาม round-robin (None ถ้าระบุไม่ได้)"""
+    """Return the next round-robin agent after last_speaker, or None if unknown."""
     if last_speaker not in ROUND_ROBIN_ORDER:
         return None
     idx = ROUND_ROBIN_ORDER.index(last_speaker)
@@ -61,11 +56,11 @@ def _next_speaker(last_speaker: str):
 
 
 def _blame_agent(groupchat_messages, use_cached_plan: bool = False):
-    """อนุมานว่า LLM call ของ agent ตัวไหนล้มเหลว
+    """Infer which agent's LLM call failed.
 
-    transcript บันทึกเฉพาะเทิร์นที่ผลิตข้อความสำเร็จ เทิร์นที่ error จึงไม่มี
-    ข้อความ -> agent ที่ล้มเหลวคือตัวที่ถึงคิวถัดจากข้อความล่าสุด
-    เมื่อ use_cached_plan=True ห้องแชทมีแค่ (Worker, Reviewer) จึงสลับสองตัวนี้
+    The transcript records only successful messages, so the failed agent is the
+    next speaker after the latest message. With use_cached_plan=True, alternate
+    only between Worker and Reviewer.
     """
     if not groupchat_messages:
         return "Worker" if use_cached_plan else None
@@ -84,7 +79,7 @@ REVIEWER_SYSTEM_MESSAGE_DEFAULT = (
     "ถ้างานสมบูรณ์จริงๆ ค่อยให้ 5"
 )
 
-# (คงไว้จาก Tier2 — ใช้ร่วมกับ strict_reviewer=True ได้ตามปกติ)
+# Preserved from Tier2 and compatible with strict_reviewer=True.
 REVIEWER_SYSTEM_MESSAGE_STRICT = (
     "คุณคือ Reviewer agent ที่เข้มงวดมาก ตรวจงานจาก Worker แบบละเอียดทีละจุด "
     "ก่อนตัดสินใจ ให้ทำตามขั้นตอนนี้ในใจ (ไม่ต้องเขียนขั้นตอนออกมา):\n"
@@ -99,11 +94,13 @@ REVIEWER_SYSTEM_MESSAGE_STRICT = (
 )
 
 
-# TIER5 CHANGE: คำนวณ timeout แบบปรับตาม network condition
+# TIER5 CHANGE: Calculate timeout from the network condition.
 def _adaptive_timeout_seconds(network_condition: dict = None) -> int:
-    """ขยาย BASE_LLM_TIMEOUT ตาม delay_ms/loss_pct/jitter_ms ของ scenario
-    สูตร (ปรับแต่งได้): +10s ต่อทุก 100ms delay, +3s ต่อทุก 1% loss,
-    +5s ต่อทุก 10ms jitter, cap ที่ 10 เท่าของ base (กันหลุดไปยาวเกินจำเป็น)"""
+    """Scale BASE_LLM_TIMEOUT using delay_ms, loss_pct, and jitter_ms.
+
+    Formula: +10s per 100ms delay, +3s per 1% loss, +5s per 10ms jitter,
+    capped at ten times the base timeout.
+    """
     if not network_condition:
         return BASE_LLM_TIMEOUT
 

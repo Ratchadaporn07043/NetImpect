@@ -1,69 +1,69 @@
 # Tier 6 — Mitigation × Multi-Round (optional stretch experiment)
 
-**สถานะ:** ✅ รันเสร็จแล้ว — 120/120 trials, 0 ไฟล์เสีย — เป็น **optional stretch** experiment เพิ่มจาก 5 Tier หลัก (ดู `Paper/NetImpact.md/Archive_Legacy/NetImpact_10_AINTEC2026_Readiness_Assessment.md` สำหรับบริบท timeline เดิมที่ทำให้ถูกจัดเป็น optional) — ผลจริงอยู่ที่หัวข้อ "ผลที่ได้" ด้านล่าง และรายละเอียดเต็มที่
-`Paper/NetImpact.md/Current/NetImpact_06_Tier6_Pending_Experiment.md` (ชื่อไฟล์ยังใช้คำว่า
-"Pending" เพื่อความคงที่ของลิงก์อ้างอิงในเอกสารอื่น — เนื้อหาข้างในเป็นผลจริงที่รันจบแล้ว ไม่ใช่แผนที่ยังไม่ได้รัน)
+**Status:** ✅ Completed - 120/120 trials, 0 corrupted files. This was an **optional stretch** experiment beyond the five main tiers. Results are summarized below, with full details in
+`Paper/NetImpact.md/Current/NetImpact_06_Tier6_Pending_Experiment.md` (the filename still contains
+"Pending" to preserve links from other documents; its contents are completed results, not an unrun plan.)
 
-## เป้าหมาย
+## Goal
 
-เชื่อม 2 finding ที่แข็งแรงที่สุดของโปรเจกต์เข้าด้วยกัน:
+Connect the two strongest findings in the project:
 
-1. **Tier2 finding:** เมื่อใช้ hard tasks + `strict_reviewer=True` (บังคับคุยหลายรอบ) success rate โดยรวมตกจาก ~100% เหลือ 83.75% และ **`moderate_delay` (delay=300ms) คือ scenario ที่แย่ที่สุด (75%)** — แย่กว่า baseline (95%), high_loss (85%) และ combined_bad (80%) เสียอีก แสดงว่า delay สะสมผลข้ามรอบสนทนาได้ ทั้งที่ main-effect เดิม (single-pass) ไม่เห็นผลของ delay เลย
-2. **Tier5 finding:** `adaptive_timeout` แก้ปัญหา loss cliff ได้จริงมีนัยสำคัญ (70%→100% ที่ loss=75%, Fisher p=0.020) แต่ทดสอบบนแกน loss แบบ single-pass (`strict_reviewer=False`) เท่านั้น
+1. **Tier2 finding:** With hard tasks and `strict_reviewer=True`, overall success fell from ~100% to 83.75%. **`moderate_delay` (delay=300ms) was worst at 75%**, below baseline (95%), high_loss (85%), and combined_bad (80%), showing that delay accumulates across rounds.
+2. **Tier5 finding:** `adaptive_timeout` significantly improved the loss cliff (70% to 100% at loss=75%, Fisher p=0.020), but was tested only in single-pass mode (`strict_reviewer=False`).
 
-**คำถามของ Tier6:** mitigation ที่พิสูจน์แล้วว่าช่วยแกน loss (single-pass) จะช่วยปัญหา "delay สะสมข้ามรอบสนทนา multi-round" ของ Tier2 ได้ด้วยหรือไม่ — เป็นคำถามที่ไม่มี Tier ไหนก่อนหน้าเคยตอบ เพราะไม่เคยมีการเรียก `strict_reviewer=True` และ `mitigation=<...>` พร้อมกันมาก่อน
+**Tier6 question:** Can a mitigation proven to help the single-pass loss axis also help Tier2's multi-round accumulated-delay problem? No previous tier had called `strict_reviewer=True` and `mitigation=<...>` together.
 
-ถ้าพิสูจน์ได้ว่าช่วย: paper จะมี narrative แบบ "พบปัญหา A (loss cliff) → แก้ได้ → พบปัญหา B ที่ต่างมิติ (multi-round delay) → mitigation เดิมช่วยได้ด้วย (generalizes)" ซึ่งแข็งแรงกว่า "แก้ได้แค่ปัญหาเดียว" มาก ถ้าไม่ช่วย: ก็ยังเป็นผลลัพธ์ที่มีประโยชน์ (ระบุขอบเขตของ mitigation ชัดเจนขึ้น เขียนเป็น limitation/future work ได้)
+If effective, the paper can show that the mitigation generalizes from the loss cliff to a distinct multi-round delay problem. If not, the result still clarifies the mitigation boundary and supports a limitation or future-work statement.
 
-## ทำไมใช้ scope แค่นี้ (ไม่ใช่ full factorial)
+## Why This Scope (Not Full Factorial)
 
-ทดสอบเฉพาะ 2 scenario ที่จำเป็น: `baseline` (control — มี strict_reviewer แต่ไม่มี network impairment เพื่อแยกผลของ "reviewer เข้มงวด" ออกจากผลของ "delay") กับ `moderate_delay` (จุดที่ Tier2 พบว่าแย่สุด, delay=300ms) — ไม่รวม `high_loss`/`combined_bad` ของ Tier2 เพราะเป้าหมายเฉพาะเจาะจงคือ moderate_delay ตามที่วิเคราะห์ไว้ข้างต้น ถ้ามีเวลาเหลือทีหลังขยายได้ง่าย (แค่เพิ่ม scenario เข้า `TEST_SCENARIOS` ใน `run_tier6_mitigation_multiround.py`)
+Test only two necessary scenarios: `baseline` (control, with strict review but no network impairment) and `moderate_delay` (Tier2's worst point at delay=300ms). `high_loss` and `combined_bad` are excluded because the specific target is moderate_delay. More scenarios can be added to `TEST_SCENARIOS` later.
 
-## ⚠️ ขั้นตอนก่อนรัน
+## ⚠️ Pre-Run Steps
 
 ```bash
 cd NetImpact
-cp multi_agent.py multi_agent.py.backup_original   # สำรองไฟล์เดิมไว้เสมอ
+cp multi_agent.py multi_agent.py.backup_original   # Always back up the original.
 cp "Tier6_MitigationXMultiRound/multi_agent.py" multi_agent.py
 ```
 
-ไฟล์นี้เป็นสำเนา 1:1 ของ `Tier5_Mitigation/multi_agent.py` (logic เหมือนกันทุกบรรทัด ไม่ได้แก้อะไร) — เก็บสำเนาไว้ในโฟลเดอร์นี้ด้วยเพื่อให้ Tier6 self-contained ตามธรรมเนียมเดียวกับทุก Tier ก่อนหน้า รองรับ `strict_reviewer` (จาก Tier2) และ `mitigation`/`network_condition` (จาก Tier5) **พร้อมกัน** โดย default ทั้งคู่ยังเป็นค่าเดิม (`strict_reviewer=False`, `mitigation="none"`) เสมอ ถ้าไม่ส่งพารามิเตอร์ พฤติกรรมเหมือนต้นฉบับ 100% (ยืนยันด้วย `tests/test_baseline_regression.py` ที่มีอยู่แล้ว)
+This file is a 1:1 copy of `Tier5_Mitigation/multi_agent.py` and keeps Tier6 self-contained. It supports `strict_reviewer` from Tier2 and `mitigation`/`network_condition` from Tier5 **together**. Defaults remain (`strict_reviewer=False`, `mitigation="none"`), preserving original behavior when omitted.
 
-`run_tier6_mitigation_multiround.py` มี guard เช็คอัตโนมัติว่า `multi_agent.py` ที่ root รองรับทั้ง `strict_reviewer`, `mitigation`, `network_condition` จริง — ถ้า cp ผิดไฟล์ (เช่น cp `Tier2_แกนใหม่/multi_agent.py` ที่ไม่มี `mitigation`) จะ error พร้อมคำแนะนำทันที ไม่รันไปแล้วได้ผลผิดแบบเงียบๆ
+`run_tier6_mitigation_multiround.py` automatically verifies that the root `multi_agent.py` supports all three parameters. Copying the wrong file produces a clear error before execution.
 
-## วิธีรัน
+## How to Run
 
 ```bash
 python3 "Tier6_MitigationXMultiRound/run_tier6_mitigation_multiround.py" --dry-run
 
-# รันทีละเงื่อนไข (แนะนำ — ใช้ --resume ได้ทุกครั้งถ้าหลุดกลางคัน):
-python3 "Tier6_MitigationXMultiRound/run_tier6_mitigation_multiround.py" --condition none --resume             # control (strict_reviewer=True, mitigation ปิด)
+# Run one condition at a time (recommended; --resume is safe after interruption):
+python3 "Tier6_MitigationXMultiRound/run_tier6_mitigation_multiround.py" --condition none --resume             # control; mitigation disabled
 python3 "Tier6_MitigationXMultiRound/run_tier6_mitigation_multiround.py" --condition adaptive_timeout --resume  # Mitigation A
 python3 "Tier6_MitigationXMultiRound/run_tier6_mitigation_multiround.py" --condition context_cache --resume     # Mitigation B
 
-# หรือรันรวดเดียวทั้ง 3 เงื่อนไข (120 trials รวม)
+# Or run all three conditions at once (120 trials total).
 python3 "Tier6_MitigationXMultiRound/run_tier6_mitigation_multiround.py" --condition all --resume
 ```
 
-จำนวน trial: 2 scenarios (`t6_baseline`, `t6_moderate_delay`) × 2 hard tasks (`coding_task_hard`, `planning_decision_hard`, ยืมมาจาก Tier2 ตรงๆ ไม่ duplicate นิยาม) × 10 repeats (เท่า Tier2 เพื่อเทียบ n ตรงกัน) = **40 trials ต่อเงื่อนไข** × 3 เงื่อนไข = **120 trials รวม**
+Trial count: 2 scenarios x 2 hard tasks borrowed directly from Tier2 x 10 repeats = **40 trials per condition** x 3 conditions = **120 total trials**.
 
-log แยกเป็น `logs_tier6_none/`, `logs_tier6_adaptive_timeout/`, `logs_tier6_context_cache/` — สิ่งที่ต้องเทียบหลังรันเสร็จ:
+Logs are separated into `logs_tier6_none/`, `logs_tier6_adaptive_timeout/`, and `logs_tier6_context_cache/`. Compare:
 
-- success rate ที่ `t6_moderate_delay` โดยเฉพาะ (none vs adaptive_timeout vs context_cache) — นี่คือคำถามหลัก
-- success rate ที่ `t6_baseline` ควรใกล้เคียงกันทั้ง 3 เงื่อนไข (ถ้าต่างกันมาก แปลว่า mitigation มีผลข้างเคียงกับกรณีไม่มีปัญหาเลยด้วย ต้องระวัง)
-- reviewer_rejections เฉลี่ยต่อ trial ที่ `t6_moderate_delay` (ลดลงหรือไม่หลัง mitigation)
-- elapsed_seconds เฉลี่ย (ต้นทุนเวลาที่แลกมา เหมือนที่ Tier5 พบว่า adaptive_timeout ทำให้ช้าขึ้น)
+- success rate at `t6_moderate_delay` (none vs adaptive_timeout vs context_cache), the main question
+- success rate at `t6_baseline`, which should be similar across all three conditions
+- mean `reviewer_rejections` per trial at `t6_moderate_delay`
+- mean `elapsed_seconds`, the time cost of mitigation
 
-**หมายเหตุ code (สืบทอดจาก Tier5):** field `mitigation` ใน `multi_agent.py` ถูกคำนวณและใส่ใน return dict แต่ **ไม่ถูกบันทึกลง JSON log จริง** (`logger.log_outcome()` ไม่รับพารามิเตอร์นี้) — ไม่กระทบผลการวิเคราะห์เพราะ Tier6 แยกโฟลเดอร์ log ต่อเงื่อนไขอยู่แล้ว (`logs_tier6_<condition>/`) และ field `network_condition.experiment_phase` (`tier6_mitigation_multiround__<condition>`) ระบุเงื่อนไขถูกต้อง 100% เมื่อ parse log — เหมือนที่ Tier5 เจอและสรุปไว้แล้ว
+**Code note (inherited from Tier5):** `mitigation` is included in the return dict but not written to JSON because `logger.log_outcome()` does not accept it. This does not affect analysis because Tier6 uses separate condition directories and `network_condition.experiment_phase` identifies each condition.
 
-## ไฟล์ในโฟลเดอร์นี้
+## Files in This Folder
 
-| ไฟล์ | หน้าที่ |
+| File | Purpose |
 |---|---|
-| `multi_agent.py` | สำเนา 1:1 ของ `Tier5_Mitigation/multi_agent.py` — **แทนที่** root เดิม รองรับ `strict_reviewer` (Tier2) + `mitigation` A/B (Tier5) พร้อมกัน |
-| `run_tier6_mitigation_multiround.py` | รัน before/after comparison ที่ scenario `t6_baseline`/`t6_moderate_delay` ด้วย hard tasks ของ Tier2 + `strict_reviewer=True` เสมอ |
+| `multi_agent.py` | 1:1 copy of `Tier5_Mitigation/multi_agent.py`; **replaces** the root version and combines Tier2 `strict_reviewer` with Tier5 mitigations. |
+| `run_tier6_mitigation_multiround.py` | Runs the comparison on `t6_baseline` and `t6_moderate_delay` using Tier2 hard tasks and `strict_reviewer=True`. |
 
-ไม่มีไฟล์ task/scenario ของตัวเอง — ยืม `TIER2_HARD_TASKS`/`TIER2_HARD_TASK_GROUND_TRUTH` จาก `Tier2_แกนใหม่/tier2_tasks_multiround.py` ตรงๆ (import ข้ามโฟลเดอร์ ดู `sys.path` setup ต้นไฟล์ `run_tier6_mitigation_multiround.py`)
+There are no local task/scenario definitions. The runner imports `TIER2_HARD_TASKS` and `TIER2_HARD_TASK_GROUND_TRUTH` directly from `Tier2_NewAxis/tier2_tasks_multiround.py`.
 
 ## การทดสอบ (offline, ไม่ต้องมี Ollama/GPU/tc จริง)
 

@@ -77,7 +77,7 @@ REVIEWER_SYSTEM_MESSAGE_DEFAULT = (
     "ถ้างานสมบูรณ์จริงๆ ค่อยให้ 5"
 )
 
-# (คงไว้จาก Tier2 — ใช้ร่วมกับ strict_reviewer=True ได้ตามปกติ)
+# Preserved from Tier2 and compatible with strict_reviewer=True.
 REVIEWER_SYSTEM_MESSAGE_STRICT = (
     "คุณคือ Reviewer agent ที่เข้มงวดมาก ตรวจงานจาก Worker แบบละเอียดทีละจุด "
     "ก่อนตัดสินใจ ให้ทำตามขั้นตอนนี้ในใจ (ไม่ต้องเขียนขั้นตอนออกมา):\n"
@@ -352,7 +352,7 @@ def run_multi_agent_task(task_prompt: str, logger=None, max_rounds: int = None, 
         "evaluation": evaluation,
         "retries": retries_used,
         "elapsed_seconds": round(elapsed, 2),
-        "mitigation": mitigation,  # บันทึกไว้ว่า attempt นี้ใช้ mitigation อะไร (ดูหมายเหตุ code gap ใน README)
+        "mitigation": mitigation,  # Record the mitigation used for this attempt.
     }
 
     if logger is not None:

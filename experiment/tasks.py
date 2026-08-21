@@ -1,12 +1,12 @@
 """
 Test Tasks (Benchmarks)
 =========================
-แยกออกมาจาก scenarios.py เพื่อให้ scenarios.py เก็บเฉพาะเรื่อง network scenario
-ส่วนไฟล์นี้เก็บเฉพาะ task prompt ที่ใช้ทดสอบ multi-agent workflow
+Separated from scenarios.py so that scenarios.py contains only network scenarios.
+This file contains the task prompts used to test the multi-agent workflow.
 
-เพิ่ม Ground Truth / Rubric สำหรับ evaluator หลังจบ workflow:
-- Reviewer ยังตรวจ Worker ระหว่างคุยตามปกติ
-- Ground-truth evaluator ตรวจ final answer หลังจบเท่านั้น ไม่ช่วยแก้งานระหว่างรัน
+Adds Ground Truth / Rubric data for post-workflow evaluation:
+- The Reviewer still checks the Worker during the conversation.
+- The ground-truth evaluator checks only the final answer and does not assist during execution.
 """
 
 TASKS = {

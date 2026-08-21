@@ -28,7 +28,7 @@ import time
 import uuid
 import psutil
 
-# TIER3 CHANGE: พยายาม import pynvml แบบ optional — ถ้าไม่มีให้ทำงานต่อได้ปกติ
+# TIER3 CHANGE: Import pynvml optionally so the logger works without it.
 try:
     import pynvml
     try:
@@ -47,7 +47,7 @@ def _estimate_tokens(text: str) -> int:
     return max(1, len(text) // 4)
 
 
-# TIER3 CHANGE: ฟังก์ชันอ่าน GPU stats แบบ fail-safe เต็มรูปแบบ
+# TIER3 CHANGE: Read GPU statistics with fully fail-safe behavior.
 def _read_gpu_stats(gpu_index: int = 0):
     """คืน dict ของสถานะ GPU ตัวที่ gpu_index หรือ None ทั้งหมดถ้าอ่านไม่ได้
     ไม่มีทาง raise exception ออกไปนอกฟังก์ชันนี้เด็ดขาด (fail-safe by design)
@@ -78,7 +78,7 @@ def _read_gpu_stats(gpu_index: int = 0):
             "power_watts": power_watts,
         }
     except Exception:
-        # เครื่อง/driver มีปัญหาเฉพาะหน้า -> ไม่ crash ทั้ง trial แค่ไม่ได้ข้อมูล GPU รอบนี้
+        # A transient machine or driver issue should not fail the trial.
         return None
 
 

@@ -1,30 +1,29 @@
-# Tier 3 — โครงสร้างพื้นฐาน (GPU Logging + Dual-Judge LLM Evaluation)
+# Tier 3 - Infrastructure (GPU Logging + Dual-Judge LLM Evaluation)
 
-**เป้าหมาย:** ปิด blocking gap 2 ข้อที่ระบุใน `Paper/NetImpact.md/Archive_Legacy/NetImpact_10_AINTEC2026_Readiness_Assessment.md`:
-1. ไม่มีข้อมูล GPU/VRAM เลย (มีแค่ CPU/RAM) — วิเคราะห์ resource bottleneck ไม่ครบ
-2. ทุก 1,544 trials ใช้ evaluator แบบ `heuristic` (keyword matching) เท่านั้น ไม่เคยรัน LLM-judge จริงเลย — เป็นจุดอ่อนสำคัญที่ reviewer AINTEC จะถามแน่นอน
+**Goal:** Close two blocking gaps identified in `Paper/NetImpact.md/Archive_Legacy/NetImpact_10_AINTEC2026_Readiness_Assessment.md`:
+1. GPU/VRAM data was unavailable, leaving resource bottleneck analysis incomplete.
+2. All 1,544 trials used only the `heuristic` keyword-matching evaluator; no real LLM judge had been run.
 
-## ส่วนที่ 1: GPU/VRAM Logging (`logger.py`)
+## Part 1: GPU/VRAM Logging (`logger.py`)
 
-**ต้องแทนที่ไฟล์ root ก่อนรันอะไรก็ตามที่ต้องการ GPU stats:**
+**Replace the root file before running anything that requires GPU statistics:**
 ```bash
 cd NetImpact
 cp logger.py logger.py.backup_original
-cp "Tier3_โครงสร้างพื้นฐาน/logger.py" logger.py
-pip install -r "Tier3_โครงสร้างพื้นฐาน/requirements_gpu.txt"   # ถ้าต้องการ GPU stats จริง
+cp "Tier3_Infrastructure/logger.py" logger.py
+pip install -r "Tier3_Infrastructure/requirements_gpu.txt"   # Optional, for real GPU statistics.
 ```
 
 ปลอดภัย 100%: ถ้าไม่ติดตั้ง `pynvml`/เครื่องไม่มี NVIDIA GPU → `gpu: null` ในทุก snapshot โดยอัตโนมัติ ไม่ error ไม่ crash โครงสร้าง JSON เดิมยังอยู่ครบ (`test_tier3_logger_gpu.py` ทดสอบทั้ง 2 กรณี)
 
-จากนั้นรัน experiment ตามปกติ (three-day เดิม, Tier1, Tier2 ฯลฯ) — ทุก log ใหม่จะมี key `gpu`/`gpu_all` เพิ่มเข้ามาในทุก `resource_snapshots` entry โดยอัตโนมัติ
+Run experiments normally afterward. Every new log automatically includes `gpu`/`gpu_all` in each `resource_snapshots` entry.
 
-## ส่วนที่ 2: Dual-Judge LLM Evaluation
+## Part 2: Dual-Judge LLM Evaluation
 
-**Step 1 — รัน LLM-judge เต็มรูปแบบบน log ที่มีอยู่แล้วทั้ง 1,544 ไฟล์** (post-hoc, ไม่ apply network/ไม่รัน agent ใหม่):
+**Step 1 - Run the full LLM judge on all 1,544 existing logs** (post-hoc; no network impairment or agent rerun):
 
-⚠️ **สำคัญ:** evaluator.py ต้นฉบับจริงอยู่ที่ `experiment/evaluator.py` (ไม่ใช่ root!)
-ทุกจุดที่ import (`multi_agent.py`, `experiment/evaluate_logs.py`, `run_dual_judge_sample.py`)
-เรียกผ่าน `from experiment.evaluator import ...` ทั้งหมด ต้อง cp ทับไฟล์นี้ที่ตำแหน่งนี้เท่านั้น
+**Important:** The actual evaluator is `experiment/evaluator.py`, not the project root.
+All import sites use `from experiment.evaluator import ...`, so replace only this file.
 (ถ้า cp ไปสร้างเป็น root-level `evaluator.py` แทน จะได้ไฟล์ที่ไม่มีใครเรียกใช้เลย
 และ `run_dual_judge_sample.py` จะ crash ด้วย `TypeError: _llm_evaluate() got an
 unexpected keyword argument 'judge_model_name'` ทันทีที่รัน เพราะยังใช้
@@ -32,12 +31,12 @@ unexpected keyword argument 'judge_model_name'` ทันทีที่รั�
 ```bash
 cd NetImpact
 cp experiment/evaluator.py experiment/evaluator.py.backup_original
-cp "Tier3_โครงสร้างพื้นฐาน/evaluator.py" experiment/evaluator.py
+cp "Tier3_Infrastructure/evaluator.py" experiment/evaluator.py
 
 cp -r logs_three_day logs_three_day.backup   # backup ก่อนเสมอ! เขียนทับไฟล์เดิม
 
-bash "Tier3_โครงสร้างพื้นฐาน/run_full_llm_judge.sh" logs_three_day --dry-run   # เช็คก่อน
-bash "Tier3_โครงสร้างพื้นฐาน/run_full_llm_judge.sh" logs_three_day            # รันจริง (ใช้เวลานาน หลายชม.)
+bash "Tier3_Infrastructure/run_full_llm_judge.sh" logs_three_day --dry-run   # Check first.
+bash "Tier3_Infrastructure/run_full_llm_judge.sh" logs_three_day            # Run; this may take hours.
 ```
 ใช้ `experiment/evaluate_logs.py --mode both --all` ที่มีอยู่แล้วเดิม (ไม่ต้องเขียนใหม่) — เขียนผล LLM-judge กลับเข้า field `posthoc_evaluation` ของทุกไฟล์
 
@@ -45,20 +44,20 @@ bash "Tier3_โครงสร้างพื้นฐาน/run_full_llm_judge.
 ```bash
 ollama pull llama3.1:8b   # โมเดลที่สอง ต้องต่างจาก agent model (qwen3:8b)
 
-python3 "Tier3_โครงสร้างพื้นฐาน/run_dual_judge_sample.py" \
+python3 "Tier3_Infrastructure/run_dual_judge_sample.py" \
   --log-dir logs_three_day --sample 200 \
   --judge-a qwen3:8b --judge-b llama3.1:8b \
   --out Tier3_dual_judge_report
 ```
 Read-only ต่อ log เดิม (ไม่เขียนทับ) — output เป็น `dual_judge_report.csv` (ราย trial) + `dual_judge_report_summary.json` (Cohen's kappa, quadratic weighted kappa, Pearson r) คำนวณเองแบบ pure Python ไม่พึ่ง sklearn
 
-## ไฟล์ในโฟลเดอร์นี้
+## Files in This Folder
 
-| ไฟล์ | หน้าที่ |
+| File | Purpose |
 |---|---|
-| `logger.py` | **แทนที่** root เดิม — เพิ่ม GPU/VRAM/temperature/power logging (graceful fallback) |
+| `logger.py` | **Replaces** the root logger and adds GPU/VRAM/temperature/power logging with graceful fallback. |
 | `evaluator.py` | **แทนที่** `experiment/evaluator.py` เดิม (ไม่ใช่ root!) — เพิ่ม `JUDGE_MODEL_NAME` env var แยกจาก agent model |
-| `run_full_llm_judge.sh` | wrapper เรียก `evaluate_logs.py --mode both --all` |
+| `run_full_llm_judge.sh` | Wrapper for `evaluate_logs.py --mode both --all`. |
 | `run_dual_judge_sample.py` | รัน 2 judge model บน sample เดียวกัน + คำนวณ agreement metrics |
 | `requirements_gpu.txt` | dependency `pynvml`/`nvidia-ml-py3` (optional) |
 

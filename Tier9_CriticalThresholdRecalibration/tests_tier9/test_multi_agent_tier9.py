@@ -1,11 +1,10 @@
 """
-Tier9 multi_agent.py — เทส end-to-end
+Tier9 multi_agent.py - end-to-end tests.
 ================================================================================
-ต่อยอดจาก Tier8_EnsureScopeClosure/tests_tier8/test_multi_agent_tier8.py ทุก
-เทสเดิมยังต้องผ่านเหมือนเดิม (retry/timeout/agent-blame/mitigation dispatch
-ไม่ได้เปลี่ยนเลยจาก Tier 8) กลุ่มเทสใหม่ที่เพิ่มมาเฉพาะ Tier 9 คือกลุ่ม
-"native client wiring" — ยืนยันว่า OllamaNativeThinkOffClient ถูกผูกเข้ากับ
-ทุก agent + manager จริง ไม่ใช่แค่เขียนโค้ดไว้เฉยๆ แต่ลืมเรียก
+Extends Tier8_EnsureScopeClosure/tests_tier8/test_multi_agent_tier8.py. All existing
+retry/timeout/agent-attribution/mitigation tests remain unchanged. Tier9 adds
+native-client wiring tests to verify that OllamaNativeThinkOffClient is registered
+with every agent and manager.
 """
 import os
 
@@ -23,12 +22,11 @@ def _fresh_logger(tmp_log_dir):
     )
 
 
-# ---------- TIER9: native client wiring (กลุ่มเทสใหม่) ----------
+# ---------- TIER9: native client wiring (new tests) ----------
 
 def test_llm_config_declares_native_think_off_client_in_config_list():
-    """config_list ทุก entry ต้องมี model_client_cls ตรงกับชื่อคลาสเป๊ะ —
-    ไม่งั้น autogen.oai.client.OpenAIWrapper จะพยายามสร้าง OpenAI client ปกติ
-    แทน (คุยผ่าน /v1/chat/completions เดิม ซึ่งเป็นบั๊กที่ Tier 9 มีไว้แก้)"""
+    """Every config entry must name the exact model_client_cls; otherwise AutoGen
+    creates the standard OpenAI client through /v1/chat/completions."""
     config = mod._llm_config()
     assert config["config_list"][0]["model_client_cls"] == "OllamaNativeThinkOffClient"
 
@@ -43,11 +41,10 @@ def test_build_agents_registers_native_client_on_all_three_agents():
 
 
 def test_attempt_once_also_registers_native_client_on_manager(tmp_log_dir):
-    """จุดที่ Tier 8's monkey-patch เดิมต้องใช้ subclass พิเศษเพื่อทำสิ่งนี้
-    (เพราะ _attempt_once() สร้าง GroupChatManager ตรงๆ ไม่ผ่าน build_agents())
-    — Tier 9 เขียนการเรียกนี้ตรงๆ ในซอร์สเลย เทสนี้ยืนยันว่าไม่ลืมบรรทัดนั้น"""
+    """Tier8's monkey patch needed a special subclass because _attempt_once()
+    creates GroupChatManager directly. Tier9 registers it directly in the source."""
     logger = _fresh_logger(tmp_log_dir)
-    mod.run_multi_agent_task("โจทย์ทดสอบ", logger=logger, task_name="coding_task", mitigation="none")
+    mod.run_multi_agent_task("test prompt", logger=logger, task_name="coding_task", mitigation="none")
 
     registered_names = [name for name, cls in fake_autogen.REGISTERED_MODEL_CLIENTS]
     assert "chat_manager" in registered_names, (

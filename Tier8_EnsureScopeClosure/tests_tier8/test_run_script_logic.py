@@ -1,9 +1,9 @@
 """
-เทส logic เฉพาะของแต่ละ run_tier8_*.py ที่ไม่ต้องแตะ network/LLM จริง:
+Tests the logic of each run_tier8_*.py without touching real network/LLM services:
   - checkpoint_utils.py roundtrip (load/save/mark_completed/should_skip)
-  - run_tier8_randomized_mitigation.py: การสุ่มลำดับ trial (ข้อ 3)
-  - run_tier8_jitter_floor.py: scenario ตรงกับ MIN_DELAY_FOR_JITTER_MS ของโปรเจกต์จริง (ข้อ 5)
-  - run_tier8_achieved_path.py: การดึง host/url จาก OLLAMA_BASE_URL (ข้อ 1)
+    - run_tier8_randomized_mitigation.py: trial-order randomization (item 3)
+    - run_tier8_jitter_floor.py: scenario matches MIN_DELAY_FOR_JITTER_MS (item 5)
+    - run_tier8_achieved_path.py: host/URL extraction from OLLAMA_BASE_URL (item 1)
 """
 import os
 
@@ -29,14 +29,14 @@ def test_checkpoint_roundtrip(tmp_log_dir):
 def test_should_skip_false_when_not_resuming(tmp_log_dir):
     checkpoint = load_checkpoint(tmp_log_dir)
     mark_completed(tmp_log_dir, checkpoint, "key1", "x.json")
-    assert should_skip(False, checkpoint, "key1") is False  # resume=False -> ไม่ skip แม้เคยเสร็จแล้ว
+    assert should_skip(False, checkpoint, "key1") is False  # resume=False never skips.
 
 
 def test_should_skip_false_when_checkpoint_is_none():
     assert should_skip(True, None, "any_key") is False
 
 
-# ---------- run_tier8_randomized_mitigation.py (ข้อ 3) ----------
+# ---------- run_tier8_randomized_mitigation.py (item 3) ----------
 
 def _load_randomized_module():
     return load_module_from_path(
@@ -70,11 +70,10 @@ def test_shuffle_is_reproducible_with_same_seed():
 
 
 def test_shuffle_actually_interleaves_conditions_not_left_as_blocks():
-    """ยืนยันว่าผลของการสุ่มไม่ได้ปล่อยให้ condition เดียวกันอยู่ติดกันเป็นบล็อก
-    ยาวเหมือน Tier 5 เดิม (ซึ่งเป็นปัญหาที่ข้อ 3 ตั้งใจแก้) วัดง่ายๆ ด้วยจำนวน
-    ครั้งที่ condition เปลี่ยนระหว่าง trial ที่ติดกัน ถ้าเป็นบล็อกล้วนจะมีแค่ 2
-    จุดเปลี่ยน (none->adaptive->cache) จาก 659 คู่ที่ติดกัน ถ้าสุ่มดีควรเปลี่ยน
-    บ่อยกว่านั้นมาก"""
+    """Verify that randomization does not leave each condition in a long block,
+    as in Tier5. Count condition changes between adjacent trials; a pure block has
+    only two changes, while a good shuffle has many more.
+    much more frequently."""
     mod = _load_randomized_module()
     trials = mod.build_shuffled_trial_list(seed=RANDOM_SEED_FOR_TEST)
     conditions_in_order = [t["condition"] for t in trials]
@@ -82,11 +81,11 @@ def test_shuffle_actually_interleaves_conditions_not_left_as_blocks():
         1 for i in range(1, len(conditions_in_order))
         if conditions_in_order[i] != conditions_in_order[i - 1]
     )
-    # สุ่มจริงจาก 3 ค่าเท่าๆ กันควรเปลี่ยนราว 2/3 ของคู่ที่ติดกัน (~440 จาก 659)
-    # ตั้งเกณฑ์แบบหลวมมากพอที่จะไม่ flaky แต่ยังจับบั๊ก "ลืมสุ่ม" ได้แน่นอน
+    # A shuffle of three equally likely values should change roughly two-thirds
+    # of adjacent pairs (~440 of 659). Use a loose threshold to avoid flakiness.
     assert changes > 100, (
-        f"condition เปลี่ยนแค่ {changes} ครั้งจาก 659 คู่ — ดูเหมือนลำดับยังเป็นบล็อกต่อเนื่องอยู่ "
-        "ตรวจว่า random.shuffle() ถูกเรียกจริงหรือไม่"
+        f"Condition changed only {changes} times across 659 pairs; the order still looks blocked. "
+        "Check that random.shuffle() is called."
     )
 
 
@@ -98,7 +97,7 @@ def test_execution_order_manifest_matches_seed_used():
     assert mod.RANDOM_SEED == RANDOM_SEED_FOR_TEST
 
 
-# ---------- run_tier8_jitter_floor.py (ข้อ 5) ----------
+# ---------- run_tier8_jitter_floor.py (item 5) ----------
 
 def test_jitter_floor_scenario_uses_projects_own_min_delay_constant():
     mod = load_module_from_path(
@@ -111,7 +110,7 @@ def test_jitter_floor_scenario_uses_projects_own_min_delay_constant():
     assert mod.JITTER_FLOOR_SCENARIO["bandwidth_kbit"] is None
 
 
-# ---------- run_tier8_achieved_path.py (ข้อ 1) ----------
+# ---------- run_tier8_achieved_path.py (item 1) ----------
 
 def _load_achieved_path_module():
     return load_module_from_path(
@@ -138,8 +137,8 @@ def test_ollama_probe_url_uses_api_tags_endpoint(monkeypatch):
 
 
 def test_four_achieved_path_scenarios_match_papers_reference_points():
-    """4 จุดต้องตรงกับจุดที่ sigconf.tex อ้างอิงอยู่แล้ว (loss=75%, delay=3000ms,
-    bandwidth=50kbit, baseline) ไม่ใช่จุดใหม่ที่ไม่เคยมีในเปเปอร์"""
+    """All four points must match points already referenced by sigconf.tex
+    (loss=75%, delay=3000ms, bandwidth=50kbit, and baseline)."""
     mod = _load_achieved_path_module()
     names = {s["name"] for s in mod.TEST_SCENARIOS}
     assert names == {"t8ap_baseline", "t8ap_loss75", "t8ap_delay3000", "t8ap_bw50"}

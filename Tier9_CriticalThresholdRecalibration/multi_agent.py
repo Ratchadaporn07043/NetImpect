@@ -1,20 +1,18 @@
 """
 Multi-Agent Runner — Tier 9 (Critical Threshold Recalibration)
 ========================================================================
-สำเนาของ `Tier8_EnsureScopeClosure/multi_agent.py` ทั้งหมด **ยกเว้นจุดเดียว
-ที่ตั้งใจเปลี่ยน**: LLM call ทุกตัวคุย Ollama ผ่าน native `/api/chat` +
-`"think": false` (ผ่าน `OllamaNativeThinkOffClient`) เป็น**ค่าเริ่มต้นมาตรฐาน
-ของไฟล์นี้เลย** ไม่ใช่ monkey-patch จากภายนอกแบบที่
+Complete copy of `Tier8_EnsureScopeClosure/multi_agent.py` except for one
+intentional change: every LLM call uses Ollama's native `/api/chat` with
+`"think": false` through `OllamaNativeThinkOffClient` by default, rather than
+an external monkey patch.
 `Tier8_EnsureScopeClosure/thinking_off_diagnostic/multi_agent_thinking_off.py`
-ทำ (ไฟล์นั้นเป็นเครื่องมือวินิจฉัยชั่วคราว จงใจไม่แก้ไฟล์ต้นฉบับ — ไฟล์นี้คือ
-"ต้นฉบับ" ของ Tier 9 เองที่เขียนให้ถูกต้องตั้งแต่แรกไปเลย)
+that tool was intentionally temporary and did not modify the original; this file
+is Tier9's own correctly implemented source.)
 
-เหตุผลที่ต้องฝัง native client เป็นค่าเริ่มต้น (สรุปจาก Tier 8, ตรวจสอบซ้ำแล้ว
-หลายรอบก่อนสรุปเป็น Tier 9):
+Reason for making the native client the default, based on repeated Tier8 checks:
   1. Ollama เวอร์ชันของเครื่องนี้เปิด "thinking" mode เป็นค่าเริ่มต้นให้ qwen3:8b
-     ทำให้ทุก LLM call ผ่าน `/v1/chat/completions` (ที่ AutoGen ใช้ปกติ) ช้าลง
-     10-30+ เท่า โดยพารามิเตอร์ "think": false ผ่าน endpoint นั้นถูก Ollama
-     เพิกเฉยเงียบๆ (ยืนยันด้วยการทดสอบจริงหลายรอบใน Tier 8)
+    makes every LLM call through AutoGen's `/v1/chat/completions` 10-30+ times
+    slower; Ollama silently ignores `think:false` at that endpoint.
   2. วิธีเดียวที่ยืนยันแล้วว่าปิด thinking ได้จริงคือเรียก native `/api/chat`
      พร้อม `"think": false` ตรงๆ — ต้องใช้ custom AutoGen model client
      (`ollama_native_client.py` ในโฟลเดอร์นี้)
@@ -29,7 +27,7 @@ Multi-Agent Runner — Tier 9 (Critical Threshold Recalibration)
      (inference เร็วขึ้นเอง) คือเหตุผลที่ต้องหา critical loss ใหม่แทนที่จะใช้
      75% เดิม
 
-คงไว้ตามเดิมจาก Tier 8 ทั้งหมด (ไม่เปลี่ยน):
+Everything else is preserved unchanged from Tier 8:
   - mitigation modes: none / adaptive_timeout / context_cache / both / fixed_long_timeout
   - retry logic, agent-blame logic, evaluator call, logger call — ทุกอย่าง
     เหมือน Tier8_EnsureScopeClosure/multi_agent.py เป๊ะ ยกเว้นจุดที่สร้าง/
@@ -60,18 +58,16 @@ BASE_LLM_TIMEOUT = int(os.environ.get("LLM_TIMEOUT", 120))
 
 VALID_MITIGATIONS = ("none", "adaptive_timeout", "context_cache", "both", "fixed_long_timeout")
 
-# ค่าเริ่มต้น 345 (= ค่าที่ Tier 8 ใช้ที่จุดวิกฤตเดิม loss=75%) เก็บไว้เป็น
-# fallback เฉยๆ ไม่ได้ใช้จริงตอนรัน Tier 9 — run_tier9_critical_comparison.py
-# จะตั้งค่า multi_agent.FIXED_LONG_TIMEOUT ทับตรงๆ หลัง import เสมอ (ดู main()
-# ในไฟล์นั้น บรรทัดที่เรียก multi_agent_module._adaptive_timeout_seconds()
-# แล้ว assign ทับ) ให้ตรงกับ critical loss ที่พบใหม่จริง ไม่ใช่ 345 นี้
+# Default 345 seconds is retained only as a fallback. The critical comparison
+# runner overwrites multi_agent.FIXED_LONG_TIMEOUT after import using the newly
+# measured critical loss.
 FIXED_LONG_TIMEOUT = int(os.environ.get("FIXED_LONG_TIMEOUT", 345))
 
 ROUND_ROBIN_ORDER = ("Planner", "Worker", "Reviewer")
 
 
 def _next_speaker(last_speaker: str):
-    """agent ที่ถึงคิวถัดจาก last_speaker ตาม round-robin (None ถ้าระบุไม่ได้)"""
+    """Return the next round-robin agent after last_speaker, or None if unknown."""
     if last_speaker not in ROUND_ROBIN_ORDER:
         return None
     idx = ROUND_ROBIN_ORDER.index(last_speaker)
@@ -79,10 +75,7 @@ def _next_speaker(last_speaker: str):
 
 
 def _blame_agent(groupchat_messages, use_cached_plan: bool = False):
-    """อนุมานว่า LLM call ของ agent ตัวไหนล้มเหลว: transcript บันทึกเฉพาะเทิร์นที่
-    ผลิตข้อความสำเร็จ เทิร์นที่ error จึงไม่มีข้อความ -> agent ที่ล้มเหลวคือตัวที่
-    ถึงคิวถัดจากข้อความล่าสุด เมื่อ use_cached_plan=True ห้องแชทมีแค่
-    (Worker, Reviewer) จึงสลับสองตัวนี้"""
+    """Infer the failed agent from the transcript and round-robin order."""
     if not groupchat_messages:
         return "Worker" if use_cached_plan else None
     last = groupchat_messages[-1].get("name", "")

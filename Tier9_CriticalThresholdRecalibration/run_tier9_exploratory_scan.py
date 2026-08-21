@@ -1,46 +1,42 @@
 #!/usr/bin/env python3
 """
-Tier 9, ขั้นตอนที่ 1 — exploratory scan หา critical loss threshold ใหม่
+Tier 9, Step 1 - Exploratory scan for the new critical loss threshold.
 ========================================================================
-คำถามที่สคริปต์นี้ตอบ
+Question addressed by this script
 ----------------------
-Tier 8 พบว่า mitigation="none" (arm ควบคุม) ไม่ล้มเหลวเลยแม้แต่จุดเดียวที่
-loss=75% ในสภาพแวดล้อมปัจจุบัน (20/20 ทุกครั้งที่ทดสอบ ทั้งใน item 1/2/3 และ
-ยืนยันซ้ำแล้วว่าไม่ใช่เพราะ thinking mode) ตรวจ item 3 เดิม (660 trials, 11
-ระดับ loss ตั้งแต่ 0-75%) ก็พบว่า `none` arm ได้ ~100% ทุกระดับ loss ที่เคย
-ทดสอบมาตลอดทั้งโปรเจกต์ (ไม่เคยมีข้อมูลเกิน 75% เลย) สาเหตุที่ยืนยันแล้ว (ไม่ใช่
-สมมติฐาน): inference โดยรวม (ไม่นับ thinking) เร็วขึ้นเองราว 2 เท่าเมื่อเทียบกับ
-ตอน Tier 5 รัน — เทียบ first-try-success only ตัดปัญหาเรื่อง retry ออกแล้ว
-(Tier 5 เดิม elapsed median 248s ที่ loss=75% เทียบกับ 127s ในสภาพแวดล้อม
-ปัจจุบัน) ทำให้ connection สั้นลง เสี่ยงโดน packet drop น้อยลง จึงรอดจาก 75%
-loss ได้บ่อยกว่าเดิมมาก — รายละเอียดเต็มอยู่ที่ README.md หัวข้อ "ที่มา"
+Tier8 found that mitigation="none" (the control arm) did not fail at
+loss=75% in the current environment (20/20 in every tested item, confirmed not to
+be caused by thinking mode). The original item 3 (660 trials, 11 loss levels from
+0-75%) also found approximately 100% completion for `none` at every tested level.
+tested throughout the project (no data above 75% exists). Confirmed cause: overall
+inference, excluding thinking, became approximately twice as fast than in Tier5.
+Among first-try successes, median elapsed time was 248s in Tier5 versus 127s now,
+shortening connections and reducing exposure to packet drops.
 
-สคริปต์นี้จึงหา **จุดวิกฤตใหม่** ของสภาพแวดล้อมปัจจุบัน (ไม่ใช่ 75% เดิมอีกต่อไป)
-โดยสแกน `mitigation="none"` ที่ loss สูงกว่า 75% ด้วย n เล็กก่อน (default 12
-trials/ระดับ) เพื่อประหยัดเวลา — ผลจากสคริปต์นี้เอาไปใช้กำหนด
-`--critical-loss-pct` ของ `run_tier9_critical_comparison.py` (ขั้นตอนที่ 2)
+This script therefore searches for the **new critical point** by scanning
+`mitigation="none"` above 75% with a small sample (12 trials per level by default).
+Its result supplies `--critical-loss-pct` to `run_tier9_critical_comparison.py` (Step 2).
 
-⚠️ ข้อควรระวัง: ผลจากสคริปต์นี้ (n เล็ก 8-12/ระดับ) ใช้แค่ "หาว่าจุดไหนน่าจะ
-เป็นจุดวิกฤต" เท่านั้น ไม่ใช่ผลที่เอาไปเขียนลงเปเปอร์ตรงๆ (สถิติไม่พอ) —
-ต้องรัน run_tier9_critical_comparison.py (n=20/arm) ที่จุดที่เลือกได้ ถึงจะได้
-ตัวเลขที่อ้างในเปเปอร์ได้จริง
+⚠️ Warning: this small-sample scan (n=8-12 per level) only locates a candidate
+critical point. It is not paper-ready evidence; run run_tier9_critical_comparison.py
+with n=20 per arm at the selected point for publishable estimates.
 
 Pre-flight self-test
 ---------------------
-ก่อนรันจริงทุกครั้ง สคริปต์นี้เรียก OllamaNativeThinkOffClient ตรงๆ 1 ครั้ง
-(warm-up + วัดจริง) ยืนยันว่า thinking mode ปิดจริง (elapsed < 5s, ไม่มี
+Before each run, this script calls OllamaNativeThinkOffClient once to confirm that
+thinking is disabled (elapsed < 5s, no
 reasoning field) — ถ้าไม่ผ่านจะหยุดทันทีก่อนเสียเวลารันจริงหลายชั่วโมงไปเปล่าๆ
 บนข้อมูลที่ปนเปื้อน thinking mode อีกครั้ง
 
-การใช้งาน
+Usage
 ---------
-    # 1. ทดสอบ offline ก่อนเสมอ (ไม่แตะ Ollama/tc จริง)
+    # 1. Run offline checks first (no real Ollama/tc).
     cd Tier9_CriticalThresholdRecalibration && python3 -m pytest tests_tier9/ -q
 
-    # 2. ดูแผนการรันโดยไม่แตะอะไรจริง
+    # 2. Preview the run without touching live services.
     python3 run_tier9_exploratory_scan.py --dry-run
 
-    # 3. รันจริง (ปรับ --loss-levels/--repeats ได้ตามเวลาที่มี)
+    # 3. Run the experiment; adjust --loss-levels/--repeats as needed.
     python3 run_tier9_exploratory_scan.py --resume
 """
 import argparse
@@ -50,10 +46,9 @@ import time
 from collections import defaultdict
 
 _THIS_DIR = os.path.dirname(os.path.abspath(__file__))  # Tier9_CriticalThresholdRecalibration/
-# Tier 9 standalone เต็มรูปแบบ: ไม่ต้องพึ่ง Tier8_EnsureScopeClosure/ หรือ
-# experiment/ ที่ root โปรเจกต์เลย — ทุกไฟล์ที่เคย import ข้ามมา ตอนนี้เป็น
-# สำเนา tier9_*.py อยู่ในโฟลเดอร์นี้เอง (ตั้งชื่อไม่ให้ซ้ำกับต้นฉบับ กันสับสน/
-# กัน sys.path shadowing ผิดตัวแบบที่เคยเป็นปัญหาระหว่าง Tier 7->Tier 8)
+# Tier9 is fully standalone and does not depend on Tier8 or root experiment files.
+# Previously imported files are local tier9_* copies, avoiding name collisions and
+# sys.path shadowing between tiers.
 sys.path.insert(0, _THIS_DIR)
 
 from tier9_controller import NetworkController  # noqa: E402
@@ -65,14 +60,14 @@ from ollama_native_client import OllamaNativeThinkOffClient  # noqa: E402
 DEFAULT_LOSS_LEVELS = [80, 85, 90, 95, 99]
 DEFAULT_REPEATS = 3  # x 4 tasks = 12 trials/ระดับ
 CONDITION = "none"
-CRITICAL_THRESHOLD_PCT = 0.85  # เกณฑ์เดียวกับ falsification check ของข้อ 4 เดิม
+CRITICAL_THRESHOLD_PCT = 0.85  # Same threshold as the original item 4 falsification check.
 
 
 def _self_test_native_client_fast_and_thinking_off():
     """เหมือน smoke_test_thinking_off.py::stage1 ทุกประการ (warm-up แล้ววัดจริง)
     แต่ฝังไว้ในตัวสคริปต์รันจริงเลย เพื่อกันไม่ให้เผลอรันหลายชั่วโมงบนข้อมูลที่
     thinking mode แอบเปิดอยู่โดยไม่รู้ตัว"""
-    print("[self-test] ตรวจว่า native client เร็วจริงและไม่มี thinking mode ปนก่อนรันจริง...")
+    print("[self-test] Verify that the native client is fast and thinking is disabled...")
     config = {"model": os.environ.get("MODEL_NAME", "qwen3:8b"),
              "base_url": os.environ.get("OLLAMA_BASE_URL", "http://host.docker.internal:11434/v1"),
              "timeout": 180, "temperature": 0.3}
