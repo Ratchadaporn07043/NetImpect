@@ -1,0 +1,127 @@
+{
+  "run_id": "72d97cda",
+  "task_name": "research_summary",
+  "run_index": 1,
+  "started_at": 1783597806.865629,
+  "network_condition": {
+    "name": "factorial_jitter",
+    "scenario_type": "factorial",
+    "delay_ms": 50,
+    "requested_delay_ms": 0,
+    "jitter_ms": 30,
+    "loss_pct": 0,
+    "factors": {
+      "delay": "off",
+      "loss": "off",
+      "jitter": "on"
+    },
+    "note": "requested delay=0ms แต่ jitter=30ms ต้องใช้ delay=50ms ขั้นต่ำ เพราะ netem ต้องมี delay>0",
+    "experiment_phase": "three_day_tournament",
+    "tournament": {
+      "match_id": "r06_m02",
+      "round_index": 6,
+      "pair_index": 2,
+      "side": "B",
+      "opponent": "factorial_loss_jitter",
+      "pair": [
+        "factorial_loss_jitter",
+        "factorial_jitter"
+      ]
+    },
+    "trial_key": "three_day_tournament::r06_m02::B::factorial_jitter::research_summary::run1"
+  },
+  "messages": [
+    {
+      "timestamp": 1783597807.094263,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1783597880.6936517,
+      "from": "Worker",
+      "to": "group",
+      "content": "1. **ข้อดีของ RAG**: สามารถเข้าถึงข้อมูลที่อัปเดตได้ทันท่วงทีผ่านการค้นหาข้อมูลจากฐานข้อมูล ขณะที่การ fine-tune โมเดลโดยตรงต้องพึ่งพาความรู้ที่ฝังอยู่ในโมเดลซึ่งอาจล้าสมัย  \n2. **ข้อเสียของ RAG**: ต้องพึ่งพาความแม่นยำของระบบค้นหาข้อมูล หากข้อมูลที่ค้นไม่ตรงประเด็น อาจทำให้คำตอบผิดพลาดหรือไม่สมบูรณ์  \n3. **ข้อดีของ fine-tune**: โมเดลสามารถเรียนรู้รูปแบบเฉพาะของข้อมูลงานได้ลึกซึ้ง ทำให้ผลลัพธ์มีความแม่นยำและเหมาะสมกับงานนั้น ๆ มากกว่า  \n4. **ข้อเสียของ fine-tune**: ต้องใช้ข้อมูลฝึกจำนวนมากและใช้ทรัพยากรการคำนวณสูง ซึ่งอาจไม่เหมาะกับงานที่ข้อมูลไม่เพียงพอ  \n5. **ข้อดีของ RAG**: รองรับการปรับใช้งานที่หลากหลายได้โดยไม่ต้องฝึกโมเดลใหม่ทั้งหมด ช่วยลดเวลาและค่าใช้จ่ายในการปรับปรุงระบบ  \n\n**สรุป**: RAG ดีในเรื่องความยืดหยุ่นและข้อมูลที่อัปเดต แต่ต้องพึ่งพาระบบค้นหา ขณะที่ fine-tune ให้ผลลัพธ์ที่แม่นยำแต่ต้องใช้ทรัพยากรมากขึ้นและข้อมูลที่ครบถ้วน",
+      "tokens": 211
+    },
+    {
+      "timestamp": 1783597918.5405083,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED งานตรงตามแผน สรุปข้อดี-ข้อเสียครบ 5 ข้อ ชัดเจนและถูกต้อง  \nSCORE: 5",
+      "tokens": 19
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1783597806.8656476,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.2,
+      "ram_used_mb": 500.0
+    },
+    {
+      "timestamp": 1783597918.5496738,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.2,
+      "ram_used_mb": 500.4
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 111.56,
+    "total_tokens": 263,
+    "quality_score": 5,
+    "ground_truth_score": 4,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "research_summary",
+    "score": 4,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 0.833,
+    "matched_points": [
+      {
+        "id": "rag_mentioned",
+        "description": "กล่าวถึง RAG"
+      },
+      {
+        "id": "fine_tune_mentioned",
+        "description": "กล่าวถึง fine-tune"
+      },
+      {
+        "id": "rag_advantage",
+        "description": "มีข้อดีของ RAG"
+      },
+      {
+        "id": "finetune_advantage",
+        "description": "มีข้อดีของ fine-tuning"
+      },
+      {
+        "id": "finetune_disadvantage",
+        "description": "มีข้อเสียของ fine-tuning"
+      }
+    ],
+    "missing_points": [
+      {
+        "id": "rag_disadvantage",
+        "description": "มีข้อเสียของ RAG"
+      }
+    ],
+    "rationale": "matched 5/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "ended_at": 1783597918.6607368
+}

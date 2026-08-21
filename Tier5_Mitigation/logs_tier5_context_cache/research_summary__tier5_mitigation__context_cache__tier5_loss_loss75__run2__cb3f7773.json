@@ -1,0 +1,141 @@
+{
+  "run_id": "cb3f7773",
+  "task_name": "research_summary",
+  "run_index": 2,
+  "started_at": 1784803710.4051995,
+  "network_condition": {
+    "name": "tier5_loss_loss75",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 75,
+    "note": "",
+    "experiment_phase": "tier5_mitigation__context_cache",
+    "trial_key": "tier5_mitigation__context_cache::no_match::no_side::tier5_loss_loss75::research_summary::run2"
+  },
+  "messages": [
+    {
+      "timestamp": 1784803710.6182501,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1784803959.6687229,
+      "from": "Worker",
+      "to": "group",
+      "content": "[แผนจาก Planner ที่ cache ไว้จาก attempt ก่อนหน้า ไม่ต้องขอแผนใหม่]\nงานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ\n\nงานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 85
+    },
+    {
+      "timestamp": 1784804092.4457083,
+      "from": "Worker",
+      "to": "group",
+      "content": "[แผนจาก Planner ที่ cache ไว้จาก attempt ก่อนหน้า ไม่ต้องขอแผนใหม่]\nงานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ\n\nงานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 85
+    }
+  ],
+  "errors": [
+    {
+      "timestamp": 1784803959.5562255,
+      "error_type": "APIConnectionError",
+      "detail": "Connection error."
+    },
+    {
+      "timestamp": 1784803959.556235,
+      "error_type": "retry",
+      "detail": "attempt 1 failed with APIConnectionError, retrying"
+    },
+    {
+      "timestamp": 1784804092.3435202,
+      "error_type": "timeout",
+      "detail": "OpenAI API call timed out. This could be due to congestion or too small a timeout value. The timeout can be specified by setting the 'timeout' value (in seconds) in the llm_config (if you are using agents) or the OpenAIWrapper constructor (if you are using the OpenAIWrapper directly)."
+    },
+    {
+      "timestamp": 1784804092.3435261,
+      "error_type": "retry",
+      "detail": "attempt 2 failed with TimeoutError, retrying"
+    },
+    {
+      "timestamp": 1784804353.9752622,
+      "error_type": "timeout",
+      "detail": "OpenAI API call timed out. This could be due to congestion or too small a timeout value. The timeout can be specified by setting the 'timeout' value (in seconds) in the llm_config (if you are using agents) or the OpenAIWrapper constructor (if you are using the OpenAIWrapper directly)."
+    }
+  ],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784803710.405205,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 7.9,
+      "ram_used_mb": 476.8,
+      "gpu": null,
+      "gpu_all": []
+    },
+    {
+      "timestamp": 1784804353.9805584,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 7.9,
+      "ram_used_mb": 475.1,
+      "gpu": null,
+      "gpu_all": []
+    }
+  ],
+  "outcome": {
+    "success": false,
+    "rounds": 1,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 643.46,
+    "total_tokens": 203,
+    "quality_score": null,
+    "ground_truth_score": 2,
+    "ground_truth_passed": false,
+    "retry_count": 2,
+    "timeout_count": 2,
+    "total_error_count": 5
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "research_summary",
+    "score": 2,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": false,
+    "coverage": 0.5,
+    "matched_points": [
+      {
+        "id": "rag_mentioned",
+        "description": "กล่าวถึง RAG"
+      },
+      {
+        "id": "fine_tune_mentioned",
+        "description": "กล่าวถึง fine-tune"
+      },
+      {
+        "id": "rag_disadvantage",
+        "description": "มีข้อเสียของ RAG"
+      }
+    ],
+    "missing_points": [
+      {
+        "id": "rag_advantage",
+        "description": "มีข้อดีของ RAG"
+      },
+      {
+        "id": "finetune_advantage",
+        "description": "มีข้อดีของ fine-tuning"
+      },
+      {
+        "id": "finetune_disadvantage",
+        "description": "มีข้อเสียของ fine-tuning"
+      }
+    ],
+    "rationale": "matched 3/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "gpu_monitoring_available": false,
+  "ended_at": 1784804354.0851972
+}

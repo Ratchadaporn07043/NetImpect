@@ -1,0 +1,113 @@
+{
+  "run_id": "142df922",
+  "task_name": "research_summary",
+  "run_index": 1,
+  "started_at": 1784073563.8287158,
+  "network_condition": {
+    "name": "main_bandwidth_bw02000",
+    "scenario_type": "main_effect",
+    "main_effect_axis": "bandwidth",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 0,
+    "bandwidth_kbit": 2000,
+    "note": "",
+    "tier": "tier2_bandwidth",
+    "experiment_phase": "tier2_bandwidth_main_effect",
+    "trial_key": "tier2_bandwidth_main_effect::no_match::no_side::main_bandwidth_bw02000::research_summary::run1"
+  },
+  "messages": [
+    {
+      "timestamp": 1784073564.042119,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1784073641.3036678,
+      "from": "Worker",
+      "to": "group",
+      "content": "1. **การเข้าถึงข้อมูลที่อัปเดต**  \n   RAG สามารถดึงข้อมูลจากแหล่งภายนอกที่อัปเดตได้ตลอดเวลา ขณะที่การ fine-tune โมเดลโดยตรงขึ้นอยู่กับข้อมูลฝึกที่ถูกตั้งค่าไว้ล่วงหน้า ซึ่งอาจไม่ทันสมัย  \n\n2. **ความต้องการข้อมูลฝึก**  \n   RAG ไม่ต้องการข้อมูลฝึกจำนวนมากหรือมีป้ายกำกับ (labeled data) มากนัก ขณะที่การ fine-tune ต้องการข้อมูลฝึกที่มีคุณภาพและปริมาณมากเพื่อให้โมเดลปรับตัวได้ดี  \n\n3. **ประสิทธิภาพในการตอบคำถามเฉพาะทาง**  \n   การ fine-tune ช่วยให้โมเดลแสดงผลลัพธ์ที่แม่นยำและสอดคล้องกับงานเฉพาะทางได้ดีกว่า RAG ซึ่งอาจมีข้อผิดพลาดในการสรุปข้อมูลจากแหล่งภายนอก  \n\n4. **ความยืดหยุ่นในการปรับตัว**  \n   RAG สามารถปรับตัวได้เร็วขึ้นเมื่อมีข้อมูลใหม่ เนื่องจากใช้ระบบดึงข้อมูล (retrieval) ขณะที่การ fine-tune ต้องการการฝึกซ้ำเพื่อปรับปรุงโมเดล  \n\n5. **ความเสี่ยงของข้อมูลที่ไม่ถูกต้อง**  \n   RAG มีความเสี่ยงต่อการสร้างข้อมูลที่ไม่ถูกต้อง (hallucination) หากข้อมูลที่ดึงมานั้นไม่แม่นยำ ขณะที่การ fine-tune อาจมีข้อผิดพลาดจากข้อมูลฝึกที่มีอคติหรือไม่สมบูรณ์  \n\n**สรุป**: RAG เหมาะกับงานที่ต้องการข้อมูลที่อัปเดตและยืดหยุ่น แต่ต้องระวังความเสี่ยงด้านความถูกต้อง ขณะที่การ fine-tune ให้ผลลัพธ์ที่แม่นยำกว่า แต่ต้องใช้ทรัพยากรและข้อมูลฝึกมากกว่า",
+      "tokens": 283
+    },
+    {
+      "timestamp": 1784073682.8880136,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED งานตรงตามแผน ครอบคลุมข้อดี-ข้อเสีย 5 ข้ออย่างชัดเจน  \nSCORE: 5",
+      "tokens": 17
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784073563.8287272,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.5,
+      "ram_used_mb": 492.9
+    },
+    {
+      "timestamp": 1784073682.893823,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.5,
+      "ram_used_mb": 493.9
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 118.94,
+    "total_tokens": 333,
+    "quality_score": 5,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "research_summary",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "rag_mentioned",
+        "description": "กล่าวถึง RAG"
+      },
+      {
+        "id": "fine_tune_mentioned",
+        "description": "กล่าวถึง fine-tune"
+      },
+      {
+        "id": "rag_advantage",
+        "description": "มีข้อดีของ RAG"
+      },
+      {
+        "id": "rag_disadvantage",
+        "description": "มีข้อเสียของ RAG"
+      },
+      {
+        "id": "finetune_advantage",
+        "description": "มีข้อดีของ fine-tuning"
+      },
+      {
+        "id": "finetune_disadvantage",
+        "description": "มีข้อเสียของ fine-tuning"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 6/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "ended_at": 1784073683.0033178
+}

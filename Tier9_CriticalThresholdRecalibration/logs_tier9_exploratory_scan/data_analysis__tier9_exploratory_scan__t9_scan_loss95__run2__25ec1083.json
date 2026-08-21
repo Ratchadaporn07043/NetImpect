@@ -1,0 +1,166 @@
+{
+  "run_id": "25ec1083",
+  "task_name": "data_analysis",
+  "run_index": 2,
+  "started_at": 1786092955.683468,
+  "network_condition": {
+    "name": "t9_scan_loss95",
+    "scenario_type": "critical_threshold_scan",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 95,
+    "bandwidth_kbit": null,
+    "note": "exploratory scan หา critical threshold ใหม่ (loss=95%, mitigation=none, สภาพแวดล้อมปัจจุบัน thinking-off)",
+    "experiment_phase": "tier9_exploratory_scan"
+  },
+  "messages": [
+    {
+      "timestamp": 1786092955.8006139,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สมมติมีข้อมูลยอดขายรายเดือน 12 เดือน ให้เสนอวิธีการวิเคราะห์ trend และบอกว่าควรใช้กราฟประเภทไหนถึงจะสื่อสารได้ดีที่สุด",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1786093083.0663364,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สมมติมีข้อมูลยอดขายรายเดือน 12 เดือน ให้เสนอวิธีการวิเคราะห์ trend และบอกว่าควรใช้กราฟประเภทไหนถึงจะสื่อสารได้ดีที่สุด",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1786093086.1386917,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สมมติมีข้อมูลยอดขายรายเดือน 12 เดือน ให้เสนอวิธีการวิเคราะห์ trend และบอกว่าควรใช้กราฟประเภทไหนถึงจะสื่อสารได้ดีที่สุด",
+      "tokens": 33
+    }
+  ],
+  "errors": [
+    {
+      "timestamp": 1786093083.0608325,
+      "error_type": "timeout",
+      "detail": "HTTPConnectionPool(host='host.docker.internal', port=11434): Read timed out. (read timeout=120)",
+      "agent": "Worker"
+    },
+    {
+      "timestamp": 1786093083.0608404,
+      "error_type": "retry",
+      "detail": "attempt 1 failed with ReadTimeout, retrying",
+      "agent": "Worker"
+    },
+    {
+      "timestamp": 1786093086.1330962,
+      "error_type": "ConnectionError",
+      "detail": "HTTPConnectionPool(host='host.docker.internal', port=11434): Max retries exceeded with url: /api/chat (Caused by NewConnectionError(\"HTTPConnection(host='host.docker.internal', port=11434): Failed to establish a new connection: [Errno 113] No route to host\"))",
+      "agent": "Worker"
+    },
+    {
+      "timestamp": 1786093086.1331036,
+      "error_type": "retry",
+      "detail": "attempt 2 failed with ConnectionError, retrying",
+      "agent": "Worker"
+    },
+    {
+      "timestamp": 1786093089.205031,
+      "error_type": "ConnectionError",
+      "detail": "HTTPConnectionPool(host='host.docker.internal', port=11434): Max retries exceeded with url: /api/chat (Caused by NewConnectionError(\"HTTPConnection(host='host.docker.internal', port=11434): Failed to establish a new connection: [Errno 113] No route to host\"))",
+      "agent": "Worker"
+    }
+  ],
+  "resource_snapshots": [
+    {
+      "timestamp": 1786092955.6834733,
+      "tag": "start",
+      "cpu_percent": 4.8,
+      "ram_percent": 14.9,
+      "ram_used_mb": 1500.7
+    },
+    {
+      "timestamp": 1786093089.2077928,
+      "tag": "end",
+      "cpu_percent": 1.6,
+      "ram_percent": 14.9,
+      "ram_used_mb": 1502.5
+    }
+  ],
+  "outcome": {
+    "success": false,
+    "rounds": 1,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 133.41,
+    "total_tokens": 99,
+    "quality_score": null,
+    "ground_truth_score": 1,
+    "ground_truth_passed": false,
+    "retry_count": 2,
+    "timeout_count": 1,
+    "total_error_count": 5
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "data_analysis",
+    "score": 1,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": false,
+    "coverage": 0.0,
+    "matched_points": [],
+    "missing_points": [
+      {
+        "id": "time_order",
+        "description": "กล่าวถึงข้อมูลรายเดือน/ลำดับเวลา"
+      },
+      {
+        "id": "trend",
+        "description": "กล่าวถึง trend"
+      },
+      {
+        "id": "line_chart",
+        "description": "แนะนำ line chart"
+      },
+      {
+        "id": "seasonality_outlier",
+        "description": "พิจารณา seasonality หรือ outlier"
+      },
+      {
+        "id": "moving_average",
+        "description": "กล่าวถึง moving average/เปรียบเทียบ MoM"
+      }
+    ],
+    "rationale": "matched 0/5 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "achieved": null,
+  "network_commands": [
+    {
+      "action": "apply",
+      "result": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "cmd": "tc qdisc add dev eth0 root handle 1: netem loss 95%",
+        "clear_before_apply": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "Error: Cannot delete qdisc with handle of zero.\n",
+          "cmd": "tc qdisc del dev eth0 root",
+          "note": "clear skipped: no existing qdisc"
+        },
+        "tbf": null
+      }
+    },
+    {
+      "action": "clear",
+      "result": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "cmd": "tc qdisc del dev eth0 root"
+      }
+    }
+  ],
+  "ended_at": 1786093089.312798
+}

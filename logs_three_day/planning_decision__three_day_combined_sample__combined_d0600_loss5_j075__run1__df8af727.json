@@ -1,0 +1,112 @@
+{
+  "run_id": "df8af727",
+  "task_name": "planning_decision",
+  "run_index": 1,
+  "started_at": 1783811620.6842234,
+  "network_condition": {
+    "name": "combined_d0600_loss5_j075",
+    "scenario_type": "combined",
+    "delay_ms": 600,
+    "requested_delay_ms": 600,
+    "jitter_ms": 75,
+    "loss_pct": 5,
+    "combined_levels": {
+      "delay_ms": 600,
+      "loss_pct": 5,
+      "jitter_ms": 75
+    },
+    "note": "",
+    "experiment_phase": "three_day_combined_sample",
+    "trial_key": "three_day_combined_sample::no_match::no_side::combined_d0600_loss5_j075::planning_decision::run1"
+  },
+  "messages": [
+    {
+      "timestamp": 1783811620.9005346,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: ทีมมีงบ 3 อย่างให้เลือกลงทุนอย่างใดอย่างหนึ่ง: (1) ปรับปรุง UX, (2) เพิ่ม feature ใหม่, (3) แก้ bug ค้างเก่า ช่วยวางแผนว่าควรเลือกอะไรก่อน พร้อมเหตุผลสั้นๆ",
+      "tokens": 42
+    },
+    {
+      "timestamp": 1783811665.572017,
+      "from": "Worker",
+      "to": "group",
+      "content": "**คำตอบ:** ควรเลือก (3) แก้ bug ค้างเก่า ก่อน  \n**เหตุผล:** ปัญหา bug ที่ค้างอยู่อาจส่งผลกระทบต่อความน่าเชื่อถือและความพึงพอใจของผู้ใช้โดยตรง หากไม่แก้ไขอาจทำให้ผู้ใช้สูญเสียความไว้วางใจหรือใช้งานไม่ได้ ซึ่งเป็นปัญหาเร่งด่วนที่ต้องแก้ไขก่อนการพัฒนาฟีเจอร์ใหม่หรือปรับปรุง UX ที่อาจไม่จำเป็นต้องเร่งด่วนในระยะสั้น",
+      "tokens": 78
+    },
+    {
+      "timestamp": 1783811693.2622116,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED คำตอบตรงตามแผนและเหตุผลสมเหตุสมผล  \nSCORE: 4",
+      "tokens": 13
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1783811620.684229,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.4,
+      "ram_used_mb": 511.6
+    },
+    {
+      "timestamp": 1783811693.2656028,
+      "tag": "end",
+      "cpu_percent": 0.9,
+      "ram_percent": 8.4,
+      "ram_used_mb": 508.1
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 72.46,
+    "total_tokens": 133,
+    "quality_score": 4,
+    "ground_truth_score": 4,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "planning_decision",
+    "score": 4,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 0.8,
+    "matched_points": [
+      {
+        "id": "clear_choice",
+        "description": "มีการเลือก/จัดลำดับชัดเจน"
+      },
+      {
+        "id": "mentions_options",
+        "description": "กล่าวถึงตัวเลือกหลัก"
+      },
+      {
+        "id": "impact_reason",
+        "description": "มีเหตุผลด้านผลกระทบ/ลูกค้า"
+      },
+      {
+        "id": "risk_urgency",
+        "description": "มีเหตุผลด้านความเสี่ยงหรือความเร่งด่วน"
+      }
+    ],
+    "missing_points": [
+      {
+        "id": "action_plan",
+        "description": "มีแผนดำเนินการ"
+      }
+    ],
+    "rationale": "matched 4/5 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "ended_at": 1783811693.3764992
+}

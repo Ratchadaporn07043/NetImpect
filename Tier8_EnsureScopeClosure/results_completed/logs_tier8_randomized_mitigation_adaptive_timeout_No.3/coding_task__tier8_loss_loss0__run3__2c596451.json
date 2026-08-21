@@ -1,0 +1,138 @@
+{
+  "run_id": "2c596451",
+  "task_name": "coding_task",
+  "run_index": 3,
+  "started_at": 1785718314.8475137,
+  "network_condition": {
+    "name": "tier8_loss_loss0",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 0,
+    "bandwidth_kbit": null,
+    "note": ""
+  },
+  "messages": [
+    {
+      "timestamp": 1785718315.1589808,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ",
+      "tokens": 35
+    },
+    {
+      "timestamp": 1785718477.7291389,
+      "from": "Worker",
+      "to": "group",
+      "content": "```python\ndef is_prime(n):\n    \"\"\"\n    ตรวจสอบว่าจำนวนเต็ม n เป็นจำนวนเฉพาะหรือไม่\n    จำนวนเฉพาะคือจำนวนที่มีตัวหารเฉพาะ 1 และตัวเอง\n    \"\"\"\n    if n <= 1:\n        return False  # จำนวนที่น้อยกว่าหรือเท่ากับ 1 ไม่ใช่จำนวนเฉพาะ\n    if n == 2:\n        return True  # 2 เป็นจำนวนเฉพาะ\n    if n % 2 == 0:\n        return False  # จำนวนคู่ที่มากกว่า 2 ไม่ใช่จำนวนเฉพาะ\n    # ตรวจสอบตัวหารจาก 3 ถึง sqrt(n) โดยเพิ่มขึ้นทีละ 2 (ข้ามจำนวนคู่)\n    for i in range(3, int(n**0.5) + 1, 2):\n        if n % i == 0:\n            return False\n    return True\n```\n\n**หลักการสั้นๆ:**  \nฟังก์ชัน `is_prime(n)` ตรวจสอบว่าจำนวนเต็ม `n` เป็นจำนวนเฉพาะหรือไม่ โดย:  \n1. จำนวนที่น้อยกว่าหรือเท่ากับ 1 ไม่ใช่จำนวนเฉพาะ  \n2. จำนวน 2 เป็นจำนวนเฉพาะ  \n3. จำนวนคู่ที่มากกว่า 2 ไม่ใช่จำนวนเฉพาะ  \n4. ตรวจสอบตัวหารจาก 3 ถึงรากที่สองของ `n` โดยข้ามจำนวนคู่ (เพื่อเพิ่มประสิทธิภาพ)  \n5. หากพบตัวหารใดๆ คืนค่า `False` ถ้าไม่พบ คืนค่า `True`",
+      "tokens": 226
+    },
+    {
+      "timestamp": 1785718568.5874708,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED ฟังก์ชันทำงานถูกต้องและมีประสิทธิภาพ ตรวจสอบเงื่อนไขทั้งหมดครบถ้วน  \nSCORE: 5",
+      "tokens": 21
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1785718314.8475182,
+      "tag": "start",
+      "cpu_percent": 4.8,
+      "ram_percent": 62.5,
+      "ram_used_mb": 6941.0
+    },
+    {
+      "timestamp": 1785718568.6061401,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 67.1,
+      "ram_used_mb": 7466.0
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 253.63,
+    "total_tokens": 282,
+    "quality_score": 5,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "coding_task",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "function_name",
+        "description": "ระบุฟังก์ชัน is_prime"
+      },
+      {
+        "id": "boolean_return",
+        "description": "คืนค่า True/False"
+      },
+      {
+        "id": "n_le_1",
+        "description": "อธิบาย/จัดการ n <= 1"
+      },
+      {
+        "id": "two_case",
+        "description": "จัดการเลข 2"
+      },
+      {
+        "id": "sqrt_bound",
+        "description": "ตรวจถึงรากที่สองหรือ i*i <= n"
+      },
+      {
+        "id": "explanation",
+        "description": "มีคำอธิบายหลักการ"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 6/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "achieved": null,
+  "execution_sequence_index": 387,
+  "network_commands": [
+    {
+      "action": "apply",
+      "result": {
+        "returncode": 0,
+        "stdout": "baseline (no impairment)",
+        "stderr": "",
+        "cmd": "baseline",
+        "clear_before_apply": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "Error: Cannot delete qdisc with handle of zero.\n",
+          "cmd": "tc qdisc del dev eth0 root",
+          "note": "clear skipped: no existing qdisc"
+        }
+      }
+    },
+    {
+      "action": "clear",
+      "result": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "Error: Cannot delete qdisc with handle of zero.\n",
+        "cmd": "tc qdisc del dev eth0 root",
+        "note": "clear skipped: no existing qdisc"
+      }
+    }
+  ],
+  "ended_at": 1785718568.71682
+}

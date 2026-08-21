@@ -1,0 +1,132 @@
+{
+  "run_id": "c4f0b77c",
+  "task_name": "research_summary",
+  "run_index": 1,
+  "started_at": 1784468916.626448,
+  "network_condition": {
+    "name": "factorial_baseline",
+    "scenario_type": "factorial",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 0,
+    "factors": {
+      "delay": "off",
+      "loss": "off",
+      "jitter": "off"
+    },
+    "note": "",
+    "experiment_phase": "three_day_tournament",
+    "tournament": {
+      "match_id": "r04_m01",
+      "round_index": 4,
+      "pair_index": 1,
+      "side": "A",
+      "opponent": "factorial_delay",
+      "pair": [
+        "factorial_baseline",
+        "factorial_delay"
+      ]
+    },
+    "trial_key": "three_day_tournament::r04_m01::A::factorial_baseline::research_summary::run1"
+  },
+  "messages": [
+    {
+      "timestamp": 1784468916.8373907,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1784469008.1342387,
+      "from": "Worker",
+      "to": "group",
+      "content": "1. **RAG ใช้ทรัพยากรการคำนวณน้อยกว่า** – การใช้ RAG ไม่ต้องฝึกโมเดลใหม่ทั้งหมด ทำให้ประหยัดทรัพยากรและเวลาในการฝึก ขณะที่การ fine-tune ต้องใช้ทรัพยากรมากขึ้น  \n2. **RAG สามารถเข้าถึงข้อมูลภายนอกได้** – โมเดล RAG สามารถดึงข้อมูลจากแหล่งข้อมูลภายนอกได้แบบเรียลไทม์ ช่วยให้ตอบคำถามที่ต้องการข้อมูลล่าสุดได้ดีขึ้น  \n3. **RAG อาจมีความเสี่ยงต่อความคลาดเคลื่อนของข้อมูล** – การดึงข้อมูลจากแหล่งภายนอกอาจมีข้อผิดพลาดหรือข้อมูลที่ไม่เกี่ยวข้อง ส่งผลต่อความถูกต้องของคำตอบ  \n4. **Fine-tune ช่วยให้โมเดลเข้าใจงานเฉพาะได้ลึกซึ้ง** – การฝึกโมเดลโดยตรงบนข้อมูลเฉพาะช่วยให้โมเดลเรียนรู้รูปแบบและลักษณะเฉพาะของงานได้ดีขึ้น  \n5. **Fine-tune มีความเสี่ยงต่อการ overfitting** – โมเดลอาจเรียนรู้ข้อมูลฝึกจนเกิดการ overfitting ทำให้ประสิทธิภาพลดลงเมื่อใช้กับข้อมูลใหม่ที่ไม่เคยเห็นมาก่อน  \n\n**สรุป:** RAG เหมาะกับงานที่ต้องการข้อมูลภายนอกและประหยัดทรัพยากร ขณะที่ fine-tune ดีกว่าในงานที่ต้องการความแม่นยำสูงและเข้าใจลึกซึ้ง แต่ต้องแลกเปลี่ยนด้วยความเสี่ยงในการ overfitting และต้นทุนทรัพยากรที่สูงขึ้น",
+      "tokens": 245
+    },
+    {
+      "timestamp": 1784469041.4054804,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED งานมีโครงสร้างชัดเจน ข้อดี-ข้อเสียครบถ้วน ตรงตามโจทย์  \nSCORE: 5",
+      "tokens": 18
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784468916.6264625,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.1,
+      "ram_used_mb": 489.2,
+      "gpu": null,
+      "gpu_all": []
+    },
+    {
+      "timestamp": 1784469041.417782,
+      "tag": "end",
+      "cpu_percent": 1.0,
+      "ram_percent": 8.1,
+      "ram_used_mb": 488.1,
+      "gpu": null,
+      "gpu_all": []
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 124.67,
+    "total_tokens": 296,
+    "quality_score": 5,
+    "ground_truth_score": 4,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "research_summary",
+    "score": 4,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 0.833,
+    "matched_points": [
+      {
+        "id": "rag_mentioned",
+        "description": "กล่าวถึง RAG"
+      },
+      {
+        "id": "fine_tune_mentioned",
+        "description": "กล่าวถึง fine-tune"
+      },
+      {
+        "id": "rag_advantage",
+        "description": "มีข้อดีของ RAG"
+      },
+      {
+        "id": "finetune_advantage",
+        "description": "มีข้อดีของ fine-tuning"
+      },
+      {
+        "id": "finetune_disadvantage",
+        "description": "มีข้อเสียของ fine-tuning"
+      }
+    ],
+    "missing_points": [
+      {
+        "id": "rag_disadvantage",
+        "description": "มีข้อเสียของ RAG"
+      }
+    ],
+    "rationale": "matched 5/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "gpu_monitoring_available": false,
+  "ended_at": 1784469041.5199127
+}

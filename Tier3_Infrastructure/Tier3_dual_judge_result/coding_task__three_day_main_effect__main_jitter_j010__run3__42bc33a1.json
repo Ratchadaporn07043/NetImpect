@@ -1,0 +1,167 @@
+{
+  "run_id": "42bc33a1",
+  "task_name": "coding_task",
+  "run_index": 3,
+  "started_at": 1783689941.5175633,
+  "network_condition": {
+    "name": "main_jitter_j010",
+    "scenario_type": "main_effect",
+    "main_effect_axis": "jitter",
+    "delay_ms": 50,
+    "requested_delay_ms": 0,
+    "jitter_ms": 10,
+    "loss_pct": 0,
+    "note": "requested delay=0ms แต่ jitter=10ms ต้องใช้ delay=50ms ขั้นต่ำ เพราะ netem ต้องมี delay>0",
+    "experiment_phase": "three_day_main_effect",
+    "trial_key": "three_day_main_effect::no_match::no_side::main_jitter_j010::coding_task::run3"
+  },
+  "messages": [
+    {
+      "timestamp": 1783689941.7342002,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ",
+      "tokens": 35
+    },
+    {
+      "timestamp": 1783690022.7049372,
+      "from": "Worker",
+      "to": "group",
+      "content": "```python\ndef is_prime(n):\n    \"\"\"\n    ตรวจสอบว่าจำนวนเต็ม n เป็นจำนวนเฉพาะหรือไม่\n    จำนวนเฉพาะคือจำนวนที่มีค่ามากกว่า 1 และไม่มีตัวหารอื่นนอกจาก 1 และตัวมันเอง\n    \"\"\"\n    if n <= 1:\n        return False  # จำนวนที่น้อยกว่าหรือเท่ากับ 1 ไม่ใช่จำนวนเฉพาะ\n    if n == 2:\n        return True  # 2 เป็นจำนวนเฉพาะ\n    if n % 2 == 0:\n        return False  # จำนวนคู่ที่มากกว่า 2 ไม่ใช่จำนวนเฉพาะ\n    # ตรวจสอบตัวหารจาก 3 ถึง sqrt(n) โดยเพิ่มขึ้นทีละ 2 (ข้ามคู่)\n    for i in range(3, int(n**0.5) + 1, 2):\n        if n % i == 0:\n            return False  # ถ้ามีตัวหาร ไม่ใช่จำนวนเฉพาะ\n    return True  # ถ้าผ่านการตรวจสอบทั้งหมด คือจำนวนเฉพาะ\n```\n\n### หลักการ:\n1. **กรณีพิเศษ**: \n   - หาก `n <= 1` คืนค่า `False` (ไม่ใช่จำนวนเฉพาะ)\n   - หาก `n == 2` คืนค่า `True` (2 เป็นจำนวนเฉพาะ)\n   - หาก `n` เป็นคู่ (หารด้วย 2 ลงตัว) และมากกว่า 2 คืนค่า `False`\n2. **ตรวจสอบตัวหาร**: \n   - ใช้การวนลูปจาก `3` ถึง `sqrt(n)` (เพิ่มขึ้นทีละ 2) เพื่อตรวจสอบว่ามีตัวหารใดที่หาร `n` ลงตัว\n   - หากพบตัวหารใดเลย คืนค่า `False` (ไม่ใช่จำนวนเฉพาะ)\n   - หากไม่พบตัวหารใดเลย คืนค่า `True` (เป็นจำนวนเฉพาะ)",
+      "tokens": 269
+    },
+    {
+      "timestamp": 1783690063.992877,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED ฟังก์ชันและหลักการอธิบายถูกต้อง ครอบคลุมกรณีทั้งหมด\nSCORE: 5",
+      "tokens": 17
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1783689941.5175676,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.3,
+      "ram_used_mb": 507.4
+    },
+    {
+      "timestamp": 1783690064.006491,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.4,
+      "ram_used_mb": 508.1
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 122.36,
+    "total_tokens": 321,
+    "quality_score": 5,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0,
+    "posthoc_ground_truth_score": 5,
+    "posthoc_ground_truth_passed": true,
+    "posthoc_ground_truth_mode": "both"
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "coding_task",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "function_name",
+        "description": "ระบุฟังก์ชัน is_prime"
+      },
+      {
+        "id": "boolean_return",
+        "description": "คืนค่า True/False"
+      },
+      {
+        "id": "n_le_1",
+        "description": "อธิบาย/จัดการ n <= 1"
+      },
+      {
+        "id": "two_case",
+        "description": "จัดการเลข 2"
+      },
+      {
+        "id": "sqrt_bound",
+        "description": "ตรวจถึงรากที่สองหรือ i*i <= n"
+      },
+      {
+        "id": "explanation",
+        "description": "มีคำอธิบายหลักการ"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 6/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "ended_at": 1783690064.1123247,
+  "posthoc_evaluation": {
+    "enabled": true,
+    "mode": "both",
+    "task_name": "coding_task",
+    "judge_model_name": "qwen3:8b",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "missing_points": [],
+    "rationale": "ฟังก์ชัน is_prime(n) มีโครงสร้างครบถ้วนตามรูปแบบที่กำหนด ตรวจสอบค่า n <=1 คืน False แยกกรณี n==2 คืน True และเลขคู่ที่มากกว่า 2 คืน False ใช้การวนลูปตรวจสอบตัวหารจาก 3 ถึง sqrt(n) โดยเพิ่มขึ้นทีละ 2 ซึ่งมีประสิทธิภาพ และมีคำอธิบายหลักการใน docstring ทุกเงื่อนไขใน rubric ถูกปฏิบัติตามอย่างถูกต้อง",
+    "raw_response": "{\n  \"score\": 5,\n  \"passed\": true,\n  \"missing_points\": [],\n  \"rationale\": \"ฟังก์ชัน is_prime(n) มีโครงสร้างครบถ้วนตามรูปแบบที่กำหนด ตรวจสอบค่า n <=1 คืน False แยกกรณี n==2 คืน True และเลขคู่ที่มากกว่า 2 คืน False ใช้การวนลูปตรวจสอบตัวหารจาก 3 ถึง sqrt(n) โดยเพิ่มขึ้นทีละ 2 ซึ่งมีประสิทธิภาพ และมีคำอธิบายหลักการใน docstring ทุกเงื่อนไขใน rubric ถูกปฏิบัติตามอย่างถูกต้อง\"\n}",
+    "heuristic_reference": {
+      "enabled": true,
+      "mode": "heuristic",
+      "task_name": "coding_task",
+      "score": 5,
+      "max_score": 5,
+      "pass_score": 4,
+      "passed": true,
+      "coverage": 1.0,
+      "matched_points": [
+        {
+          "id": "function_name",
+          "description": "ระบุฟังก์ชัน is_prime"
+        },
+        {
+          "id": "boolean_return",
+          "description": "คืนค่า True/False"
+        },
+        {
+          "id": "n_le_1",
+          "description": "อธิบาย/จัดการ n <= 1"
+        },
+        {
+          "id": "two_case",
+          "description": "จัดการเลข 2"
+        },
+        {
+          "id": "sqrt_bound",
+          "description": "ตรวจถึงรากที่สองหรือ i*i <= n"
+        },
+        {
+          "id": "explanation",
+          "description": "มีคำอธิบายหลักการ"
+        }
+      ],
+      "missing_points": [],
+      "rationale": "matched 6/6 rubric checks"
+    },
+    "posthoc": true,
+    "evaluated_at": "2026-07-17T03:41:11+0000"
+  }
+}

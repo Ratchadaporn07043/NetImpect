@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  agent-lab:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: netem-agent-lab
+    # NET_ADMIN จำเป็นสำหรับคำสั่ง tc qdisc (NetEm) ที่จะ inject delay/loss/jitter
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      # mount ทั้งโฟลเดอร์โปรเจกต์เข้า /workspace แทนการ mount ทีละไฟล์/โฟลเดอร์
+      # เหตุผล: โฟลเดอร์ Tier1-5 (การทดลองเพิ่มเติม) และ logs_tierN/ ที่จะถูกสร้าง
+      # ขึ้นใหม่ต้องมองเห็นได้ใน container โดยไม่ต้องมาแก้ไฟล์นี้ทุกครั้งที่เพิ่มโฟลเดอร์ใหม่
+      - ..:/workspace
+    environment:
+      # ชี้กลับไปหา Ollama server ที่รันอยู่บน macOS host (localhost:11434)
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434/v1
+    extra_hosts:
+      # เผื่อ Docker Desktop เวอร์ชันเก่าที่ยังไม่ resolve host.docker.internal อัตโนมัติ
+      - "host.docker.internal:host-gateway"
+    stdin_open: true
+    tty: true

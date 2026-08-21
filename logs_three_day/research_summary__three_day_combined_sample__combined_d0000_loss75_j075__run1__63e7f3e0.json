@@ -1,0 +1,134 @@
+{
+  "run_id": "63e7f3e0",
+  "task_name": "research_summary",
+  "run_index": 1,
+  "started_at": 1783749511.7815433,
+  "network_condition": {
+    "name": "combined_d0000_loss75_j075",
+    "scenario_type": "combined",
+    "delay_ms": 50,
+    "requested_delay_ms": 0,
+    "jitter_ms": 75,
+    "loss_pct": 75,
+    "combined_levels": {
+      "delay_ms": 0,
+      "loss_pct": 75,
+      "jitter_ms": 75
+    },
+    "note": "requested delay=0ms แต่ jitter=75ms ต้องใช้ delay=50ms ขั้นต่ำ เพราะ netem ต้องมี delay>0",
+    "experiment_phase": "three_day_combined_sample",
+    "trial_key": "three_day_combined_sample::no_match::no_side::combined_d0000_loss75_j075::research_summary::run1"
+  },
+  "messages": [
+    {
+      "timestamp": 1783749511.9979646,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1783749760.6515675,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1783749822.3198884,
+      "from": "Worker",
+      "to": "group",
+      "content": "1. **ข้อดีของ RAG**: สามารถเข้าถึงข้อมูลที่อัปเดตได้ในเวลาจริงผ่านการค้นหาข้อมูลภายนอก ขณะที่การ fine-tune โมเดลโดยตรงต้องพึ่งพาข้อมูลฝึกที่มีอยู่ตั้งแต่เริ่มต้น ซึ่งอาจล้าสมัย  \n2. **ข้อเสียของ RAG**: ขึ้นอยู่กับประสิทธิภาพของระบบค้นหาข้อมูล หากข้อมูลที่ดึงมาไม่เกี่ยวข้องหรือไม่ถูกต้อง อาจทำให้คำตอบผิดพลาดหรือไม่แม่นยำ  \n3. **ข้อดีของ fine-tune**: โมเดลสามารถเรียนรู้รูปแบบและบริบทเฉพาะงานได้ลึกซึ้ง ทำให้คำตอบมีความสอดคล้องและเป็นระบบมากขึ้น  \n4. **ข้อเสียของ fine-tune**: ต้องใช้ทรัพยากรการคำนวณสูงในการฝึกซ้ำ และข้อมูลฝึกต้องมีจำนวนมากและมีคุณภาพสูง ซึ่งอาจไม่สามารถเข้าถึงได้ในบางกรณี  \n5. **ข้อดีของ RAG**: ลดความต้องการการฝึกซ้ำโดยตรง ทำให้ปรับปรุงระบบได้เร็วขึ้นและยืดหยุ่นกว่าเมื่อต้องการเพิ่มข้อมูลใหม่  \n\n**สรุป**: RAG เหมาะกับงานที่ต้องการข้อมูลที่อัปเดตและลดการฝึกซ้ำ ขณะที่ fine-tune ให้ผลลัพธ์ที่แม่นยำมากขึ้นแต่ต้องใช้ทรัพยากรและข้อมูลฝึกมากขึ้น",
+      "tokens": 215
+    },
+    {
+      "timestamp": 1783749906.6023817,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED งานตรงตามแผน สรุปข้อดี-ข้อเสียครบ 5 ข้อ ชัดเจนและถูกต้อง  \nSCORE: 5",
+      "tokens": 19
+    }
+  ],
+  "errors": [
+    {
+      "timestamp": 1783749760.5473006,
+      "error_type": "timeout",
+      "detail": "OpenAI API call timed out. This could be due to congestion or too small a timeout value. The timeout can be specified by setting the 'timeout' value (in seconds) in the llm_config (if you are using agents) or the OpenAIWrapper constructor (if you are using the OpenAIWrapper directly)."
+    },
+    {
+      "timestamp": 1783749760.5473125,
+      "error_type": "retry",
+      "detail": "attempt 1 failed with TimeoutError, retrying"
+    }
+  ],
+  "resource_snapshots": [
+    {
+      "timestamp": 1783749511.7815478,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.3,
+      "ram_used_mb": 502.4
+    },
+    {
+      "timestamp": 1783749906.6076298,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.3,
+      "ram_used_mb": 503.3
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 394.7,
+    "total_tokens": 300,
+    "quality_score": 5,
+    "ground_truth_score": 4,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 1,
+    "total_error_count": 2
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "research_summary",
+    "score": 4,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 0.833,
+    "matched_points": [
+      {
+        "id": "rag_mentioned",
+        "description": "กล่าวถึง RAG"
+      },
+      {
+        "id": "fine_tune_mentioned",
+        "description": "กล่าวถึง fine-tune"
+      },
+      {
+        "id": "rag_advantage",
+        "description": "มีข้อดีของ RAG"
+      },
+      {
+        "id": "finetune_advantage",
+        "description": "มีข้อดีของ fine-tuning"
+      },
+      {
+        "id": "finetune_disadvantage",
+        "description": "มีข้อเสียของ fine-tuning"
+      }
+    ],
+    "missing_points": [
+      {
+        "id": "rag_disadvantage",
+        "description": "มีข้อเสียของ RAG"
+      }
+    ],
+    "rationale": "matched 5/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "ended_at": 1783749906.7122073
+}

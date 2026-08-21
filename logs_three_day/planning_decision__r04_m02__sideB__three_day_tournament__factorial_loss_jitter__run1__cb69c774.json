@@ -1,0 +1,123 @@
+{
+  "run_id": "cb69c774",
+  "task_name": "planning_decision",
+  "run_index": 1,
+  "started_at": 1783587796.8459759,
+  "network_condition": {
+    "name": "factorial_loss_jitter",
+    "scenario_type": "factorial",
+    "delay_ms": 50,
+    "requested_delay_ms": 0,
+    "jitter_ms": 30,
+    "loss_pct": 5,
+    "factors": {
+      "delay": "off",
+      "loss": "on",
+      "jitter": "on"
+    },
+    "note": "requested delay=0ms แต่ jitter=30ms ต้องใช้ delay=50ms ขั้นต่ำ เพราะ netem ต้องมี delay>0",
+    "experiment_phase": "three_day_tournament",
+    "tournament": {
+      "match_id": "r04_m02",
+      "round_index": 4,
+      "pair_index": 2,
+      "side": "B",
+      "opponent": "factorial_delay_jitter",
+      "pair": [
+        "factorial_delay_jitter",
+        "factorial_loss_jitter"
+      ]
+    },
+    "trial_key": "three_day_tournament::r04_m02::B::factorial_loss_jitter::planning_decision::run1"
+  },
+  "messages": [
+    {
+      "timestamp": 1783587797.0630808,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: ทีมมีงบ 3 อย่างให้เลือกลงทุนอย่างใดอย่างหนึ่ง: (1) ปรับปรุง UX, (2) เพิ่ม feature ใหม่, (3) แก้ bug ค้างเก่า ช่วยวางแผนว่าควรเลือกอะไรก่อน พร้อมเหตุผลสั้นๆ",
+      "tokens": 42
+    },
+    {
+      "timestamp": 1783587839.417422,
+      "from": "Worker",
+      "to": "group",
+      "content": "**คำตอบสุดท้าย:**  \nควรเลือก **ปรับปรุง UX (1)** ก่อน เนื่องจากการปรับปรุง UX ช่วยเพิ่มประสบการณ์ผู้ใช้โดยตรง ลดอัตราการยกเลิกการใช้งาน และสร้างความพึงพอใจในระยะยาว ซึ่งส่งผลต่อการเติบโตของธุรกิจในระยะยาวมากกว่าการเพิ่มฟีเจอร์ใหม่หรือแก้บั๊กที่ไม่ส่งผลต่อการใช้งานหลัก",
+      "tokens": 67
+    },
+    {
+      "timestamp": 1783587864.314737,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED: เลือก UX ก่อนเนื่องจากส่งผลต่อประสบการณ์ผู้ใช้โดยตรงและเติบโตระยะยาว  \nSCORE: 5",
+      "tokens": 22
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1783587796.8459966,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.2,
+      "ram_used_mb": 499.1
+    },
+    {
+      "timestamp": 1783587864.3231199,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.2,
+      "ram_used_mb": 499.4
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 67.35,
+    "total_tokens": 131,
+    "quality_score": 5,
+    "ground_truth_score": 3,
+    "ground_truth_passed": false,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "planning_decision",
+    "score": 3,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": false,
+    "coverage": 0.6,
+    "matched_points": [
+      {
+        "id": "clear_choice",
+        "description": "มีการเลือก/จัดลำดับชัดเจน"
+      },
+      {
+        "id": "mentions_options",
+        "description": "กล่าวถึงตัวเลือกหลัก"
+      },
+      {
+        "id": "impact_reason",
+        "description": "มีเหตุผลด้านผลกระทบ/ลูกค้า"
+      }
+    ],
+    "missing_points": [
+      {
+        "id": "risk_urgency",
+        "description": "มีเหตุผลด้านความเสี่ยงหรือความเร่งด่วน"
+      },
+      {
+        "id": "action_plan",
+        "description": "มีแผนดำเนินการ"
+      }
+    ],
+    "rationale": "matched 3/5 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "ended_at": 1783587864.4293408
+}

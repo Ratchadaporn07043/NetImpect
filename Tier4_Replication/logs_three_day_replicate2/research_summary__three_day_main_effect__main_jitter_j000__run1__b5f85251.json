@@ -1,0 +1,117 @@
+{
+  "run_id": "b5f85251",
+  "task_name": "research_summary",
+  "run_index": 1,
+  "started_at": 1784502404.7778537,
+  "network_condition": {
+    "name": "main_jitter_j000",
+    "scenario_type": "main_effect",
+    "main_effect_axis": "jitter",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 0,
+    "note": "",
+    "experiment_phase": "three_day_main_effect",
+    "trial_key": "three_day_main_effect::no_match::no_side::main_jitter_j000::research_summary::run1"
+  },
+  "messages": [
+    {
+      "timestamp": 1784502404.9925745,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1784502469.789976,
+      "from": "Worker",
+      "to": "group",
+      "content": "1. **ข้อดีของ RAG**: สามารถเข้าถึงข้อมูลที่อัปเดตได้โดยไม่ต้องฝึกโมเดลใหม่ ทำให้ตอบคำถามที่เกี่ยวข้องกับข้อมูลใหม่ได้ทันที ขณะที่การ fine-tune โมเดลโดยตรงต้องพึ่งพาข้อมูลที่มีอยู่ในช่วงฝึกตั้งแต่ต้น  \n2. **ข้อเสียของ RAG**: ขึ้นอยู่กับความแม่นยำของระบบค้นหาข้อมูล หากข้อมูลที่ดึงมาไม่ตรงประเด็น อาจทำให้คำตอบผิดพลาดหรือไม่สมบูรณ์ ขณะที่การ fine-tune โมเดลโดยตรงมีความแม่นยำสูงกว่าในข้อมูลที่ใช้ฝึก  \n3. **ข้อดีของ RAG**: ลดความต้องการข้อมูลฝึกที่มีการป้ายกำกับ (labeled data) เนื่องจากใช้ข้อมูลทั่วไปจากแหล่งภายนอก ขณะที่การ fine-tune ต้องใช้ข้อมูลฝึกจำนวนมากและมีคุณภาพสูง  \n4. **ข้อเสียของ RAG**: กระบวนการค้นหาและสร้างคำตอบมีความล่าช้ากว่าการ fine-tune โมเดลโดยตรง ซึ่งอาจไม่เหมาะกับงานที่ต้องการความเร็วสูง  \n5. **ข้อดีของ fine-tune**: โมเดลที่ฝึกโดยตรงมีประสิทธิภาพสูงในงานเฉพาะด้าน เนื่องจากปรับตัวให้เหมาะสมกับข้อมูลและข้อกำหนดของงานได้ดีกว่า RAG ที่พึ่งพาข้อมูลภายนอก",
+      "tokens": 218
+    },
+    {
+      "timestamp": 1784502507.7069368,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED งานมีโครงสร้างชัดเจน ครอบคลุม 5 ข้อ ตรงตามโจทย์  \nSCORE: 5",
+      "tokens": 16
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784502404.7778578,
+      "tag": "start",
+      "cpu_percent": 1.0,
+      "ram_percent": 8.1,
+      "ram_used_mb": 487.7,
+      "gpu": null,
+      "gpu_all": []
+    },
+    {
+      "timestamp": 1784502507.7114563,
+      "tag": "end",
+      "cpu_percent": 0.9,
+      "ram_percent": 8.1,
+      "ram_used_mb": 484.8,
+      "gpu": null,
+      "gpu_all": []
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 102.82,
+    "total_tokens": 267,
+    "quality_score": 5,
+    "ground_truth_score": 3,
+    "ground_truth_passed": false,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "research_summary",
+    "score": 3,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": false,
+    "coverage": 0.667,
+    "matched_points": [
+      {
+        "id": "rag_mentioned",
+        "description": "กล่าวถึง RAG"
+      },
+      {
+        "id": "fine_tune_mentioned",
+        "description": "กล่าวถึง fine-tune"
+      },
+      {
+        "id": "rag_advantage",
+        "description": "มีข้อดีของ RAG"
+      },
+      {
+        "id": "finetune_disadvantage",
+        "description": "มีข้อเสียของ fine-tuning"
+      }
+    ],
+    "missing_points": [
+      {
+        "id": "rag_disadvantage",
+        "description": "มีข้อเสียของ RAG"
+      },
+      {
+        "id": "finetune_advantage",
+        "description": "มีข้อดีของ fine-tuning"
+      }
+    ],
+    "rationale": "matched 4/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "gpu_monitoring_available": false,
+  "ended_at": 1784502507.8222764
+}

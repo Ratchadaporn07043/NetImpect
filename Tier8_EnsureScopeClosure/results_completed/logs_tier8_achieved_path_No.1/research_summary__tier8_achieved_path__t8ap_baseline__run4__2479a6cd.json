@@ -1,0 +1,209 @@
+{
+  "run_id": "2479a6cd",
+  "task_name": "research_summary",
+  "run_index": 4,
+  "started_at": 1785432793.3768048,
+  "network_condition": {
+    "name": "t8ap_baseline",
+    "scenario_type": "achieved_path_check",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 0,
+    "bandwidth_kbit": null,
+    "note": "ค่าอ้างอิง ไม่มี impairment — achieved ควรใกล้ configured (คือใกล้ 0)",
+    "experiment_phase": "tier8_achieved_path"
+  },
+  "messages": [
+    {
+      "timestamp": 1785432797.732404,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1785432936.4753184,
+      "from": "Worker",
+      "to": "group",
+      "content": "**ข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง**  \n\n1. **ข้อดีของ RAG**: สามารถเข้าถึงข้อมูลที่อัปเดตได้โดยไม่ต้องฝึกโมเดลอีกครั้ง ทำให้ตอบคำถามที่เกี่ยวข้องกับข้อมูลใหม่ได้ทันที  \n2. **ข้อดีของ RAG**: รองรับการขยายข้อมูลได้ดีกว่า การฝึกโมเดลโดยตรงต้องใช้ทรัพยากรมากเมื่อข้อมูลเพิ่มขึ้น  \n3. **ข้อเสียของ fine-tune**: ต้องใช้ทรัพยากรการคำนวณและเวลาในการฝึกโมเดลซ้ำเมื่อข้อมูลเปลี่ยนแปลง  \n4. **ข้อเสียของ fine-tune**: ความรู้ของโมเดลถูกจำกัดโดยข้อมูลฝึก ไม่สามารถปรับตัวกับข้อมูลใหม่ได้โดยไม่ฝึกซ้ำ  \n5. **ข้อดีของ fine-tune**: ผลลัพธ์มีความสอดคล้องและเชื่อถือได้สูงกว่า เนื่องจากโมเดลเรียนรู้จากข้อมูลเฉพาะที่ใช้ฝึก  \n\n**สรุป**: RAG ดีที่การเข้าถึงข้อมูลใหม่และขยายได้ แต่ต้องพึ่งพาคุณภาพของระบบค้นหา ขณะที่ fine-tune ให้ผลลัพธ์ที่แม่นยำแต่ต้องใช้ทรัพยากรมากและไม่ยืดหยุ่นต่อข้อมูลใหม่",
+      "tokens": 208
+    },
+    {
+      "timestamp": 1785433018.976925,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED งานตรงตามแผน สรุปข้อดี-ข้อเสียชัดเจน ครบ 5 ข้อ  \nSCORE: 5",
+      "tokens": 16
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1785432793.3768167,
+      "tag": "start",
+      "cpu_percent": 3.4,
+      "ram_percent": 89.6,
+      "ram_used_mb": 10028.0
+    },
+    {
+      "timestamp": 1785433023.1609948,
+      "tag": "end",
+      "cpu_percent": 1.6,
+      "ram_percent": 93.5,
+      "ram_used_mb": 10474.6
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 221.36,
+    "total_tokens": 257,
+    "quality_score": 5,
+    "ground_truth_score": 4,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "research_summary",
+    "score": 4,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 0.833,
+    "matched_points": [
+      {
+        "id": "rag_mentioned",
+        "description": "กล่าวถึง RAG"
+      },
+      {
+        "id": "fine_tune_mentioned",
+        "description": "กล่าวถึง fine-tune"
+      },
+      {
+        "id": "rag_advantage",
+        "description": "มีข้อดีของ RAG"
+      },
+      {
+        "id": "rag_disadvantage",
+        "description": "มีข้อเสียของ RAG"
+      },
+      {
+        "id": "finetune_disadvantage",
+        "description": "มีข้อเสียของ fine-tuning"
+      }
+    ],
+    "missing_points": [
+      {
+        "id": "finetune_advantage",
+        "description": "มีข้อดีของ fine-tuning"
+      }
+    ],
+    "rationale": "matched 5/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "achieved": {
+    "before": {
+      "timestamp": 1785432793.480157,
+      "qdisc_egress": {
+        "dev": "eth0",
+        "sent_bytes": 0,
+        "sent_pkts": 0,
+        "dropped": 0,
+        "overlimits": 0,
+        "requeues": 0,
+        "raw": "qdisc noqueue 0: root refcnt 2 \n Sent 0 bytes 0 pkt (dropped 0, overlimits 0 requeues 0) \n backlog 0b 0p requeues 0\n"
+      },
+      "tcp_retrans": {
+        "retrans_segs": 808
+      },
+      "rtt_probe": {
+        "target": "host.docker.internal",
+        "returncode": 0,
+        "raw": "PING host.docker.internal (172.17.0.1) 56(84) bytes of data.\n\n--- host.docker.internal ping statistics ---\n5 packets transmitted, 5 received, 0% packet loss, time 4114ms\nrtt min/avg/max/mdev = 0.079/0.150/0.208/0.044 ms\n",
+        "packets_sent": 5,
+        "packets_received": 5,
+        "packet_loss_pct": 0.0,
+        "min_ms": 0.079,
+        "avg_ms": 0.15,
+        "max_ms": 0.208,
+        "mdev_ms": 0.044
+      },
+      "throughput_probe": {
+        "target": "http://host.docker.internal:11434/api/tags",
+        "returncode": 0,
+        "bytes": 426,
+        "seconds": 0.002745,
+        "achieved_kbit_s": 1241.53
+      }
+    },
+    "after": {
+      "timestamp": 1785433018.978753,
+      "qdisc_egress": {
+        "dev": "eth0",
+        "sent_bytes": 0,
+        "sent_pkts": 0,
+        "dropped": 0,
+        "overlimits": 0,
+        "requeues": 0,
+        "raw": "qdisc noqueue 0: root refcnt 2 \n Sent 0 bytes 0 pkt (dropped 0, overlimits 0 requeues 0) \n backlog 0b 0p requeues 0\n"
+      },
+      "tcp_retrans": {
+        "retrans_segs": 808
+      },
+      "rtt_probe": {
+        "target": "host.docker.internal",
+        "returncode": 0,
+        "raw": "PING host.docker.internal (172.17.0.1) 56(84) bytes of data.\n\n--- host.docker.internal ping statistics ---\n5 packets transmitted, 5 received, 0% packet loss, time 4131ms\nrtt min/avg/max/mdev = 0.030/0.179/0.488/0.168 ms\n",
+        "packets_sent": 5,
+        "packets_received": 5,
+        "packet_loss_pct": 0.0,
+        "min_ms": 0.03,
+        "avg_ms": 0.179,
+        "max_ms": 0.488,
+        "mdev_ms": 0.168
+      },
+      "throughput_probe": {
+        "target": "http://host.docker.internal:11434/api/tags",
+        "returncode": 0,
+        "bytes": 426,
+        "seconds": 0.008175,
+        "achieved_kbit_s": 416.881
+      }
+    }
+  },
+  "network_commands": [
+    {
+      "action": "apply",
+      "result": {
+        "returncode": 0,
+        "stdout": "baseline (no impairment)",
+        "stderr": "",
+        "cmd": "baseline",
+        "clear_before_apply": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "Error: Cannot delete qdisc with handle of zero.\n",
+          "cmd": "tc qdisc del dev eth0 root",
+          "note": "clear skipped: no existing qdisc"
+        }
+      }
+    },
+    {
+      "action": "clear",
+      "result": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "Error: Cannot delete qdisc with handle of zero.\n",
+        "cmd": "tc qdisc del dev eth0 root",
+        "note": "clear skipped: no existing qdisc"
+      }
+    }
+  ],
+  "ended_at": 1785433023.2637882
+}

@@ -1,0 +1,116 @@
+{
+  "run_id": "6873f3e2",
+  "task_name": "coding_task",
+  "run_index": 1,
+  "started_at": 1784425900.6846747,
+  "network_condition": {
+    "name": "main_loss_loss25",
+    "scenario_type": "main_effect",
+    "main_effect_axis": "loss",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 25,
+    "note": "",
+    "experiment_phase": "tier4_main_effect_replicate__llama3.1_8b",
+    "trial_key": "tier4_main_effect_replicate__llama3.1_8b::no_match::no_side::main_loss_loss25::coding_task::run1"
+  },
+  "messages": [
+    {
+      "timestamp": 1784425900.8965654,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ",
+      "tokens": 35
+    },
+    {
+      "timestamp": 1784425933.830205,
+      "from": "Worker",
+      "to": "group",
+      "content": "ฟังก์ชัน `is_prime(n)` จะตรวจสอบว่าจำนวนเต็ม `n` เป็นจำนวนเฉพาะหรือไม่ โดยใช้หลักการดังต่อไปนี้:\n\n1.  จำนวน 0 และ 1 ไม่ใช่จำนวนเฉพาะ เพราะมีมากกว่าหนึ่งตัวหาร (ตัวหารของ 0 คือทุกตัวเลข และตัวหารของ 1 คือ 1)\n2.  หาก `n` เป็นเลขคู่ (ยกเว้น 2) จะไม่เป็นจำนวนเฉพาะ เพราะจะถูกหารด้วย 2\n3.  หาก `n` มีตัวหารอื่นใดนอกจาก 1 และ `n` อาจจะเป็นจำนวนเฉพาะ\n\nฟังก์ชัน `is_prime(n)` จะตรวจสอบว่า `n` เป็นเลขคู่หรือไม่ หากเป็นเลขคู่และไม่ใช่ 2 ก็จะไม่เป็นจำนวนเฉพาะ จากนั้น ฟังก์ชันก็จะตรวจสอบตัวหารของ `n` หากมีตัวหารอื่นอีกกี่ตัว (ยกเว้น 1 และ `n`) แล้วจึงแจ้งว่าเป็นจำนวนเฉพาะหรือไม่\n\n```python\ndef is_prime(n):\n    if n < 2:  # จำนวน 0 และ 1 ไม่ใช่จำนวนเฉพาะ\n        return False\n    elif n == 2:  # 2 เป็นจำนวนเฉพาะ\n        return True\n    elif n % 2 == 0:  # หาก `n` เป็นเลขคู่ (ยกเว้น 2) จะไม่เป็นจำนวนเฉพาะ\n        return False\n    \n    for i in range(3, int(n ** 0.5) + 1, 2):  # ตรวจสอบตัวหารของ `n`\n        if n % i == 0:  # หากมีตัวหารอื่นอีกกี่ตัว (ยกเว้น 1 และ `n`)\n            return False\n    \n    return True  # หากไม่มีตัวหารอื่นใดนอกจาก 1 และ `n` ก็จะเป็นจำนวนเฉพาะ\n\n# ตัวอย่างการใช้งาน\nprint(is_prime(25))  # Output: False\nprint(is_prime(23))  # Output: True\n```\n\nฟังก์ชัน `is_prime(n)` จะตรวจสอบว่าจำนวนเต็ม `n` เป็นจำนวนเฉพาะหรือไม่ โดยใช้หลักการดังที่อธิบายไว้ข้างต้น",
+      "tokens": 318
+    },
+    {
+      "timestamp": 1784425939.2062378,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED\nSCORE: 5",
+      "tokens": 4
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784425900.68468,
+      "tag": "start",
+      "cpu_percent": 1.8,
+      "ram_percent": 8.0,
+      "ram_used_mb": 479.9,
+      "gpu": null,
+      "gpu_all": []
+    },
+    {
+      "timestamp": 1784425939.2101972,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.0,
+      "ram_used_mb": 480.1,
+      "gpu": null,
+      "gpu_all": []
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 38.41,
+    "total_tokens": 357,
+    "quality_score": 5,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "coding_task",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "function_name",
+        "description": "ระบุฟังก์ชัน is_prime"
+      },
+      {
+        "id": "boolean_return",
+        "description": "คืนค่า True/False"
+      },
+      {
+        "id": "n_le_1",
+        "description": "อธิบาย/จัดการ n <= 1"
+      },
+      {
+        "id": "two_case",
+        "description": "จัดการเลข 2"
+      },
+      {
+        "id": "sqrt_bound",
+        "description": "ตรวจถึงรากที่สองหรือ i*i <= n"
+      },
+      {
+        "id": "explanation",
+        "description": "มีคำอธิบายหลักการ"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 6/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "gpu_monitoring_available": false,
+  "ended_at": 1784425939.313195
+}

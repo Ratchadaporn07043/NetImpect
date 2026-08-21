@@ -1,0 +1,179 @@
+{
+  "run_id": "35cc8be9",
+  "task_name": "planning_decision",
+  "run_index": 1,
+  "started_at": 1783602758.036321,
+  "network_condition": {
+    "name": "factorial_delay_loss_jitter",
+    "scenario_type": "factorial",
+    "delay_ms": 300,
+    "requested_delay_ms": 300,
+    "jitter_ms": 30,
+    "loss_pct": 5,
+    "factors": {
+      "delay": "on",
+      "loss": "on",
+      "jitter": "on"
+    },
+    "note": "",
+    "experiment_phase": "three_day_tournament",
+    "tournament": {
+      "match_id": "r07_m02",
+      "round_index": 7,
+      "pair_index": 2,
+      "side": "B",
+      "opponent": "factorial_loss",
+      "pair": [
+        "factorial_loss",
+        "factorial_delay_loss_jitter"
+      ]
+    },
+    "trial_key": "three_day_tournament::r07_m02::B::factorial_delay_loss_jitter::planning_decision::run1"
+  },
+  "messages": [
+    {
+      "timestamp": 1783602758.254065,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: ทีมมีงบ 3 อย่างให้เลือกลงทุนอย่างใดอย่างหนึ่ง: (1) ปรับปรุง UX, (2) เพิ่ม feature ใหม่, (3) แก้ bug ค้างเก่า ช่วยวางแผนว่าควรเลือกอะไรก่อน พร้อมเหตุผลสั้นๆ",
+      "tokens": 42
+    },
+    {
+      "timestamp": 1783602800.7998319,
+      "from": "Worker",
+      "to": "group",
+      "content": "**แผนการลงทุน:**  \nเลือก **(1) ปรับปรุง UX** ก่อน  \n\n**เหตุผล:**  \nUX ที่ดีเป็นพื้นฐานของการใช้งานที่ราบรื่น ช่วยเพิ่มความพึงพอใจของผู้ใช้ ลดอัตราการยกเลิกการใช้งาน และส่งเสริมการเติบโตของธุรกิจในระยะยาว หาก UX ไม่ดี ผู้ใช้อาจไม่สนใจฟีเจอร์ใหม่หรือการแก้บั๊ก ดังนั้น การลงทุนใน UX เป็นการสร้างความแข็งแกร่งให้กับผลิตภัณฑ์ก่อนที่จะพัฒนาสิ่งอื่นๆ ต่อไป",
+      "tokens": 87
+    },
+    {
+      "timestamp": 1783602824.720278,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED: เหตุผลชัดเจนและสมเหตุสมผล ชี้ให้เห็นความสำคัญของ UX ต่อการใช้งานที่ดี\nSCORE: 5",
+      "tokens": 22
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1783602758.0363445,
+      "tag": "start",
+      "cpu_percent": 1.0,
+      "ram_percent": 8.2,
+      "ram_used_mb": 495.3
+    },
+    {
+      "timestamp": 1783602824.7622707,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.2,
+      "ram_used_mb": 495.5
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 66.56,
+    "total_tokens": 151,
+    "quality_score": 5,
+    "ground_truth_score": 4,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0,
+    "posthoc_ground_truth_score": 3,
+    "posthoc_ground_truth_passed": false,
+    "posthoc_ground_truth_mode": "both"
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "planning_decision",
+    "score": 4,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 0.8,
+    "matched_points": [
+      {
+        "id": "clear_choice",
+        "description": "มีการเลือก/จัดลำดับชัดเจน"
+      },
+      {
+        "id": "mentions_options",
+        "description": "กล่าวถึงตัวเลือกหลัก"
+      },
+      {
+        "id": "impact_reason",
+        "description": "มีเหตุผลด้านผลกระทบ/ลูกค้า"
+      },
+      {
+        "id": "action_plan",
+        "description": "มีแผนดำเนินการ"
+      }
+    ],
+    "missing_points": [
+      {
+        "id": "risk_urgency",
+        "description": "มีเหตุผลด้านความเสี่ยงหรือความเร่งด่วน"
+      }
+    ],
+    "rationale": "matched 4/5 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "ended_at": 1783602824.8694832,
+  "posthoc_evaluation": {
+    "enabled": true,
+    "mode": "both",
+    "task_name": "planning_decision",
+    "judge_model_name": "qwen3:8b",
+    "score": 3,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": false,
+    "missing_points": [
+      "แผนปฏิบัติสั้นๆ เช่น ประเมินข้อมูล วัดผล ทำ sprint",
+      "trade-off ระหว่าง UX, feature ใหม่, bug ค้างเก่า"
+    ],
+    "rationale": "คำตอบเลือก UX เป็นลำดับแรกและให้เหตุผลเชิง impact/customer value ได้ดี แต่ไม่มีแผนปฏิบัติสั้นๆ เช่น การประเมินข้อมูลหรือ sprint ที่ชัดเจน และการพิจารณา trade-off ระหว่าง UX กับ feature ใหม่/bug ค้างเก่าไม่เพียงพอ",
+    "raw_response": "{\"score\": 3, \"passed\": false, \"missing_points\": [\"แผนปฏิบัติสั้นๆ เช่น ประเมินข้อมูล วัดผล ทำ sprint\", \"trade-off ระหว่าง UX, feature ใหม่, bug ค้างเก่า\"], \"rationale\": \"คำตอบเลือก UX เป็นลำดับแรกและให้เหตุผลเชิง impact/customer value ได้ดี แต่ไม่มีแผนปฏิบัติสั้นๆ เช่น การประเมินข้อมูลหรือ sprint ที่ชัดเจน และการพิจารณา trade-off ระหว่าง UX กับ feature ใหม่/bug ค้างเก่าไม่เพียงพอ\"}",
+    "heuristic_reference": {
+      "enabled": true,
+      "mode": "heuristic",
+      "task_name": "planning_decision",
+      "score": 4,
+      "max_score": 5,
+      "pass_score": 4,
+      "passed": true,
+      "coverage": 0.8,
+      "matched_points": [
+        {
+          "id": "clear_choice",
+          "description": "มีการเลือก/จัดลำดับชัดเจน"
+        },
+        {
+          "id": "mentions_options",
+          "description": "กล่าวถึงตัวเลือกหลัก"
+        },
+        {
+          "id": "impact_reason",
+          "description": "มีเหตุผลด้านผลกระทบ/ลูกค้า"
+        },
+        {
+          "id": "action_plan",
+          "description": "มีแผนดำเนินการ"
+        }
+      ],
+      "missing_points": [
+        {
+          "id": "risk_urgency",
+          "description": "มีเหตุผลด้านความเสี่ยงหรือความเร่งด่วน"
+        }
+      ],
+      "rationale": "matched 4/5 rubric checks"
+    },
+    "posthoc": true,
+    "evaluated_at": "2026-07-17T11:10:21+0000"
+  }
+}

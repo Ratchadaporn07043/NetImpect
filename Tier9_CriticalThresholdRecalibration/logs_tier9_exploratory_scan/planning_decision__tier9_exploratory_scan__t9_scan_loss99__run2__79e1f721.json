@@ -1,0 +1,166 @@
+{
+  "run_id": "79e1f721",
+  "task_name": "planning_decision",
+  "run_index": 2,
+  "started_at": 1786093127.20575,
+  "network_condition": {
+    "name": "t9_scan_loss99",
+    "scenario_type": "critical_threshold_scan",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 99,
+    "bandwidth_kbit": null,
+    "note": "exploratory scan หา critical threshold ใหม่ (loss=99%, mitigation=none, สภาพแวดล้อมปัจจุบัน thinking-off)",
+    "experiment_phase": "tier9_exploratory_scan"
+  },
+  "messages": [
+    {
+      "timestamp": 1786093127.3223066,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: ทีมมีงบ 3 อย่างให้เลือกลงทุนอย่างใดอย่างหนึ่ง: (1) ปรับปรุง UX, (2) เพิ่ม feature ใหม่, (3) แก้ bug ค้างเก่า ช่วยวางแผนว่าควรเลือกอะไรก่อน พร้อมเหตุผลสั้นๆ",
+      "tokens": 42
+    },
+    {
+      "timestamp": 1786093130.424539,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: ทีมมีงบ 3 อย่างให้เลือกลงทุนอย่างใดอย่างหนึ่ง: (1) ปรับปรุง UX, (2) เพิ่ม feature ใหม่, (3) แก้ bug ค้างเก่า ช่วยวางแผนว่าควรเลือกอะไรก่อน พร้อมเหตุผลสั้นๆ",
+      "tokens": 42
+    },
+    {
+      "timestamp": 1786093133.492308,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: ทีมมีงบ 3 อย่างให้เลือกลงทุนอย่างใดอย่างหนึ่ง: (1) ปรับปรุง UX, (2) เพิ่ม feature ใหม่, (3) แก้ bug ค้างเก่า ช่วยวางแผนว่าควรเลือกอะไรก่อน พร้อมเหตุผลสั้นๆ",
+      "tokens": 42
+    }
+  ],
+  "errors": [
+    {
+      "timestamp": 1786093130.4184854,
+      "error_type": "ConnectionError",
+      "detail": "HTTPConnectionPool(host='host.docker.internal', port=11434): Max retries exceeded with url: /api/chat (Caused by NewConnectionError(\"HTTPConnection(host='host.docker.internal', port=11434): Failed to establish a new connection: [Errno 113] No route to host\"))",
+      "agent": "Worker"
+    },
+    {
+      "timestamp": 1786093130.4184947,
+      "error_type": "retry",
+      "detail": "attempt 1 failed with ConnectionError, retrying",
+      "agent": "Worker"
+    },
+    {
+      "timestamp": 1786093133.4898143,
+      "error_type": "ConnectionError",
+      "detail": "HTTPConnectionPool(host='host.docker.internal', port=11434): Max retries exceeded with url: /api/chat (Caused by NewConnectionError(\"HTTPConnection(host='host.docker.internal', port=11434): Failed to establish a new connection: [Errno 113] No route to host\"))",
+      "agent": "Worker"
+    },
+    {
+      "timestamp": 1786093133.4898221,
+      "error_type": "retry",
+      "detail": "attempt 2 failed with ConnectionError, retrying",
+      "agent": "Worker"
+    },
+    {
+      "timestamp": 1786093136.5664108,
+      "error_type": "ConnectionError",
+      "detail": "HTTPConnectionPool(host='host.docker.internal', port=11434): Max retries exceeded with url: /api/chat (Caused by NewConnectionError(\"HTTPConnection(host='host.docker.internal', port=11434): Failed to establish a new connection: [Errno 113] No route to host\"))",
+      "agent": "Worker"
+    }
+  ],
+  "resource_snapshots": [
+    {
+      "timestamp": 1786093127.205757,
+      "tag": "start",
+      "cpu_percent": 1.7,
+      "ram_percent": 15.0,
+      "ram_used_mb": 1503.4
+    },
+    {
+      "timestamp": 1786093136.5740745,
+      "tag": "end",
+      "cpu_percent": 1.6,
+      "ram_percent": 15.0,
+      "ram_used_mb": 1504.1
+    }
+  ],
+  "outcome": {
+    "success": false,
+    "rounds": 1,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 9.25,
+    "total_tokens": 126,
+    "quality_score": null,
+    "ground_truth_score": 1,
+    "ground_truth_passed": false,
+    "retry_count": 2,
+    "timeout_count": 0,
+    "total_error_count": 5
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "planning_decision",
+    "score": 1,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": false,
+    "coverage": 0.0,
+    "matched_points": [],
+    "missing_points": [
+      {
+        "id": "clear_choice",
+        "description": "มีการเลือก/จัดลำดับชัดเจน"
+      },
+      {
+        "id": "mentions_options",
+        "description": "กล่าวถึงตัวเลือกหลัก"
+      },
+      {
+        "id": "impact_reason",
+        "description": "มีเหตุผลด้านผลกระทบ/ลูกค้า"
+      },
+      {
+        "id": "risk_urgency",
+        "description": "มีเหตุผลด้านความเสี่ยงหรือความเร่งด่วน"
+      },
+      {
+        "id": "action_plan",
+        "description": "มีแผนดำเนินการ"
+      }
+    ],
+    "rationale": "matched 0/5 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "achieved": null,
+  "network_commands": [
+    {
+      "action": "apply",
+      "result": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "cmd": "tc qdisc add dev eth0 root handle 1: netem loss 99%",
+        "clear_before_apply": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "Error: Cannot delete qdisc with handle of zero.\n",
+          "cmd": "tc qdisc del dev eth0 root",
+          "note": "clear skipped: no existing qdisc"
+        },
+        "tbf": null
+      }
+    },
+    {
+      "action": "clear",
+      "result": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "cmd": "tc qdisc del dev eth0 root"
+      }
+    }
+  ],
+  "ended_at": 1786093136.683074
+}

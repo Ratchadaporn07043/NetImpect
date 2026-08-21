@@ -1,0 +1,139 @@
+{
+  "run_id": "289461b6",
+  "task_name": "research_summary",
+  "run_index": 5,
+  "started_at": 1785635394.322551,
+  "network_condition": {
+    "name": "tier8_loss_loss40",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 40,
+    "bandwidth_kbit": null,
+    "note": ""
+  },
+  "messages": [
+    {
+      "timestamp": 1785635394.5385494,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1785635553.6605742,
+      "from": "Worker",
+      "to": "group",
+      "content": "**ข้อดีของการใช้ Retrieval-Augmented Generation (RAG):**  \n1. **เข้าถึงข้อมูลล่าสุดได้ทันที** – ดึงข้อมูลจากแหล่งข้อมูลภายนอกที่อัปเดตได้ ทำให้ตอบคำถามได้แม่นยำในกรณีที่ข้อมูลเปลี่ยนแปลงบ่อย  \n2. **ลดความพึ่งพาข้อมูลฝึก** – ใช้ข้อมูลที่มีอยู่ในระบบแทนการฝึกโมเดลซ้ำ ช่วยประหยัดทรัพยากรการคำนวณ  \n3. **เพิ่มความโปร่งใส** – สามารถอธิบายแหล่งข้อมูลที่ใช้ในการตอบได้ชัดเจน ช่วยลดความเสี่ยงของการสร้างข้อมูลเท็จ (hallucination)  \n4. **รองรับคำถามที่ซับซ้อน** – ใช้ข้อมูลภายนอกเพื่อตอบคำถามที่ต้องการความรู้เฉพาะด้านหรือข้อมูลที่ไม่ได้ฝึกในโมเดลเดิม  \n5. **ปรับตัวได้เร็ว** – เพิ่มหรือเปลี่ยนแหล่งข้อมูลได้ง่าย โดยไม่ต้องฝึกโมเดลใหม่ทั้งหมด  \n\n**ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG):**  \n1. **ขึ้นกับประสิทธิภาพระบบค้นหา** – ความแม่นยำของคำตอบขึ้นอยู่กับคุณภาพของระบบค้นหาข้อมูล ซึ่งอาจมีข้อผิดพลาด  \n2. **ใช้ทรัพยากรมากขึ้น** – ต้องประมวลผลทั้งการค้นหาข้อมูลและกระบวนการสร้างคำตอบ ทำให้ใช้เวลาและทรัพยากรมากกว่า  \n3. **มีความเสี่ยงต่อข้อมูลที่ไม่ถูกต้อง** – ข้อมูลที่ดึงมาอาจมีข้อผิดพลาด ทำให้คำตอบไม่แม่นยำ  \n4. **ไม่เหมาะกับข้อมูลที่ต้องการความเข้าใจลึกซึ้ง** – ข้อมูลจากแหล่งภายนอกอาจไม่ครอบคลุมบริบทหรือความสัมพันธ์ที่ซับซ้อน  \n5. **ต้องจัดการกับข้อมูลที่ซ้ำซ้อน** – ข้อมูลจากแหล่งต่างๆ อาจมีความขัดแย้ง ทำให้ต้องปรับแต่งเพิ่มเติม  \n\n**ข้อดีของการ fine-tune โมเดลโดยตรง:**  \n1. **ปรับตัวให้เหมาะกับงานเฉพาะ** – ฝึกโมเดลบนข้อมูลเฉพาะที่เกี่ยวข้อง ทำให้ผลลัพธ์มีความแม่นยำสูงในงานนั้นๆ  \n2. **ลดความพึ่งพาแหล่งข้อมูลภายนอก** – ไม่ต้องพึ่งพาระบบค้นหา ทำให้ตอบคำถามได้รวดเร็วและไม่ขึ้นกับแหล่งข้อมูล  \n3. **จัดการข้อมูลที่มีโครงสร้างซับซ้อนได้ดี** – โมเดลที่ฝึกมาแล้วสามารถเข้าใจบริบทและความสัมพันธ์ในข้อมูลได้ดีขึ้น  \n4. **เหมาะกับข้อมูลที่ไม่เปลี่ยนแปลง** – หากข้อมูลเป็น static โมเดลที่ฝึกแล้วจะให้ผลลัพธ์ที่เสถียร  \n5. **ต้นทุนการคำนวณต่ำกว่า** – ไม่ต้องใช้ทรัพยากรเพิ่มในการค้นหาข้อมูล ทำให้การประมวลผลเร็วขึ้น  \n\n**ข้อเสียของการ fine-tune โมเดลโดยตรง:**  \n1. **ต้องใช้ข้อมูลฝึกจำนวนมาก** – ต้องมีข้อมูลที่มีคุณภาพและครบถ้วน ซึ่งอาจไม่สามารถหาได้ในบางกรณี  \n2. **เสี่ยงต่อการ overfitting** – โมเดลอาจเรียนรู้ข้อมูลฝึกจนเกิดความผิดพลาดเมื่อใช้กับข้อมูลใหม่  \n3. **ไม่สามารถปรับตัวได้เร็วเมื่อข้อมูลเปลี่ยน** – ต้องฝึกโมเดลใหม่ทั้งหมดหากข้อมูลเปลี่ยนแปลง  \n4. **ต้องใช้ทรัพยากรสูงในการฝึก** – ต้องใช้เวลาและทรัพยากรในการฝึกโมเดลซ้ำ  \n5. **ไม่เหมาะกับคำถามที่ต้องการข้อมูลภายนอก** – ไม่สามารถใช้ข้อมูลที่ไม่ได้ฝึกในโมเดลเดิมได้เลย",
+      "tokens": 586
+    },
+    {
+      "timestamp": 1785635634.6486661,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED งานมีโครงสร้างชัดเจน ครบตามโจทย์ 5 ข้อต่อประเภท  \nSCORE: 5",
+      "tokens": 16
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1785635394.3225534,
+      "tag": "start",
+      "cpu_percent": 3.1,
+      "ram_percent": 96.5,
+      "ram_used_mb": 10818.0
+    },
+    {
+      "timestamp": 1785635634.6795945,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 97.4,
+      "ram_used_mb": 10923.5
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 240.22,
+    "total_tokens": 635,
+    "quality_score": 5,
+    "ground_truth_score": 4,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "research_summary",
+    "score": 4,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 0.833,
+    "matched_points": [
+      {
+        "id": "rag_mentioned",
+        "description": "กล่าวถึง RAG"
+      },
+      {
+        "id": "fine_tune_mentioned",
+        "description": "กล่าวถึง fine-tune"
+      },
+      {
+        "id": "rag_advantage",
+        "description": "มีข้อดีของ RAG"
+      },
+      {
+        "id": "rag_disadvantage",
+        "description": "มีข้อเสียของ RAG"
+      },
+      {
+        "id": "finetune_disadvantage",
+        "description": "มีข้อเสียของ fine-tuning"
+      }
+    ],
+    "missing_points": [
+      {
+        "id": "finetune_advantage",
+        "description": "มีข้อดีของ fine-tuning"
+      }
+    ],
+    "rationale": "matched 5/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "achieved": null,
+  "execution_sequence_index": 13,
+  "network_commands": [
+    {
+      "action": "apply",
+      "result": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "cmd": "tc qdisc add dev eth0 root handle 1: netem loss 40%",
+        "clear_before_apply": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "Error: Cannot delete qdisc with handle of zero.\n",
+          "cmd": "tc qdisc del dev eth0 root",
+          "note": "clear skipped: no existing qdisc"
+        },
+        "tbf": null
+      }
+    },
+    {
+      "action": "clear",
+      "result": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "cmd": "tc qdisc del dev eth0 root"
+      }
+    }
+  ],
+  "ended_at": 1785635634.7931986
+}

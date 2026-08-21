@@ -1,0 +1,167 @@
+{
+  "run_id": "87c5e1d6",
+  "task_name": "coding_task",
+  "run_index": 2,
+  "started_at": 1783642711.7887022,
+  "network_condition": {
+    "name": "main_delay_d0150",
+    "scenario_type": "main_effect",
+    "main_effect_axis": "delay",
+    "delay_ms": 150,
+    "requested_delay_ms": 150,
+    "jitter_ms": 0,
+    "loss_pct": 0,
+    "note": "",
+    "experiment_phase": "three_day_main_effect",
+    "trial_key": "three_day_main_effect::no_match::no_side::main_delay_d0150::coding_task::run2"
+  },
+  "messages": [
+    {
+      "timestamp": 1783642712.0128546,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ",
+      "tokens": 35
+    },
+    {
+      "timestamp": 1783642943.7092803,
+      "from": "Worker",
+      "to": "group",
+      "content": "```python\ndef is_prime(n):\n    \"\"\"\n    ตรวจสอบว่าจำนวนเต็ม n เป็นจำนวนเฉพาะหรือไม่\n    จำนวนเฉพาะคือจำนวนที่มีตัวหารเฉพาะ 1 และตัวเอง\n    \"\"\"\n    if n < 2:\n        return False  # จำนวนน้อยกว่า 2 ไม่ใช่จำนวนเฉพาะ\n    if n == 2 or n == 3:\n        return True  # 2 และ 3 เป็นจำนวนเฉพาะ\n    if n % 2 == 0:\n        return False  # จำนวนคู่ไม่ใช่จำนวนเฉพาะ (ยกเว้น 2)\n    \n    # ตรวจสอบตัวหารจาก 3 ถึง sqrt(n) โดยเพิ่มขึ้นทีละ 2 (เพื่อหลีกเลี่ยงตัวหารคู่)\n    max_divisor = int(n**0.5) + 1\n    for i in range(3, max_divisor, 2):\n        if n % i == 0:\n            return False  # พบตัวหาร ไม่ใช่จำนวนเฉพาะ\n    return True  # ไม่มีตัวหาร คือจำนวนเฉพาะ\n```\n\n### หลักการ:\n1. **กรณีพิเศษ**: ถ้า `n < 2` คืนค่า `False` (ไม่ใช่จำนวนเฉพาะ)  \n   ถ้า `n == 2` หรือ `n == 3` คืนค่า `True` (จำนวนเฉพาะ)  \n2. **จำนวนคู่**: ถ้า `n` เป็นคู่ (หารด้วย 2 ลงตัว) คืนค่า `False` (ยกเว้น 2)  \n3. **ตรวจสอบตัวหาร**: วนลูปจาก `3` ถึง `sqrt(n)` โดยเพิ่มขึ้นทีละ `2` (เพื่อหลีกเลี่ยงตัวหารคู่)  \n   หากพบตัวหารที่หาร `n` ลงตัว คืนค่า `False`  \n   หากไม่พบตัวหารใดเลย คืนค่า `True`  \n\n### ตัวอย่าง:\n- `is_prime(7)` → `True`  \n- `is_prime(15)` → `False`  \n- `is_prime(1)` → `False`",
+      "tokens": 287
+    },
+    {
+      "timestamp": 1783642997.9279962,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED ฟังก์ชันทำงานถูกต้องและครอบคลุมกรณีทุกอย่าง\nSCORE: 5",
+      "tokens": 15
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1783642711.788705,
+      "tag": "start",
+      "cpu_percent": 0.9,
+      "ram_percent": 8.3,
+      "ram_used_mb": 508.1
+    },
+    {
+      "timestamp": 1783642997.9370933,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.4,
+      "ram_used_mb": 508.7
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 286.02,
+    "total_tokens": 337,
+    "quality_score": 5,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0,
+    "posthoc_ground_truth_score": 5,
+    "posthoc_ground_truth_passed": true,
+    "posthoc_ground_truth_mode": "both"
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "coding_task",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "function_name",
+        "description": "ระบุฟังก์ชัน is_prime"
+      },
+      {
+        "id": "boolean_return",
+        "description": "คืนค่า True/False"
+      },
+      {
+        "id": "n_le_1",
+        "description": "อธิบาย/จัดการ n <= 1"
+      },
+      {
+        "id": "two_case",
+        "description": "จัดการเลข 2"
+      },
+      {
+        "id": "sqrt_bound",
+        "description": "ตรวจถึงรากที่สองหรือ i*i <= n"
+      },
+      {
+        "id": "explanation",
+        "description": "มีคำอธิบายหลักการ"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 6/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "ended_at": 1783642998.0389335,
+  "posthoc_evaluation": {
+    "enabled": true,
+    "mode": "both",
+    "task_name": "coding_task",
+    "judge_model_name": "qwen3:8b",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "missing_points": [],
+    "rationale": "ฟังก์ชันมีชื่อ is_prime(n) คืนค่า boolean จัดการ n<=1 ให้ False แยกกรณี 2/3 ให้ True ตรวจสอบตัวหารถึง sqrt(n) ด้วยการเพิ่มขึ้นทีละ 2 พร้อมคำอธิบายหลักการครบถ้วน ตรงตามทุกเงื่อนไขใน rubric",
+    "raw_response": "{\n  \"score\": 5,\n  \"passed\": true,\n  \"missing_points\": [],\n  \"rationale\": \"ฟังก์ชันมีชื่อ is_prime(n) คืนค่า boolean จัดการ n<=1 ให้ False แยกกรณี 2/3 ให้ True ตรวจสอบตัวหารถึง sqrt(n) ด้วยการเพิ่มขึ้นทีละ 2 พร้อมคำอธิบายหลักการครบถ้วน ตรงตามทุกเงื่อนไขใน rubric\"\n}",
+    "heuristic_reference": {
+      "enabled": true,
+      "mode": "heuristic",
+      "task_name": "coding_task",
+      "score": 5,
+      "max_score": 5,
+      "pass_score": 4,
+      "passed": true,
+      "coverage": 1.0,
+      "matched_points": [
+        {
+          "id": "function_name",
+          "description": "ระบุฟังก์ชัน is_prime"
+        },
+        {
+          "id": "boolean_return",
+          "description": "คืนค่า True/False"
+        },
+        {
+          "id": "n_le_1",
+          "description": "อธิบาย/จัดการ n <= 1"
+        },
+        {
+          "id": "two_case",
+          "description": "จัดการเลข 2"
+        },
+        {
+          "id": "sqrt_bound",
+          "description": "ตรวจถึงรากที่สองหรือ i*i <= n"
+        },
+        {
+          "id": "explanation",
+          "description": "มีคำอธิบายหลักการ"
+        }
+      ],
+      "missing_points": [],
+      "rationale": "matched 6/6 rubric checks"
+    },
+    "posthoc": true,
+    "evaluated_at": "2026-07-17T02:50:18+0000"
+  }
+}

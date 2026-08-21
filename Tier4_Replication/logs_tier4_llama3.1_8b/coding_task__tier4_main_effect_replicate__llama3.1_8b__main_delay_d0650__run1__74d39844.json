@@ -1,0 +1,117 @@
+{
+  "run_id": "74d39844",
+  "task_name": "coding_task",
+  "run_index": 1,
+  "started_at": 1784423772.0849016,
+  "network_condition": {
+    "name": "main_delay_d0650",
+    "scenario_type": "main_effect",
+    "main_effect_axis": "delay",
+    "delay_ms": 650,
+    "requested_delay_ms": 650,
+    "jitter_ms": 0,
+    "loss_pct": 0,
+    "note": "",
+    "experiment_phase": "tier4_main_effect_replicate__llama3.1_8b",
+    "trial_key": "tier4_main_effect_replicate__llama3.1_8b::no_match::no_side::main_delay_d0650::coding_task::run1"
+  },
+  "messages": [
+    {
+      "timestamp": 1784423772.2985852,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ",
+      "tokens": 35
+    },
+    {
+      "timestamp": 1784423799.4752882,
+      "from": "Worker",
+      "to": "group",
+      "content": "ฟังก์ชัน `is_prime(n)` จะตรวจสอบว่าตัวเลข `n` เป็นจำนวนเฉพาะหรือไม่ โดยใช้หลักการดังนี้:\n\n1. ถ้าตัวเลขน้อยกว่า 2 ก็ไม่ใช่จำนวนเฉพาะ\n2. ถ้าสามารถหารด้วยตัวเลขใดๆ ได้ ก็ไม่ใช่จำนวนเฉพาะ\n\nฟังก์ชัน `is_prime(n)` จะทำงานดังนี้:\n\n```python\ndef is_prime(n):\n    if n < 2:\n        return False\n    for i in range(2, int(n ** 0.5) + 1):\n        if n % i == 0:\n            return False\n    return True\n```\n\nการทำงานของฟังก์ชัน:\n\n- ถ้าตัวเลข `n` น้อยกว่า 2 จะไม่ถือว่าเป็นจำนวนเฉพาะ และจะกลับไปที่ `False`\n- หากต้องการตรวจสอบว่าตัวเลขนั้นเป็นจำนวนเฉพาะหรือไม่ เราจะใช้ทฤษฎีบทของออยเลอร์ ซึ่งระบุว่าสำหรับตัวเลข `n` ที่หารด้วย 2 ได้ จะมีตัวประกอบที่น้อยกว่าหรือเท่ากับ `sqrt(n)`\n- ดังนั้นเราจึงไม่จำเป็นต้องตรวจสอบตัวประกอบทุกตัว แต่เพียงแค่ตัวประกอบที่น้อยกว่าหรือเท่ากับ `sqrt(n)` เท่านั้น\n- หาก `n` ไม่สามารถหารด้วยตัวเลขใดๆ ได้ ก็จะถือว่าเป็นจำนวนเฉพาะ และกลับไปที่ `True`\n\nตัวอย่างการใช้งาน:\n\n```python\nprint(is_prime(11))  # True\nprint(is_prime(12))  # False\n```\n\nเมื่อใช้ฟังก์ชัน `is_prime(n)` จะช่วยให้เราตรวจสอบได้ว่าตัวเลขใดๆ เป็นจำนวนเฉพาะหรือไม่",
+      "tokens": 261
+    },
+    {
+      "timestamp": 1784423807.39939,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED เหตุผล: ฟังก์ชันนี้ตรงตามโจทย์และทำงานถูกต้อง โดยใช้ทฤษฎีบทของออยเลอร์เพื่อลดความซับซ้อนในการตรวจสอบจำนวนเฉพาะ\n\nSCORE: 5",
+      "tokens": 32
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784423772.0849063,
+      "tag": "start",
+      "cpu_percent": 0.9,
+      "ram_percent": 7.7,
+      "ram_used_mb": 454.7,
+      "gpu": null,
+      "gpu_all": []
+    },
+    {
+      "timestamp": 1784423807.4026098,
+      "tag": "end",
+      "cpu_percent": 0.9,
+      "ram_percent": 7.7,
+      "ram_used_mb": 454.9,
+      "gpu": null,
+      "gpu_all": []
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 35.2,
+    "total_tokens": 328,
+    "quality_score": 5,
+    "ground_truth_score": 4,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "coding_task",
+    "score": 4,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 0.833,
+    "matched_points": [
+      {
+        "id": "function_name",
+        "description": "ระบุฟังก์ชัน is_prime"
+      },
+      {
+        "id": "boolean_return",
+        "description": "คืนค่า True/False"
+      },
+      {
+        "id": "n_le_1",
+        "description": "อธิบาย/จัดการ n <= 1"
+      },
+      {
+        "id": "sqrt_bound",
+        "description": "ตรวจถึงรากที่สองหรือ i*i <= n"
+      },
+      {
+        "id": "explanation",
+        "description": "มีคำอธิบายหลักการ"
+      }
+    ],
+    "missing_points": [
+      {
+        "id": "two_case",
+        "description": "จัดการเลข 2"
+      }
+    ],
+    "rationale": "matched 5/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "gpu_monitoring_available": false,
+  "ended_at": 1784423807.509121
+}

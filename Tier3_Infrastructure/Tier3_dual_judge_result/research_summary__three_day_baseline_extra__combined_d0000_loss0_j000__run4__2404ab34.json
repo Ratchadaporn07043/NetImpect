@@ -1,0 +1,178 @@
+{
+  "run_id": "2404ab34",
+  "task_name": "research_summary",
+  "run_index": 4,
+  "started_at": 1783836936.6111186,
+  "network_condition": {
+    "name": "combined_d0000_loss0_j000",
+    "scenario_type": "combined",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 0,
+    "combined_levels": {
+      "delay_ms": 0,
+      "loss_pct": 0,
+      "jitter_ms": 0
+    },
+    "note": "",
+    "experiment_phase": "three_day_baseline_extra",
+    "trial_key": "three_day_baseline_extra::no_match::no_side::combined_d0000_loss0_j000::research_summary::run4"
+  },
+  "messages": [
+    {
+      "timestamp": 1783836936.833497,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1783837005.9699218,
+      "from": "Worker",
+      "to": "group",
+      "content": "1. **ข้อดีของ RAG**: สามารถเข้าถึงข้อมูลที่อัปเดตได้ตลอดเวลาผ่านการค้นหาข้อมูลจากแหล่งภายนอก ขณะที่การ fine-tune โมเดลโดยตรงต้องพึ่งพาข้อมูลที่มีอยู่ในช่วงเวลาการฝึกอบรมเท่านั้น  \n2. **ข้อเสียของ RAG**: ขึ้นอยู่กับประสิทธิภาพของระบบค้นหาข้อมูล หากระบบค้นหาไม่แม่นยำ อาจทำให้คำตอบผิดพลาดหรือไม่สอดคล้องกับคำถาม  \n3. **ข้อดีของ fine-tune**: โมเดลสามารถปรับตัวให้เหมาะกับงานเฉพาะทางได้ดีขึ้น เนื่องจากฝึกฝนด้วยข้อมูลที่ตรงกับโจทย์ที่ต้องการ  \n4. **ข้อเสียของ fine-tune**: ต้องใช้ข้อมูลฝึกอบรมจำนวนมากและมีคุณภาพ ซึ่งอาจมีต้นทุนสูงและใช้เวลานานในการจัดเตรียม  \n5. **ข้อดีของ RAG เทียบกับ fine-tune**: ยืดหยุ่นในการใช้งานข้อมูลใหม่ได้ทันทีโดยไม่ต้องฝึกโมเดลซ้ำ ขณะที่ fine-tune ต้องการการฝึกอบรมใหม่ทุกครั้งที่ข้อมูลเปลี่ยนแปลง  \n\n(สรุปใน 5 ข้อ แยกเป็นข้อดี-ข้อเสียของแต่ละวิธี และเปรียบเทียบความแตกต่าง)",
+      "tokens": 199
+    },
+    {
+      "timestamp": 1783837154.378565,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED งานตรงตามแผน สรุปข้อดี-ข้อเสียครบ 5 ข้อ พร้อมเปรียบเทียบความแตกต่างอย่างชัดเจน  \nSCORE: 5",
+      "tokens": 24
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1783836936.6111279,
+      "tag": "start",
+      "cpu_percent": 0.9,
+      "ram_percent": 8.4,
+      "ram_used_mb": 508.1
+    },
+    {
+      "timestamp": 1783837154.389248,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.4,
+      "ram_used_mb": 508.8
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 217.65,
+    "total_tokens": 256,
+    "quality_score": 5,
+    "ground_truth_score": 4,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0,
+    "posthoc_ground_truth_score": 3,
+    "posthoc_ground_truth_passed": false,
+    "posthoc_ground_truth_mode": "both"
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "research_summary",
+    "score": 4,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 0.833,
+    "matched_points": [
+      {
+        "id": "rag_mentioned",
+        "description": "กล่าวถึง RAG"
+      },
+      {
+        "id": "fine_tune_mentioned",
+        "description": "กล่าวถึง fine-tune"
+      },
+      {
+        "id": "rag_advantage",
+        "description": "มีข้อดีของ RAG"
+      },
+      {
+        "id": "finetune_advantage",
+        "description": "มีข้อดีของ fine-tuning"
+      },
+      {
+        "id": "finetune_disadvantage",
+        "description": "มีข้อเสียของ fine-tuning"
+      }
+    ],
+    "missing_points": [
+      {
+        "id": "rag_disadvantage",
+        "description": "มีข้อเสียของ RAG"
+      }
+    ],
+    "rationale": "matched 5/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "ended_at": 1783837154.5008912,
+  "posthoc_evaluation": {
+    "enabled": true,
+    "mode": "both",
+    "task_name": "research_summary",
+    "judge_model_name": "qwen3:8b",
+    "score": 3,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": false,
+    "missing_points": [
+      "ลด hallucination",
+      "latency",
+      "infrastructure complexity",
+      "difficulty updating knowledge"
+    ],
+    "rationale": "คำตอบครอบคลุมข้อดี-ข้อเสียของ RAG และ fine-tuning บางส่วน แต่ขาดข้อความสำคัญตาม rubric เช่น ไม่กล่าวถึง 'ลด hallucination' ของ RAG, 'latency' และ 'infrastructure complexity' ของ RAG, รวมถึง 'difficulty updating knowledge' ของ fine-tuning แม้จะสรุปเป็น 5 ข้อ แต่ยังไม่ครบตามเกณฑ์ 5 ข้อที่กำหนด",
+    "raw_response": "{\n  \"score\": 3,\n  \"passed\": false,\n  \"missing_points\": [\n    \"ลด hallucination\",\n    \"latency\",\n    \"infrastructure complexity\",\n    \"difficulty updating knowledge\"\n  ],\n  \"rationale\": \"คำตอบครอบคลุมข้อดี-ข้อเสียของ RAG และ fine-tuning บางส่วน แต่ขาดข้อความสำคัญตาม rubric เช่น ไม่กล่าวถึง 'ลด hallucination' ของ RAG, 'latency' และ 'infrastructure complexity' ของ RAG, รวมถึง 'difficulty updating knowledge' ของ fine-tuning แม้จะสรุปเป็น 5 ข้อ แต่ยังไม่ครบตามเกณฑ์ 5 ข้อที่กำหนด\"\n}",
+    "heuristic_reference": {
+      "enabled": true,
+      "mode": "heuristic",
+      "task_name": "research_summary",
+      "score": 4,
+      "max_score": 5,
+      "pass_score": 4,
+      "passed": true,
+      "coverage": 0.833,
+      "matched_points": [
+        {
+          "id": "rag_mentioned",
+          "description": "กล่าวถึง RAG"
+        },
+        {
+          "id": "fine_tune_mentioned",
+          "description": "กล่าวถึง fine-tune"
+        },
+        {
+          "id": "rag_advantage",
+          "description": "มีข้อดีของ RAG"
+        },
+        {
+          "id": "finetune_advantage",
+          "description": "มีข้อดีของ fine-tuning"
+        },
+        {
+          "id": "finetune_disadvantage",
+          "description": "มีข้อเสียของ fine-tuning"
+        }
+      ],
+      "missing_points": [
+        {
+          "id": "rag_disadvantage",
+          "description": "มีข้อเสียของ RAG"
+        }
+      ],
+      "rationale": "matched 5/6 rubric checks"
+    },
+    "posthoc": true,
+    "evaluated_at": "2026-07-17T18:44:42+0000"
+  }
+}

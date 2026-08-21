@@ -1,0 +1,137 @@
+{
+  "run_id": "fe0a1df5",
+  "task_name": "planning_decision",
+  "run_index": 1,
+  "started_at": 1783750541.672958,
+  "network_condition": {
+    "name": "combined_d0000_loss75_j075",
+    "scenario_type": "combined",
+    "delay_ms": 50,
+    "requested_delay_ms": 0,
+    "jitter_ms": 75,
+    "loss_pct": 75,
+    "combined_levels": {
+      "delay_ms": 0,
+      "loss_pct": 75,
+      "jitter_ms": 75
+    },
+    "note": "requested delay=0ms แต่ jitter=75ms ต้องใช้ delay=50ms ขั้นต่ำ เพราะ netem ต้องมี delay>0",
+    "experiment_phase": "three_day_combined_sample",
+    "trial_key": "three_day_combined_sample::no_match::no_side::combined_d0000_loss75_j075::planning_decision::run1"
+  },
+  "messages": [
+    {
+      "timestamp": 1783750541.889543,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: ทีมมีงบ 3 อย่างให้เลือกลงทุนอย่างใดอย่างหนึ่ง: (1) ปรับปรุง UX, (2) เพิ่ม feature ใหม่, (3) แก้ bug ค้างเก่า ช่วยวางแผนว่าควรเลือกอะไรก่อน พร้อมเหตุผลสั้นๆ",
+      "tokens": 42
+    },
+    {
+      "timestamp": 1783750911.07503,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: ทีมมีงบ 3 อย่างให้เลือกลงทุนอย่างใดอย่างหนึ่ง: (1) ปรับปรุง UX, (2) เพิ่ม feature ใหม่, (3) แก้ bug ค้างเก่า ช่วยวางแผนว่าควรเลือกอะไรก่อน พร้อมเหตุผลสั้นๆ",
+      "tokens": 42
+    },
+    {
+      "timestamp": 1783751379.2016623,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: ทีมมีงบ 3 อย่างให้เลือกลงทุนอย่างใดอย่างหนึ่ง: (1) ปรับปรุง UX, (2) เพิ่ม feature ใหม่, (3) แก้ bug ค้างเก่า ช่วยวางแผนว่าควรเลือกอะไรก่อน พร้อมเหตุผลสั้นๆ",
+      "tokens": 42
+    }
+  ],
+  "errors": [
+    {
+      "timestamp": 1783750910.9690237,
+      "error_type": "timeout",
+      "detail": "OpenAI API call timed out. This could be due to congestion or too small a timeout value. The timeout can be specified by setting the 'timeout' value (in seconds) in the llm_config (if you are using agents) or the OpenAIWrapper constructor (if you are using the OpenAIWrapper directly)."
+    },
+    {
+      "timestamp": 1783750910.9690466,
+      "error_type": "retry",
+      "detail": "attempt 1 failed with TimeoutError, retrying"
+    },
+    {
+      "timestamp": 1783751379.0972733,
+      "error_type": "timeout",
+      "detail": "OpenAI API call timed out. This could be due to congestion or too small a timeout value. The timeout can be specified by setting the 'timeout' value (in seconds) in the llm_config (if you are using agents) or the OpenAIWrapper constructor (if you are using the OpenAIWrapper directly)."
+    },
+    {
+      "timestamp": 1783751379.0973153,
+      "error_type": "retry",
+      "detail": "attempt 2 failed with TimeoutError, retrying"
+    },
+    {
+      "timestamp": 1783751391.0928879,
+      "error_type": "APIConnectionError",
+      "detail": "Connection error."
+    }
+  ],
+  "resource_snapshots": [
+    {
+      "timestamp": 1783750541.6729667,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.4,
+      "ram_used_mb": 507.1
+    },
+    {
+      "timestamp": 1783751391.1010396,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.3,
+      "ram_used_mb": 501.0
+    }
+  ],
+  "outcome": {
+    "success": false,
+    "rounds": 1,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 849.31,
+    "total_tokens": 126,
+    "quality_score": null,
+    "ground_truth_score": 1,
+    "ground_truth_passed": false,
+    "retry_count": 2,
+    "timeout_count": 2,
+    "total_error_count": 5
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "planning_decision",
+    "score": 1,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": false,
+    "coverage": 0.0,
+    "matched_points": [],
+    "missing_points": [
+      {
+        "id": "clear_choice",
+        "description": "มีการเลือก/จัดลำดับชัดเจน"
+      },
+      {
+        "id": "mentions_options",
+        "description": "กล่าวถึงตัวเลือกหลัก"
+      },
+      {
+        "id": "impact_reason",
+        "description": "มีเหตุผลด้านผลกระทบ/ลูกค้า"
+      },
+      {
+        "id": "risk_urgency",
+        "description": "มีเหตุผลด้านความเสี่ยงหรือความเร่งด่วน"
+      },
+      {
+        "id": "action_plan",
+        "description": "มีแผนดำเนินการ"
+      }
+    ],
+    "rationale": "matched 0/5 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "ended_at": 1783751391.2040102
+}

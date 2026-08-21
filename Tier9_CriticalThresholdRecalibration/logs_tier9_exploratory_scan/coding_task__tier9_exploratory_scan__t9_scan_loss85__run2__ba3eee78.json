@@ -1,0 +1,177 @@
+{
+  "run_id": "ba3eee78",
+  "task_name": "coding_task",
+  "run_index": 2,
+  "started_at": 1786091278.32071,
+  "network_condition": {
+    "name": "t9_scan_loss85",
+    "scenario_type": "critical_threshold_scan",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 85,
+    "bandwidth_kbit": null,
+    "note": "exploratory scan หา critical threshold ใหม่ (loss=85%, mitigation=none, สภาพแวดล้อมปัจจุบัน thinking-off)",
+    "experiment_phase": "tier9_exploratory_scan"
+  },
+  "messages": [
+    {
+      "timestamp": 1786091278.4466732,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ",
+      "tokens": 35
+    },
+    {
+      "timestamp": 1786091281.5356593,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ",
+      "tokens": 35
+    },
+    {
+      "timestamp": 1786091401.6576695,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ",
+      "tokens": 35
+    },
+    {
+      "timestamp": 1786091448.5065374,
+      "from": "Worker",
+      "to": "group",
+      "content": "### ฟังก์ชัน `is_prime(n)` ใน Python\n\n```python\ndef is_prime(n):\n    if n <= 1:\n        return False\n    if n == 2:\n        return True\n    if n % 2 == 0:\n        return False\n    for i in range(3, int(n**0.5) + 1, 2):\n        if n % i == 0:\n            return False\n    return True\n```\n\n---\n\n### คำอธิบายหลักการสั้นๆ:\n\n- **กรณีพิเศษ**: \n  - ถ้า `n <= 1` ไม่ใช่จำนวนเฉพาะ (คืนค่า `False`)\n  - ถ้า `n == 2` เป็นจำนวนเฉพาะ (คืนค่า `True`)\n  - ถ้า `n` เป็นเลขคู่ (หารด้วย 2 ลงตัว) ไม่ใช่จำนวนเฉพาะ (คืนค่า `False`)\n  \n- **ตรวจสอบความเป็นจำนวนเฉพาะ**:\n  - ตรวจสอบตัวหารที่เป็นจำนวนคี่ ตั้งแต่ `3` ถึง `sqrt(n)` (เพราะถ้ามีตัวหารมากกว่า `sqrt(n)` ตัวหารอีกตัวจะต้องน้อยกว่า `sqrt(n)` ซึ่งเราได้ตรวจสอบแล้ว)\n  - หากพบตัวหารที่หาร `n` ลงตัว คืนค่า `False`\n  - หากไม่พบตัวหารใดๆ คืนค่า `True`\n\n---\n\n### ตัวอย่างการใช้งาน:\n\n```python\nprint(is_prime(2))   # True\nprint(is_prime(3))   # True\nprint(is_prime(4))   # False\nprint(is_prime(17))  # True\nprint(is_prime(1))   # False\nprint(is_prime(997)) # True\n```\n\nหากคุณต้องการให้ฟังก์ชันรองรับค่า `n` ที่เป็นลบหรือเป็นทศนิยม สามารถเพิ่มการตรวจสอบเพิ่มเติมได้เช่นกัน 😊",
+      "tokens": 276
+    }
+  ],
+  "errors": [
+    {
+      "timestamp": 1786091281.5273933,
+      "error_type": "ConnectionError",
+      "detail": "HTTPConnectionPool(host='host.docker.internal', port=11434): Max retries exceeded with url: /api/chat (Caused by NewConnectionError(\"HTTPConnection(host='host.docker.internal', port=11434): Failed to establish a new connection: [Errno 113] No route to host\"))",
+      "agent": "Worker"
+    },
+    {
+      "timestamp": 1786091281.5274055,
+      "error_type": "retry",
+      "detail": "attempt 1 failed with ConnectionError, retrying",
+      "agent": "Worker"
+    },
+    {
+      "timestamp": 1786091401.6517434,
+      "error_type": "timeout",
+      "detail": "HTTPConnectionPool(host='host.docker.internal', port=11434): Max retries exceeded with url: /api/chat (Caused by ConnectTimeoutError(<HTTPConnection(host='host.docker.internal', port=11434) at 0xf28ab768d150>, 'Connection to host.docker.internal timed out. (connect timeout=120)'))",
+      "agent": "Worker"
+    },
+    {
+      "timestamp": 1786091401.6517525,
+      "error_type": "retry",
+      "detail": "attempt 2 failed with ConnectTimeout, retrying",
+      "agent": "Worker"
+    },
+    {
+      "timestamp": 1786091568.6029913,
+      "error_type": "timeout",
+      "detail": "HTTPConnectionPool(host='host.docker.internal', port=11434): Max retries exceeded with url: /api/chat (Caused by ConnectTimeoutError(<HTTPConnection(host='host.docker.internal', port=11434) at 0xf28ab768fd90>, 'Connection to host.docker.internal timed out. (connect timeout=120)'))",
+      "agent": "Reviewer"
+    }
+  ],
+  "resource_snapshots": [
+    {
+      "timestamp": 1786091278.3207235,
+      "tag": "start",
+      "cpu_percent": 3.1,
+      "ram_percent": 15.2,
+      "ram_used_mb": 1533.0
+    },
+    {
+      "timestamp": 1786091568.617729,
+      "tag": "end",
+      "cpu_percent": 5.5,
+      "ram_percent": 14.9,
+      "ram_used_mb": 1500.4
+    }
+  ],
+  "outcome": {
+    "success": false,
+    "rounds": 2,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 290.16,
+    "total_tokens": 381,
+    "quality_score": null,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 2,
+    "timeout_count": 2,
+    "total_error_count": 5
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "coding_task",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "function_name",
+        "description": "ระบุฟังก์ชัน is_prime"
+      },
+      {
+        "id": "boolean_return",
+        "description": "คืนค่า True/False"
+      },
+      {
+        "id": "n_le_1",
+        "description": "อธิบาย/จัดการ n <= 1"
+      },
+      {
+        "id": "two_case",
+        "description": "จัดการเลข 2"
+      },
+      {
+        "id": "sqrt_bound",
+        "description": "ตรวจถึงรากที่สองหรือ i*i <= n"
+      },
+      {
+        "id": "explanation",
+        "description": "มีคำอธิบายหลักการ"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 6/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "achieved": null,
+  "network_commands": [
+    {
+      "action": "apply",
+      "result": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "cmd": "tc qdisc add dev eth0 root handle 1: netem loss 85%",
+        "clear_before_apply": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "Error: Cannot delete qdisc with handle of zero.\n",
+          "cmd": "tc qdisc del dev eth0 root",
+          "note": "clear skipped: no existing qdisc"
+        },
+        "tbf": null
+      }
+    },
+    {
+      "action": "clear",
+      "result": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "cmd": "tc qdisc del dev eth0 root"
+      }
+    }
+  ],
+  "ended_at": 1786091568.7189026
+}

@@ -1,0 +1,146 @@
+{
+  "run_id": "dacbbc10",
+  "task_name": "coding_task",
+  "run_index": 1,
+  "started_at": 1784607520.168606,
+  "network_condition": {
+    "name": "combined_d0000_loss75_j075",
+    "scenario_type": "combined",
+    "delay_ms": 50,
+    "requested_delay_ms": 0,
+    "jitter_ms": 75,
+    "loss_pct": 75,
+    "combined_levels": {
+      "delay_ms": 0,
+      "loss_pct": 75,
+      "jitter_ms": 75
+    },
+    "note": "requested delay=0ms แต่ jitter=75ms ต้องใช้ delay=50ms ขั้นต่ำ เพราะ netem ต้องมี delay>0",
+    "experiment_phase": "three_day_combined_sample",
+    "trial_key": "three_day_combined_sample::no_match::no_side::combined_d0000_loss75_j075::coding_task::run1"
+  },
+  "messages": [
+    {
+      "timestamp": 1784607520.3853433,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ",
+      "tokens": 35
+    },
+    {
+      "timestamp": 1784607648.5301564,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ",
+      "tokens": 35
+    },
+    {
+      "timestamp": 1784607892.9988718,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ",
+      "tokens": 35
+    }
+  ],
+  "errors": [
+    {
+      "timestamp": 1784607648.4238946,
+      "error_type": "APIConnectionError",
+      "detail": "Connection error."
+    },
+    {
+      "timestamp": 1784607648.4239016,
+      "error_type": "retry",
+      "detail": "attempt 1 failed with APIConnectionError, retrying"
+    },
+    {
+      "timestamp": 1784607892.9026966,
+      "error_type": "APIConnectionError",
+      "detail": "Connection error."
+    },
+    {
+      "timestamp": 1784607892.9027047,
+      "error_type": "retry",
+      "detail": "attempt 2 failed with APIConnectionError, retrying"
+    },
+    {
+      "timestamp": 1784608019.3671873,
+      "error_type": "APIConnectionError",
+      "detail": "Connection error."
+    }
+  ],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784607520.1686113,
+      "tag": "start",
+      "cpu_percent": 0.9,
+      "ram_percent": 8.2,
+      "ram_used_mb": 495.8,
+      "gpu": null,
+      "gpu_all": []
+    },
+    {
+      "timestamp": 1784608019.370075,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.1,
+      "ram_used_mb": 490.7,
+      "gpu": null,
+      "gpu_all": []
+    }
+  ],
+  "outcome": {
+    "success": false,
+    "rounds": 1,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 499.08,
+    "total_tokens": 105,
+    "quality_score": null,
+    "ground_truth_score": 1,
+    "ground_truth_passed": false,
+    "retry_count": 2,
+    "timeout_count": 0,
+    "total_error_count": 5
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "coding_task",
+    "score": 1,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": false,
+    "coverage": 0.0,
+    "matched_points": [],
+    "missing_points": [
+      {
+        "id": "function_name",
+        "description": "ระบุฟังก์ชัน is_prime"
+      },
+      {
+        "id": "boolean_return",
+        "description": "คืนค่า True/False"
+      },
+      {
+        "id": "n_le_1",
+        "description": "อธิบาย/จัดการ n <= 1"
+      },
+      {
+        "id": "two_case",
+        "description": "จัดการเลข 2"
+      },
+      {
+        "id": "sqrt_bound",
+        "description": "ตรวจถึงรากที่สองหรือ i*i <= n"
+      },
+      {
+        "id": "explanation",
+        "description": "มีคำอธิบายหลักการ"
+      }
+    ],
+    "rationale": "matched 0/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "gpu_monitoring_available": false,
+  "ended_at": 1784608019.477113
+}

@@ -1,0 +1,114 @@
+{
+  "run_id": "6724c716",
+  "task_name": "research_summary",
+  "run_index": 4,
+  "started_at": 1784081882.201806,
+  "network_condition": {
+    "name": "main_bandwidth_bw02000",
+    "scenario_type": "main_effect",
+    "main_effect_axis": "bandwidth",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 0,
+    "bandwidth_kbit": 2000,
+    "note": "",
+    "tier": "tier2_bandwidth",
+    "experiment_phase": "tier2_bandwidth_main_effect",
+    "trial_key": "tier2_bandwidth_main_effect::no_match::no_side::main_bandwidth_bw02000::research_summary::run4"
+  },
+  "messages": [
+    {
+      "timestamp": 1784081882.4123263,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1784081939.96874,
+      "from": "Worker",
+      "to": "group",
+      "content": "**ข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง**  \n\n1. **ข้อดีของ RAG**: สามารถเข้าถึงข้อมูลที่อัปเดตได้ตลอดเวลา เนื่องจากดึงข้อมูลจากแหล่งภายนอก (เช่น ฐานข้อมูลหรือเว็บไซต์) ซึ่งอาจมีข้อมูลใหม่ที่ไม่รวมอยู่ในโมเดลที่ฝึกมาเดิม  \n2. **ข้อเสียของ RAG**: อาจมีข้อมูลที่ไม่เกี่ยวข้องหรือมีเสียงรบกวน (noise) จากการดึงข้อมูลที่ไม่แม่นยำ ทำให้คำตอบไม่แม่นยำเท่ากับการฝึกโมเดลโดยตรง  \n3. **ข้อดีของ fine-tune**: สามารถปรับโมเดลให้เหมาะกับงานเฉพาะได้ดีขึ้น เนื่องจากฝึกโมเดลด้วยข้อมูลเฉพาะที่ตรงกับโจทย์ (เช่น ข้อมูลที่มี label หรือข้อมูลที่เกี่ยวข้องกับงาน)  \n4. **ข้อเสียของ fine-tune**: ต้องใช้ทรัพยากรการคำนวณสูงและเวลาในการฝึกโมเดล รวมถึงต้องมีข้อมูลฝึกจำนวนมากซึ่งอาจไม่พร้อมในบางกรณี  \n5. **ข้อเสียของ fine-tune**: มีความเสี่ยงต่อการ overfitting (โมเดลเรียนรู้ข้อมูลฝึกมากเกินไปจนไม่สามารถประยุกต์ใช้กับข้อมูลใหม่ได้) ซึ่งอาจทำให้ประสิทธิภาพลดลงเมื่อใช้งานจริง  \n\n**สรุป**: RAG เหมาะกับงานที่ต้องการข้อมูลที่อัปเดตและไม่ต้องการฝึกโมเดลใหม่ทั้งหมด ในขณะที่ fine-tune ให้ผลลัพธ์ที่แม่นยำกว่าในงานที่มีข้อมูลฝึกเฉพาะ แต่ต้องใช้ทรัพยากรมากขึ้นและเสี่ยงต่อ overfitting.",
+      "tokens": 278
+    },
+    {
+      "timestamp": 1784081979.610066,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED งานมีโครงสร้างชัดเจน ครอบคลุมข้อดี-ข้อเสียทั้งสองวิธี พร้อมสรุปเปรียบเทียบอย่างเป็นระบบ  \nSCORE: 5",
+      "tokens": 26
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784081882.2018182,
+      "tag": "start",
+      "cpu_percent": 1.8,
+      "ram_percent": 8.6,
+      "ram_used_mb": 503.9
+    },
+    {
+      "timestamp": 1784081979.6161592,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.6,
+      "ram_used_mb": 499.7
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 97.29,
+    "total_tokens": 337,
+    "quality_score": 5,
+    "ground_truth_score": 4,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "research_summary",
+    "score": 4,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 0.833,
+    "matched_points": [
+      {
+        "id": "rag_mentioned",
+        "description": "กล่าวถึง RAG"
+      },
+      {
+        "id": "fine_tune_mentioned",
+        "description": "กล่าวถึง fine-tune"
+      },
+      {
+        "id": "rag_advantage",
+        "description": "มีข้อดีของ RAG"
+      },
+      {
+        "id": "rag_disadvantage",
+        "description": "มีข้อเสียของ RAG"
+      },
+      {
+        "id": "finetune_disadvantage",
+        "description": "มีข้อเสียของ fine-tuning"
+      }
+    ],
+    "missing_points": [
+      {
+        "id": "finetune_advantage",
+        "description": "มีข้อดีของ fine-tuning"
+      }
+    ],
+    "rationale": "matched 5/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "ended_at": 1784081979.7269735
+}

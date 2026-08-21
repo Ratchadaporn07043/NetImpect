@@ -1,0 +1,149 @@
+{
+  "run_id": "7abd8b4a",
+  "task_name": "coding_task",
+  "run_index": 1,
+  "started_at": 1784497402.1297936,
+  "network_condition": {
+    "name": "main_loss_loss75",
+    "scenario_type": "main_effect",
+    "main_effect_axis": "loss",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 75,
+    "note": "",
+    "experiment_phase": "three_day_main_effect",
+    "trial_key": "three_day_main_effect::no_match::no_side::main_loss_loss75::coding_task::run1"
+  },
+  "messages": [
+    {
+      "timestamp": 1784497402.3537903,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ",
+      "tokens": 35
+    },
+    {
+      "timestamp": 1784497781.9927042,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ",
+      "tokens": 35
+    },
+    {
+      "timestamp": 1784498186.6384664,
+      "from": "Worker",
+      "to": "group",
+      "content": "```python\ndef is_prime(n):\n    if n <= 1:\n        return False\n    if n == 2:\n        return True\n    if n % 2 == 0:\n        return False\n    max_divisor = int(n**0.5) + 1\n    for i in range(3, max_divisor, 2):\n        if n % i == 0:\n            return False\n    return True\n```\n\n### หลักการสั้นๆ:\n1. **ตรวจสอบกรณีพิเศษ**: \n   - ถ้า `n <= 1` ไม่ใช่จำนวนเฉพาะ (คืนค่า `False`)\n   - ถ้า `n == 2` เป็นจำนวนเฉพาะ (คืนค่า `True`)\n   - ถ้า `n` เป็นเลขคู่ (ยกเว้น 2) ไม่ใช่จำนวนเฉพาะ (คืนค่า `False`)\n2. **ตรวจสอบตัวหาร**: \n   - ตัวหารที่เป็นไปได้ต้องอยู่ระหว่าง `3` ถึง `sqrt(n)` (เพื่อความเร็ว)\n   - เนื่องจากตัวหารที่มากกว่า `sqrt(n)` จะมีค่าตัวหารที่น้อยกว่า `sqrt(n)` อยู่แล้ว จึงเพียงตรวจสอบถึง `sqrt(n)` ที่เพิ่มค่า `1` เพื่อให้ครอบคลุมค่าที่เป็นจำนวนเต็ม\n   - เดินลูปเพียงเลขคี่ (ข้ามเลขคู่) เพื่อลดการคำนวณ\n\n### ตัวอย่าง:\n- `is_prime(7)` → `True` (7 ไม่มีตัวหารระหว่าง 3 ถึง 2.64)\n- `is_prime(15)` → `False` (15 % 3 == 0)",
+      "tokens": 230
+    },
+    {
+      "timestamp": 1784498556.769545,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ",
+      "tokens": 35
+    }
+  ],
+  "errors": [
+    {
+      "timestamp": 1784497781.8852093,
+      "error_type": "timeout",
+      "detail": "OpenAI API call timed out. This could be due to congestion or too small a timeout value. The timeout can be specified by setting the 'timeout' value (in seconds) in the llm_config (if you are using agents) or the OpenAIWrapper constructor (if you are using the OpenAIWrapper directly)."
+    },
+    {
+      "timestamp": 1784497781.8852181,
+      "error_type": "retry",
+      "detail": "attempt 1 failed with TimeoutError, retrying"
+    },
+    {
+      "timestamp": 1784498556.6727319,
+      "error_type": "APIConnectionError",
+      "detail": "Connection error."
+    },
+    {
+      "timestamp": 1784498556.6727362,
+      "error_type": "retry",
+      "detail": "attempt 2 failed with APIConnectionError, retrying"
+    },
+    {
+      "timestamp": 1784498927.0652518,
+      "error_type": "timeout",
+      "detail": "OpenAI API call timed out. This could be due to congestion or too small a timeout value. The timeout can be specified by setting the 'timeout' value (in seconds) in the llm_config (if you are using agents) or the OpenAIWrapper constructor (if you are using the OpenAIWrapper directly)."
+    }
+  ],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784497402.1297994,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.2,
+      "ram_used_mb": 494.1,
+      "gpu": null,
+      "gpu_all": []
+    },
+    {
+      "timestamp": 1784498927.0694144,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.1,
+      "ram_used_mb": 487.2,
+      "gpu": null,
+      "gpu_all": []
+    }
+  ],
+  "outcome": {
+    "success": false,
+    "rounds": 1,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 1524.82,
+    "total_tokens": 335,
+    "quality_score": null,
+    "ground_truth_score": 1,
+    "ground_truth_passed": false,
+    "retry_count": 2,
+    "timeout_count": 2,
+    "total_error_count": 5
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "coding_task",
+    "score": 1,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": false,
+    "coverage": 0.0,
+    "matched_points": [],
+    "missing_points": [
+      {
+        "id": "function_name",
+        "description": "ระบุฟังก์ชัน is_prime"
+      },
+      {
+        "id": "boolean_return",
+        "description": "คืนค่า True/False"
+      },
+      {
+        "id": "n_le_1",
+        "description": "อธิบาย/จัดการ n <= 1"
+      },
+      {
+        "id": "two_case",
+        "description": "จัดการเลข 2"
+      },
+      {
+        "id": "sqrt_bound",
+        "description": "ตรวจถึงรากที่สองหรือ i*i <= n"
+      },
+      {
+        "id": "explanation",
+        "description": "มีคำอธิบายหลักการ"
+      }
+    ],
+    "rationale": "matched 0/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "gpu_monitoring_available": false,
+  "ended_at": 1784498927.1802053
+}

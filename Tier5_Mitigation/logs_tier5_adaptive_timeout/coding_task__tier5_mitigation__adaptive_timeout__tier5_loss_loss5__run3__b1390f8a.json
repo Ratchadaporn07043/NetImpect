@@ -1,0 +1,114 @@
+{
+  "run_id": "b1390f8a",
+  "task_name": "coding_task",
+  "run_index": 3,
+  "started_at": 1784762572.7274213,
+  "network_condition": {
+    "name": "tier5_loss_loss5",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 5,
+    "note": "",
+    "experiment_phase": "tier5_mitigation__adaptive_timeout",
+    "trial_key": "tier5_mitigation__adaptive_timeout::no_match::no_side::tier5_loss_loss5::coding_task::run3"
+  },
+  "messages": [
+    {
+      "timestamp": 1784762572.9428878,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ",
+      "tokens": 35
+    },
+    {
+      "timestamp": 1784762673.313304,
+      "from": "Worker",
+      "to": "group",
+      "content": "```python\nimport math\n\ndef is_prime(n):\n    \"\"\"\n    ตรวจสอบว่าจำนวนเต็ม n เป็นจำนวนเฉพาะหรือไม่\n    จำนวนเฉพาะคือจำนวนที่มีตัวหารเฉพาะ 1 และตัวมันเอง\n    \"\"\"\n    if n <= 1:\n        return False  # จำนวนน้อยกว่าหรือเท่ากับ 1 ไม่ใช่จำนวนเฉพาะ\n    if n == 2:\n        return True   # 2 เป็นจำนวนเฉพาะ\n    if n % 2 == 0:\n        return False  # จำนวนคู่ (ยกเว้น 2) ไม่ใช่จำนวนเฉพาะ\n    \n    # ตรวจสอบตัวหารเฉพาะจาก 3 ถึง sqrt(n) โดยเพิ่มขั้นตอนทีละ 2 (เพื่อข้ามค่าคู่)\n    sqrt_n = int(math.isqrt(n))  # หาค่ารากที่สองของ n แบบเต็มจำนวน\n    for i in range(3, sqrt_n + 1, 2):\n        if n % i == 0:\n            return False  # พบตัวหาร ไม่ใช่จำนวนเฉพาะ\n    \n    return True  # ไม่พบตัวหาร จึงเป็นจำนวนเฉพาะ\n```\n\n### หลักการ:\n1. **กรณีพิเศษ**: \n   - ถ้า `n <= 1` → ไม่ใช่จำนวนเฉพาะ\n   - ถ้า `n == 2` → เป็นจำนวนเฉพาะ\n   - ถ้า `n` เป็นคู่ (ยกเว้น 2) → ไม่ใช่จำนวนเฉพาะ\n\n2. **ตรวจสอบตัวหาร**:\n   - ใช้การวนลูปจาก `3` ถึง `sqrt(n)` โดยเพิ่มขั้นตอนทีละ `2` (เพื่อข้ามค่าคู่)\n   - หากพบตัวหารที่หาร `n` ลงตัว → ไม่ใช่จำนวนเฉพาะ\n   - หากไม่พบตัวหาร → เป็นจำนวนเฉพาะ\n\n### ตัวอย่าง:\n- `is_prime(7)` → `True` (7 ไม่มีตัวหารนอกเหนือจาก 1 และ 7)\n- `is_prime(15)` → `False` (15 หารได้ด้วย 3 และ 5)",
+      "tokens": 294
+    },
+    {
+      "timestamp": 1784762720.8339524,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED ฟังก์ชันทำงานถูกต้องและครอบคลุมกรณีทุกอย่าง\nSCORE: 5",
+      "tokens": 15
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784762572.7274318,
+      "tag": "start",
+      "cpu_percent": 0.9,
+      "ram_percent": 7.3,
+      "ram_used_mb": 423.5,
+      "gpu": null,
+      "gpu_all": []
+    },
+    {
+      "timestamp": 1784762720.8373432,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 7.3,
+      "ram_used_mb": 422.8,
+      "gpu": null,
+      "gpu_all": []
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 147.99,
+    "total_tokens": 344,
+    "quality_score": 5,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "coding_task",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "function_name",
+        "description": "ระบุฟังก์ชัน is_prime"
+      },
+      {
+        "id": "boolean_return",
+        "description": "คืนค่า True/False"
+      },
+      {
+        "id": "n_le_1",
+        "description": "อธิบาย/จัดการ n <= 1"
+      },
+      {
+        "id": "two_case",
+        "description": "จัดการเลข 2"
+      },
+      {
+        "id": "sqrt_bound",
+        "description": "ตรวจถึงรากที่สองหรือ i*i <= n"
+      },
+      {
+        "id": "explanation",
+        "description": "มีคำอธิบายหลักการ"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 6/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "gpu_monitoring_available": false,
+  "ended_at": 1784762720.948592
+}

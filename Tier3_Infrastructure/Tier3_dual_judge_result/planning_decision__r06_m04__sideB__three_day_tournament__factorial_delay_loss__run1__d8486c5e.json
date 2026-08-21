@@ -1,0 +1,176 @@
+{
+  "run_id": "d8486c5e",
+  "task_name": "planning_decision",
+  "run_index": 1,
+  "started_at": 1783600730.8859963,
+  "network_condition": {
+    "name": "factorial_delay_loss",
+    "scenario_type": "factorial",
+    "delay_ms": 300,
+    "requested_delay_ms": 300,
+    "jitter_ms": 0,
+    "loss_pct": 5,
+    "factors": {
+      "delay": "on",
+      "loss": "on",
+      "jitter": "off"
+    },
+    "note": "",
+    "experiment_phase": "three_day_tournament",
+    "tournament": {
+      "match_id": "r06_m04",
+      "round_index": 6,
+      "pair_index": 4,
+      "side": "B",
+      "opponent": "factorial_delay_jitter",
+      "pair": [
+        "factorial_delay_jitter",
+        "factorial_delay_loss"
+      ]
+    },
+    "trial_key": "three_day_tournament::r06_m04::B::factorial_delay_loss::planning_decision::run1"
+  },
+  "messages": [
+    {
+      "timestamp": 1783600731.1032598,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: ทีมมีงบ 3 อย่างให้เลือกลงทุนอย่างใดอย่างหนึ่ง: (1) ปรับปรุง UX, (2) เพิ่ม feature ใหม่, (3) แก้ bug ค้างเก่า ช่วยวางแผนว่าควรเลือกอะไรก่อน พร้อมเหตุผลสั้นๆ",
+      "tokens": 42
+    },
+    {
+      "timestamp": 1783600783.1225224,
+      "from": "Worker",
+      "to": "group",
+      "content": "**แผนการลงทุนที่แนะนำ:**  \n1. **แก้ bug ค้างเก่า** (ลำดับ 1)  \n   - **เหตุผล:** บั๊กที่ยังไม่ได้แก้ไขอาจส่งผลต่อประสบการณ์ผู้ใช้โดยตรง เช่น ข้อผิดพลาดในการใช้งาน หรือความไม่ไว้วางใจในระบบ ซึ่งอาจทำให้ผู้ใช้ละทิ้งแอปได้ จึงต้องแก้ไขก่อนเพื่อสร้างความมั่นใจและความน่าเชื่อถือ  \n\n2. **ปรับปรุง UX** (ลำดับ 2)  \n   - **เหตุผล:** หลังจากที่ระบบเสถียรแล้ว การปรับ UX จะช่วยเพิ่มความพึงพอใจของผู้ใช้ ลดอัตราการยกเลิกการใช้งาน และเพิ่มการมีส่วนร่วมในระยะยาว  \n\n3. **เพิ่ม feature ใหม่** (ลำดับ 3)  \n   - **เหตุผล:** การเพิ่มฟีเจอร์ใหม่ควรทำเมื่อระบบมีความเสถียรและ UX ดีแล้ว เพื่อไม่ให้ผู้ใช้รู้สึกว่าแอป \"ยุ่ง\" หรือ \"ซับซ้อนเกินไป\" ซึ่งอาจลดประสิทธิภาพในการใช้งาน  \n\n**สรุป:** ควรเริ่มจากแก้ bug ค้างเก่าเพื่อสร้างความมั่นคง แล้วจึงโฟกัสที่ UX เพื่อเพิ่มความพึงพอใจ ต่อมาจึงพัฒนาฟีเจอร์ใหม่เพื่อขยายความสามารถของแอป",
+      "tokens": 202
+    },
+    {
+      "timestamp": 1783600805.1122162,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED แผนมีลำดับความสำคัญชัดเจน พร้อมเหตุผลที่สมเหตุสมผล  \nSCORE: 5",
+      "tokens": 17
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1783600730.8860118,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.3,
+      "ram_used_mb": 505.5
+    },
+    {
+      "timestamp": 1783600805.1285424,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.3,
+      "ram_used_mb": 503.6
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 74.11,
+    "total_tokens": 261,
+    "quality_score": 5,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0,
+    "posthoc_ground_truth_score": 3,
+    "posthoc_ground_truth_passed": false,
+    "posthoc_ground_truth_mode": "both"
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "planning_decision",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "clear_choice",
+        "description": "มีการเลือก/จัดลำดับชัดเจน"
+      },
+      {
+        "id": "mentions_options",
+        "description": "กล่าวถึงตัวเลือกหลัก"
+      },
+      {
+        "id": "impact_reason",
+        "description": "มีเหตุผลด้านผลกระทบ/ลูกค้า"
+      },
+      {
+        "id": "risk_urgency",
+        "description": "มีเหตุผลด้านความเสี่ยงหรือความเร่งด่วน"
+      },
+      {
+        "id": "action_plan",
+        "description": "มีแผนดำเนินการ"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 5/5 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "ended_at": 1783600805.2348578,
+  "posthoc_evaluation": {
+    "enabled": true,
+    "mode": "both",
+    "task_name": "planning_decision",
+    "judge_model_name": "qwen3:8b",
+    "score": 3,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": false,
+    "missing_points": [
+      "ไม่มีแผนปฏิบัติสั้นๆ เช่น ประเมินข้อมูล วัดผล ทำ sprint"
+    ],
+    "rationale": "คำตอบระบุลำดับความสำคัญและเหตุผลได้ชัดเจน แต่ไม่มีแผนปฏิบัติสั้นๆ เช่น การประเมินข้อมูลหรือทำ sprint ซึ่งเป็นข้อกำหนดใน rubric ที่ขาดหายไป",
+    "raw_response": "{\n  \"score\": 3,\n  \"passed\": false,\n  \"missing_points\": [\n    \"ไม่มีแผนปฏิบัติสั้นๆ เช่น ประเมินข้อมูล วัดผล ทำ sprint\"\n  ],\n  \"rationale\": \"คำตอบระบุลำดับความสำคัญและเหตุผลได้ชัดเจน แต่ไม่มีแผนปฏิบัติสั้นๆ เช่น การประเมินข้อมูลหรือทำ sprint ซึ่งเป็นข้อกำหนดใน rubric ที่ขาดหายไป\"\n}",
+    "heuristic_reference": {
+      "enabled": true,
+      "mode": "heuristic",
+      "task_name": "planning_decision",
+      "score": 5,
+      "max_score": 5,
+      "pass_score": 4,
+      "passed": true,
+      "coverage": 1.0,
+      "matched_points": [
+        {
+          "id": "clear_choice",
+          "description": "มีการเลือก/จัดลำดับชัดเจน"
+        },
+        {
+          "id": "mentions_options",
+          "description": "กล่าวถึงตัวเลือกหลัก"
+        },
+        {
+          "id": "impact_reason",
+          "description": "มีเหตุผลด้านผลกระทบ/ลูกค้า"
+        },
+        {
+          "id": "risk_urgency",
+          "description": "มีเหตุผลด้านความเสี่ยงหรือความเร่งด่วน"
+        },
+        {
+          "id": "action_plan",
+          "description": "มีแผนดำเนินการ"
+        }
+      ],
+      "missing_points": [],
+      "rationale": "matched 5/5 rubric checks"
+    },
+    "posthoc": true,
+    "evaluated_at": "2026-07-17T11:07:31+0000"
+  }
+}

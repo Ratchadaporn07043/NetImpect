@@ -1,0 +1,132 @@
+{
+  "run_id": "245bf334",
+  "task_name": "research_summary",
+  "run_index": 1,
+  "started_at": 1784458884.2632236,
+  "network_condition": {
+    "name": "factorial_delay",
+    "scenario_type": "factorial",
+    "delay_ms": 300,
+    "requested_delay_ms": 300,
+    "jitter_ms": 0,
+    "loss_pct": 0,
+    "factors": {
+      "delay": "on",
+      "loss": "off",
+      "jitter": "off"
+    },
+    "note": "",
+    "experiment_phase": "three_day_tournament",
+    "tournament": {
+      "match_id": "r01_m04",
+      "round_index": 1,
+      "pair_index": 4,
+      "side": "B",
+      "opponent": "factorial_loss_jitter",
+      "pair": [
+        "factorial_loss_jitter",
+        "factorial_delay"
+      ]
+    },
+    "trial_key": "three_day_tournament::r01_m04::B::factorial_delay::research_summary::run1"
+  },
+  "messages": [
+    {
+      "timestamp": 1784458884.4805107,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1784458960.3941333,
+      "from": "Worker",
+      "to": "group",
+      "content": "1. **ข้อดีของ RAG**: สามารถเข้าถึงข้อมูลใหม่หรือข้อมูลที่ไม่เคยมีในชุดฝึกได้โดยไม่ต้องฝึกโมเดลใหม่ ขณะที่การ fine-tune ต้องพึ่งพาข้อมูลที่มีอยู่ในชุดฝึกเท่านั้น  \n2. **ข้อเสียของ RAG**: ขึ้นอยู่กับประสิทธิภาพของระบบค้นหาข้อมูล หากข้อมูลที่ค้นหาไม่แม่นยำหรือไม่เกี่ยวข้อง อาจทำให้คำตอบผิดพลาดหรือไม่สมบูรณ์  \n3. **ข้อดีของ fine-tune**: โมเดลสามารถเรียนรู้รูปแบบเฉพาะของงานได้ลึกซึ้งมากขึ้น ทำให้ผลลัพธ์มีความแม่นยำสูงในงานที่ต้องการความเฉพาะเจาะจง  \n4. **ข้อเสียของ fine-tune**: ต้องใช้ข้อมูลฝึกจำนวนมากและมีคุณภาพสูง ถ้าข้อมูลไม่เพียงพอหรือมีอคติ อาจทำให้โมเดลทำงานผิดพลาด  \n5. **ข้อดีของ RAG**: รองรับการปรับตัวต่อข้อมูลใหม่ได้รวดเร็ว ไม่ต้องพึ่งพาการฝึกโมเดลซ้ำ ขณะที่การ fine-tune ต้องใช้เวลาและทรัพยากรในการปรับปรุงโมเดลใหม่  \n\n(หากมีข้อติจาก Reviewer ให้ปรับแก้เพิ่มเติม)",
+      "tokens": 194
+    },
+    {
+      "timestamp": 1784458998.439595,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED งานมีโครงสร้างชัดเจน ครบถ้วนตามโจทย์ 5 ข้อ ไม่ซ้ำกัน และเนื้อหาถูกต้อง  \nSCORE: 5",
+      "tokens": 22
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784458884.2632294,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 7.6,
+      "ram_used_mb": 450.4,
+      "gpu": null,
+      "gpu_all": []
+    },
+    {
+      "timestamp": 1784458998.4477184,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 7.7,
+      "ram_used_mb": 458.3,
+      "gpu": null,
+      "gpu_all": []
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 114.06,
+    "total_tokens": 249,
+    "quality_score": 5,
+    "ground_truth_score": 3,
+    "ground_truth_passed": false,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "research_summary",
+    "score": 3,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": false,
+    "coverage": 0.667,
+    "matched_points": [
+      {
+        "id": "rag_mentioned",
+        "description": "กล่าวถึง RAG"
+      },
+      {
+        "id": "fine_tune_mentioned",
+        "description": "กล่าวถึง fine-tune"
+      },
+      {
+        "id": "finetune_advantage",
+        "description": "มีข้อดีของ fine-tuning"
+      },
+      {
+        "id": "finetune_disadvantage",
+        "description": "มีข้อเสียของ fine-tuning"
+      }
+    ],
+    "missing_points": [
+      {
+        "id": "rag_advantage",
+        "description": "มีข้อดีของ RAG"
+      },
+      {
+        "id": "rag_disadvantage",
+        "description": "มีข้อเสียของ RAG"
+      }
+    ],
+    "rationale": "matched 4/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "gpu_monitoring_available": false,
+  "ended_at": 1784458998.553296
+}

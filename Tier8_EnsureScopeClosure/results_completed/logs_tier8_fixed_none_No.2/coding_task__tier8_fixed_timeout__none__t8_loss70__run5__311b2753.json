@@ -1,0 +1,140 @@
+{
+  "run_id": "311b2753",
+  "task_name": "coding_task",
+  "run_index": 5,
+  "started_at": 1785477099.877825,
+  "network_condition": {
+    "name": "t8_loss70",
+    "scenario_type": "main_effect",
+    "main_effect_axis": "loss",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 70,
+    "bandwidth_kbit": null,
+    "note": "",
+    "experiment_phase": "tier8_fixed_timeout__none"
+  },
+  "messages": [
+    {
+      "timestamp": 1785477100.1147597,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ",
+      "tokens": 35
+    },
+    {
+      "timestamp": 1785477471.3816063,
+      "from": "Worker",
+      "to": "group",
+      "content": "```python\nimport math\n\ndef is_prime(n):\n    \"\"\"\n    ตรวจสอบว่าจำนวนเต็ม n เป็นจำนวนเฉพาะหรือไม่\n    จำนวนเฉพาะคือจำนวนที่มีตัวหารเฉพาะ 1 และตัวเอง\n    \"\"\"\n    if n <= 1:\n        return False  # จำนวนที่น้อยกว่าหรือเท่ากับ 1 ไม่ใช่จำนวนเฉพาะ\n    if n == 2:\n        return True  # 2 เป็นจำนวนเฉพาะ\n    if n % 2 == 0:\n        return False  # จำนวนคู่ที่มากกว่า 2 ไม่ใช่จำนวนเฉพาะ\n    \n    # ตรวจสอบตัวหารจาก 3 ถึง sqrt(n) โดยเพิ่มขึ้นทีละ 2 (ข้ามค่าคู่)\n    max_divisor = int(math.sqrt(n)) + 1\n    for i in range(3, max_divisor, 2):\n        if n % i == 0:\n            return False  # ถ้าหารได้ ไม่ใช่จำนวนเฉพาะ\n    \n    return True  # ถ้าไม่พบตัวหาร คือจำนวนเฉพาะ\n```\n\n### หลักการสั้นๆ\n1. **กรณีพิเศษ**: จำนวนที่น้อยกว่าหรือเท่ากับ 1 ไม่ใช่จำนวนเฉพาะ (คืนค่า `False`)  \n   2 เป็นจำนวนเฉพาะ (คืนค่า `True`)  \n   จำนวนคู่ที่มากกว่า 2 ไม่ใช่จำนวนเฉพาะ (คืนค่า `False`)  \n2. **ตรวจสอบตัวหาร**: ตรวจสอบตัวหารจาก 3 ถึง √n โดยเพิ่มขึ้นทีละ 2 (ข้ามค่าคู่)  \n   ถ้าพบตัวหารที่หารได้ คืนค่า `False`  \n3. **ผลลัพธ์**: ถ้าไม่พบตัวหารใดๆ คืนค่า `True` (เป็นจำนวนเฉพาะ)  \n\n### ตัวอย่าง\n- `is_prime(2)` → `True`  \n- `is_prime(9)` → `False` (9 = 3×3)  \n- `is_prime(17)` → `True` (ไม่มีตัวหารใดๆ ที่มากกว่า 1 และตัวเอง)",
+      "tokens": 299
+    },
+    {
+      "timestamp": 1785477639.3757997,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED ฟังก์ชันทำงานถูกต้องและมีประสิทธิภาพ ตรวจสอบกรณีพิเศษและตัวหารทั้งหมดถูกต้อง  \nSCORE: 5",
+      "tokens": 24
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1785477099.8778296,
+      "tag": "start",
+      "cpu_percent": 1.6,
+      "ram_percent": 62.6,
+      "ram_used_mb": 6945.5
+    },
+    {
+      "timestamp": 1785477639.389108,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 66.7,
+      "ram_used_mb": 7411.8
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 539.39,
+    "total_tokens": 358,
+    "quality_score": 5,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "coding_task",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "function_name",
+        "description": "ระบุฟังก์ชัน is_prime"
+      },
+      {
+        "id": "boolean_return",
+        "description": "คืนค่า True/False"
+      },
+      {
+        "id": "n_le_1",
+        "description": "อธิบาย/จัดการ n <= 1"
+      },
+      {
+        "id": "two_case",
+        "description": "จัดการเลข 2"
+      },
+      {
+        "id": "sqrt_bound",
+        "description": "ตรวจถึงรากที่สองหรือ i*i <= n"
+      },
+      {
+        "id": "explanation",
+        "description": "มีคำอธิบายหลักการ"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 6/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "achieved": null,
+  "network_commands": [
+    {
+      "action": "apply",
+      "result": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "cmd": "tc qdisc add dev eth0 root handle 1: netem loss 70%",
+        "clear_before_apply": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "Error: Cannot delete qdisc with handle of zero.\n",
+          "cmd": "tc qdisc del dev eth0 root",
+          "note": "clear skipped: no existing qdisc"
+        },
+        "tbf": null
+      }
+    },
+    {
+      "action": "clear",
+      "result": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "cmd": "tc qdisc del dev eth0 root"
+      }
+    }
+  ],
+  "ended_at": 1785477639.498716
+}

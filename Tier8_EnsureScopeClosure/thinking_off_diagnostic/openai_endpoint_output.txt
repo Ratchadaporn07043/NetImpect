@@ -1,0 +1,29 @@
+======================================================================
+A) /v1/chat/completions ปกติ (เหมือน multi_agent.py ใช้อยู่ตอนนี้ทุกประการ)
+======================================================================
+--- A: ปกติ ---
+  รอบที่ 1: 25.15s
+  response ตัวอย่าง: {"id":"chatcmpl-165","object":"chat.completion","created":1785911793,"model":"qwen3:8b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"OK","reasoning":"Okay, the user wants me to reply with exactly one word: OK. Let me make sure I understand the request correctly. They specified \"Reply with exactly one word: OK /think\". So the instruction is to re
+  รอบที่ 2: 10.41s
+  รอบที่ 3: 10.03s
+
+======================================================================
+B) /v1/chat/completions + "think": false ต่อท้าย body
+======================================================================
+--- B: think:false ---
+  รอบที่ 1: 8.82s
+  response ตัวอย่าง: {"id":"chatcmpl-128","object":"chat.completion","created":1785911823,"model":"qwen3:8b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"OK","reasoning":"Okay, the user wants me to reply with exactly one word: OK. Let me make sure I understand the request correctly. They specified \"Reply with exactly one word: OK /think\". So the instruction is to re
+  รอบที่ 2: 9.62s
+  รอบที่ 3: 9.91s
+
+======================================================================
+สรุปวิธีอ่านผล
+======================================================================
+- ถ้า B เร็วขึ้นชัดเจนเหมือนตอนทดสอบผ่าน /api/generate (เหลือ <2s) แปลว่า
+  Ollama เวอร์ชันนี้รับ "think": false ผ่าน /v1/chat/completions ด้วย ->
+  แก้ multi_agent.py ได้โดยเพิ่ม extra_body={"think": False} หรือใส่ key
+  "think": False เข้าไปตรงๆ ใน config_list entry ของ _llm_config()
+- ถ้า B ไม่ต่างจาก A เลย แปลว่า endpoint แบบ OpenAI-compatible ของ Ollama
+  เวอร์ชันนี้ไม่ forward parameter นี้ให้ ต้องเปลี่ยนไปเรียก Ollama ผ่าน
+  /api/chat หรือ /api/generate โดยตรงแทน AutoGen's OpenAI client wrapper
+  (ใช้เวลาแก้มากกว่า ต้องเขียน custom client หรือ hook ใน pyautogen)

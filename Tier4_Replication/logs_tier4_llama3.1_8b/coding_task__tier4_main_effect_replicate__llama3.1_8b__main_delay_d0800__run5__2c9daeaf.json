@@ -1,0 +1,117 @@
+{
+  "run_id": "2c9daeaf",
+  "task_name": "coding_task",
+  "run_index": 5,
+  "started_at": 1784450897.6891723,
+  "network_condition": {
+    "name": "main_delay_d0800",
+    "scenario_type": "main_effect",
+    "main_effect_axis": "delay",
+    "delay_ms": 800,
+    "requested_delay_ms": 800,
+    "jitter_ms": 0,
+    "loss_pct": 0,
+    "note": "",
+    "experiment_phase": "tier4_main_effect_replicate__llama3.1_8b",
+    "trial_key": "tier4_main_effect_replicate__llama3.1_8b::no_match::no_side::main_delay_d0800::coding_task::run5"
+  },
+  "messages": [
+    {
+      "timestamp": 1784450897.9063218,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ",
+      "tokens": 35
+    },
+    {
+      "timestamp": 1784450925.8044944,
+      "from": "Worker",
+      "to": "group",
+      "content": "ฟังก์ชันที่ใช้ในการตรวจสอบว่าจำนวนเต็มนั้นเป็นจำนวนเฉพาะหรือไม่ โดยใช้หลักการของการหารด้วยตัวเลขทุกๆ ตัวเลขที่น้อยกว่าตัวเลขนั้นลงมา หากตัวเลขนั้นหารด้วยตัวเลขใดๆ ลงตัว นั่นก็หมายความว่าจำนวนเต็มนั้นไม่ใช่จำนวนเฉพาะ\n\n```python\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    return True\n```\n\nการทำงานของฟังก์ชัน `is_prime`:\n\n- หากตัวเลขนั้นเป็นลบ หรือเท่ากับ 1 (ซึ่งไม่ใช่จำนวนเฉพาะ) ฟังก์ชันจะคืนค่า `False`\n- จากนั้น ฟังก์ชันจะเริ่มการตรวจสอบจากตัวเลขที่สอง โดยใช้เงื่อนไขว่าตัวเลขนั้นหารด้วยตัวเลขใดๆ ลงตัว หากพบว่ามีตัวเลขหนึ่งใดที่หารลงตัว นั่นก็หมายความว่าจำนวนเต็มนั้นไม่ใช่จำนวนเฉพาะ และฟังก์ชันจะคืนค่า `False`\n- หากการตรวจสอบจนถึงตัวเลขครึ่งหนึ่งของตัวเลขนั้น (ซึ่งเป็นขั้นตอนสำคัญในการประหยัดเวลา) ไม่พบว่าตัวเลขนั้นหารด้วยตัวเลขใดๆ ลงตัว นั่นก็หมายความว่าจำนวนเต็มนั้นเป็นจำนวนเฉพาะ และฟังก์ชันจะคืนค่า `True`",
+      "tokens": 229
+    },
+    {
+      "timestamp": 1784450930.702752,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED\nSCORE: 5",
+      "tokens": 4
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784450897.6891768,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.0,
+      "ram_used_mb": 482.2,
+      "gpu": null,
+      "gpu_all": []
+    },
+    {
+      "timestamp": 1784450930.7059546,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.0,
+      "ram_used_mb": 483.6,
+      "gpu": null,
+      "gpu_all": []
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 32.9,
+    "total_tokens": 268,
+    "quality_score": 5,
+    "ground_truth_score": 3,
+    "ground_truth_passed": false,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "coding_task",
+    "score": 3,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": false,
+    "coverage": 0.667,
+    "matched_points": [
+      {
+        "id": "function_name",
+        "description": "ระบุฟังก์ชัน is_prime"
+      },
+      {
+        "id": "boolean_return",
+        "description": "คืนค่า True/False"
+      },
+      {
+        "id": "n_le_1",
+        "description": "อธิบาย/จัดการ n <= 1"
+      },
+      {
+        "id": "explanation",
+        "description": "มีคำอธิบายหลักการ"
+      }
+    ],
+    "missing_points": [
+      {
+        "id": "two_case",
+        "description": "จัดการเลข 2"
+      },
+      {
+        "id": "sqrt_bound",
+        "description": "ตรวจถึงรากที่สองหรือ i*i <= n"
+      }
+    ],
+    "rationale": "matched 4/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "gpu_monitoring_available": false,
+  "ended_at": 1784450930.8133113
+}

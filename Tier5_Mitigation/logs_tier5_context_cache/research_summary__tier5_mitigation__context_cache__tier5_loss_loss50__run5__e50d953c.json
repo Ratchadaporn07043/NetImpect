@@ -1,0 +1,115 @@
+{
+  "run_id": "e50d953c",
+  "task_name": "research_summary",
+  "run_index": 5,
+  "started_at": 1784826105.026368,
+  "network_condition": {
+    "name": "tier5_loss_loss50",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 50,
+    "note": "",
+    "experiment_phase": "tier5_mitigation__context_cache",
+    "trial_key": "tier5_mitigation__context_cache::no_match::no_side::tier5_loss_loss50::research_summary::run5"
+  },
+  "messages": [
+    {
+      "timestamp": 1784826105.245117,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1784826179.2494984,
+      "from": "Worker",
+      "to": "group",
+      "content": "**สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง (5 ข้อ):**  \n\n1. **ข้อดีของ RAG**: สามารถเข้าถึงข้อมูลอัปเดตได้ทันทีจากแหล่งข้อมูลภายนอก ทำให้ตอบคำถามที่เกี่ยวข้องกับข้อมูลใหม่หรือเปลี่ยนแปลงได้โดยไม่ต้องฝึกโมเดลใหม่  \n2. **ข้อเสียของ RAG**: กระบวนการเรียกข้อมูลอาจใช้เวลานานหรือมีความล่าช้า (latency) โดยเฉพาะเมื่อฐานข้อมูลมีขนาดใหญ่ ทำให้ประสิทธิภาพลดลงในงานที่ต้องการความเร็วสูง  \n3. **ข้อดีของ Fine-tune**: โมเดลที่ถูก fine-tune ให้ผลลัพธ์ที่แม่นยำและสอดคล้องกับข้อมูลเฉพาะงานมากขึ้น เนื่องจากได้รับการปรับแต่งโดยตรงจากข้อมูลฝึกอบรม  \n4. **ข้อเสียของ Fine-tune**: ต้องใช้ข้อมูลฝึกอบรมจำนวนมากและทรัพยากรการคำนวณสูง ซึ่งอาจไม่เหมาะกับงานที่ข้อมูลจำกัดหรือต้องการปรับตัวเร็ว  \n5. **ข้อดีของ RAG เทียบกับ Fine-tune**: RAG สามารถปรับตัวเข้ากับข้อมูลใหม่ได้โดยไม่ต้องฝึกโมเดลใหม่ทั้งหมด ขณะที่โมเดลที่ fine-tune อาจไม่สามารถจัดการกับข้อมูลที่อยู่นอกชุดข้อมูลฝึกอบรมได้ดีเท่ากับ RAG  \n\n**สรุป**: ข้อดีของ RAG คือความยืดหยุ่นในการเข้าถึงข้อมูลใหม่และความไม่ต้องพึ่งพาข้อมูลฝึกอบรมจำนวนมาก ในขณะที่ Fine-tune ให้ผลลัพธ์ที่แม่นยำในงานเฉพาะ แต่มีข้อจำกัดด้านทรัพยากรและความยืดหยุ่นต่ำเมื่อต้องการปรับตัวเร็ว",
+      "tokens": 288
+    },
+    {
+      "timestamp": 1784826217.357321,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED งานมีโครงสร้างชัดเจน ครอบคลุมข้อดี-ข้อเสียทั้งสองวิธี พร้อมเปรียบเทียบอย่างมีเหตุผล  \nSCORE: 5",
+      "tokens": 25
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784826105.026375,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.0,
+      "ram_used_mb": 481.0,
+      "gpu": null,
+      "gpu_all": []
+    },
+    {
+      "timestamp": 1784826217.3634403,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.0,
+      "ram_used_mb": 480.6,
+      "gpu": null,
+      "gpu_all": []
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 112.21,
+    "total_tokens": 346,
+    "quality_score": 5,
+    "ground_truth_score": 4,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "research_summary",
+    "score": 4,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 0.833,
+    "matched_points": [
+      {
+        "id": "rag_mentioned",
+        "description": "กล่าวถึง RAG"
+      },
+      {
+        "id": "fine_tune_mentioned",
+        "description": "กล่าวถึง fine-tune"
+      },
+      {
+        "id": "rag_advantage",
+        "description": "มีข้อดีของ RAG"
+      },
+      {
+        "id": "rag_disadvantage",
+        "description": "มีข้อเสียของ RAG"
+      },
+      {
+        "id": "finetune_disadvantage",
+        "description": "มีข้อเสียของ fine-tuning"
+      }
+    ],
+    "missing_points": [
+      {
+        "id": "finetune_advantage",
+        "description": "มีข้อดีของ fine-tuning"
+      }
+    ],
+    "rationale": "matched 5/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "gpu_monitoring_available": false,
+  "ended_at": 1784826217.4656718
+}

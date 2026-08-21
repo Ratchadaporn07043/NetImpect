@@ -1,0 +1,161 @@
+{
+  "run_id": "cc6f89ae",
+  "task_name": "planning_decision",
+  "run_index": 4,
+  "started_at": 1783714400.186935,
+  "network_condition": {
+    "name": "main_jitter_j030",
+    "scenario_type": "main_effect",
+    "main_effect_axis": "jitter",
+    "delay_ms": 50,
+    "requested_delay_ms": 0,
+    "jitter_ms": 30,
+    "loss_pct": 0,
+    "note": "requested delay=0ms แต่ jitter=30ms ต้องใช้ delay=50ms ขั้นต่ำ เพราะ netem ต้องมี delay>0",
+    "experiment_phase": "three_day_main_effect",
+    "trial_key": "three_day_main_effect::no_match::no_side::main_jitter_j030::planning_decision::run4"
+  },
+  "messages": [
+    {
+      "timestamp": 1783714400.4106162,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: ทีมมีงบ 3 อย่างให้เลือกลงทุนอย่างใดอย่างหนึ่ง: (1) ปรับปรุง UX, (2) เพิ่ม feature ใหม่, (3) แก้ bug ค้างเก่า ช่วยวางแผนว่าควรเลือกอะไรก่อน พร้อมเหตุผลสั้นๆ",
+      "tokens": 42
+    },
+    {
+      "timestamp": 1783714439.5294023,
+      "from": "Worker",
+      "to": "group",
+      "content": "**แผนการลงทุนตามลำดับความสำคัญ:**  \n1. **แก้ bug ค้างเก่า** (ก่อน)  \n   - **เหตุผล:** ถ้า bug ที่ค้างอยู่ส่งผลกระทบต่อการทำงานของระบบ (เช่น ข้อมูลหาย ระบบล่ม ความปลอดภัย) จะทำให้ผู้ใช้ไม่สามารถใช้งานได้ หรือเสี่ยงต่อความเสียหาย จึงต้องแก้ไขก่อนเพื่อให้ระบบมีความเสถียร  \n\n2. **ปรับปรุง UX** (รองลงมา)  \n   - **เหตุผล:** UX ที่ดีช่วยเพิ่มความพึงพอใจของผู้ใช้ ลดปัญหาการใช้งาน และส่งเสริมการใช้งานต่อเนื่อง แต่ถ้าระบบยังไม่ทำงานได้ดี ความพยายามปรับ UX จะสูญเปล่า  \n\n3. **เพิ่ม feature ใหม่** (สุดท้าย)  \n   - **เหตุผล:** การเพิ่ม feature ใหม่ควรทำเมื่อระบบมีความเสถียรและ UX ดีแล้ว ถ้าลงทุนใน feature ก่อน อาจทำให้ระบบไม่เสถียรหรือผู้ใช้ไม่พอใจ ซึ่งสูญเสียความคุ้มค่า  \n\n**สรุป:** ควรเริ่มจากแก้ bug ค้างเก่าเพื่อให้ระบบทำงานได้ดีก่อน แล้วจึงโฟกัสที่ UX และสุดท้ายค่อยพัฒนา feature ใหม่ตามความต้องการของผู้ใช้และตลาด",
+      "tokens": 203
+    },
+    {
+      "timestamp": 1783714458.8362906,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED แผนการลงทุนมีลำดับความสำคัญชัดเจน ตามหลักการพัฒนาซอฟต์แวร์ที่เน้นความเสถียรก่อน\nSCORE: 5",
+      "tokens": 24
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1783714400.186952,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.4,
+      "ram_used_mb": 507.8
+    },
+    {
+      "timestamp": 1783714458.8458152,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.4,
+      "ram_used_mb": 508.4
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 58.53,
+    "total_tokens": 269,
+    "quality_score": 5,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0,
+    "posthoc_ground_truth_score": 4,
+    "posthoc_ground_truth_passed": true,
+    "posthoc_ground_truth_mode": "both"
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "planning_decision",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "clear_choice",
+        "description": "มีการเลือก/จัดลำดับชัดเจน"
+      },
+      {
+        "id": "mentions_options",
+        "description": "กล่าวถึงตัวเลือกหลัก"
+      },
+      {
+        "id": "impact_reason",
+        "description": "มีเหตุผลด้านผลกระทบ/ลูกค้า"
+      },
+      {
+        "id": "risk_urgency",
+        "description": "มีเหตุผลด้านความเสี่ยงหรือความเร่งด่วน"
+      },
+      {
+        "id": "action_plan",
+        "description": "มีแผนดำเนินการ"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 5/5 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "ended_at": 1783714458.9567955,
+  "posthoc_evaluation": {
+    "enabled": true,
+    "mode": "both",
+    "task_name": "planning_decision",
+    "judge_model_name": "qwen3:8b",
+    "score": 4,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "missing_points": [
+      "แผนปฏิบัติสั้นๆ เช่น ประเมินข้อมูล วัดผล ทำ sprint"
+    ],
+    "rationale": "คำตอบเลือกลำดับความสำคัญชัดเจน (แก้ bug ค้าง > UX > feature ใหม่) และให้เหตุผลเชิง risk/impact อย่างครบถ้วน รวมถึงพิจารณา trade-off ระหว่าง UX, feature, bug ค้าง อย่างมีเหตุผล แต่ขาดการระบุแผนปฏิบัติสั้นๆ เช่น ขั้นตอนการประเมินข้อมูล วัดผล หรือกำหนด sprint ชัดเจน ทำให้ส่วนนี้ไม่ครบตาม rubric",
+    "raw_response": "{\n  \"score\": 4,\n  \"passed\": true,\n  \"missing_points\": [\"แผนปฏิบัติสั้นๆ เช่น ประเมินข้อมูล วัดผล ทำ sprint\"],\n  \"rationale\": \"คำตอบเลือกลำดับความสำคัญชัดเจน (แก้ bug ค้าง > UX > feature ใหม่) และให้เหตุผลเชิง risk/impact อย่างครบถ้วน รวมถึงพิจารณา trade-off ระหว่าง UX, feature, bug ค้าง อย่างมีเหตุผล แต่ขาดการระบุแผนปฏิบัติสั้นๆ เช่น ขั้นตอนการประเมินข้อมูล วัดผล หรือกำหนด sprint ชัดเจน ทำให้ส่วนนี้ไม่ครบตาม rubric\"\n}",
+    "heuristic_reference": {
+      "enabled": true,
+      "mode": "heuristic",
+      "task_name": "planning_decision",
+      "score": 5,
+      "max_score": 5,
+      "pass_score": 4,
+      "passed": true,
+      "coverage": 1.0,
+      "matched_points": [
+        {
+          "id": "clear_choice",
+          "description": "มีการเลือก/จัดลำดับชัดเจน"
+        },
+        {
+          "id": "mentions_options",
+          "description": "กล่าวถึงตัวเลือกหลัก"
+        },
+        {
+          "id": "impact_reason",
+          "description": "มีเหตุผลด้านผลกระทบ/ลูกค้า"
+        },
+        {
+          "id": "risk_urgency",
+          "description": "มีเหตุผลด้านความเสี่ยงหรือความเร่งด่วน"
+        },
+        {
+          "id": "action_plan",
+          "description": "มีแผนดำเนินการ"
+        }
+      ],
+      "missing_points": [],
+      "rationale": "matched 5/5 rubric checks"
+    },
+    "posthoc": true,
+    "evaluated_at": "2026-07-17T14:28:45+0000"
+  }
+}

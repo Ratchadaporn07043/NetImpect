@@ -1,0 +1,116 @@
+{
+  "run_id": "1fd7ed19",
+  "task_name": "coding_task",
+  "run_index": 1,
+  "started_at": 1784424163.6929314,
+  "network_condition": {
+    "name": "main_delay_d0800",
+    "scenario_type": "main_effect",
+    "main_effect_axis": "delay",
+    "delay_ms": 800,
+    "requested_delay_ms": 800,
+    "jitter_ms": 0,
+    "loss_pct": 0,
+    "note": "",
+    "experiment_phase": "tier4_main_effect_replicate__llama3.1_8b",
+    "trial_key": "tier4_main_effect_replicate__llama3.1_8b::no_match::no_side::main_delay_d0800::coding_task::run1"
+  },
+  "messages": [
+    {
+      "timestamp": 1784424163.9136992,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ",
+      "tokens": 35
+    },
+    {
+      "timestamp": 1784424209.1162443,
+      "from": "Worker",
+      "to": "group",
+      "content": "ฟังก์ชัน `is_prime(n)` จะตรวจสอบว่าจำนวนเต็ม `n` เป็นจำนวนเฉพาะหรือไม่ โดยใช้หลักการดังต่อไปนี้:\n\n1.  จำนวนเต็มที่น้อยกว่า 2 ไม่ใช่จำนวนเฉพาะ\n2.  จำนวนเต็มที่เท่ากับ 2 คือจำนวนเฉพาะ\n3.  จำนวนเต็มที่มากกว่า 2 และหารด้วย 2 ลงตัว จะไม่เป็นจำนวนเฉพาะ\n4.  สำหรับจำนวนเต็ม `n` ที่มากกว่า 2, ให้ตรวจสอบว่ามีจำนวนเต็มใดๆ `i` ที่อยู่ระหว่าง 2 ถึง `sqrt(n)` (รากที่สองของ `n`) และหารด้วย `i` ลงตัวหรือไม่ หากพบ `i` ที่หารลงตัว ก็จะไม่เป็นจำนวนเฉพาะ\n\nฟังก์ชัน `is_prime(n)` ในภาษา Python จะมีลักษณะดังนี้:\n\n```python\nimport math\n\ndef is_prime(n):\n    if n < 2:\n        return False\n    elif n == 2:\n        return True\n    elif n % 2 == 0:\n        return False\n    \n    for i in range(3, int(math.sqrt(n)) + 1, 2):\n        if n % i == 0:\n            return False\n            \n    return True\n\n# ตัวอย่างการใช้งาน\nprint(is_prime(11))   # True\nprint(is_prime(15))   # False\n```\n\nในฟังก์ชัน `is_prime(n)`, เราใช้เงื่อนไขต่อไปนี้:\n\n1.  `if n < 2: return False` - จำนวนเต็มที่น้อยกว่า 2 ไม่ใช่จำนวนเฉพาะ\n2.  `elif n == 2: return True` - จำนวนเต็มที่เท่ากับ 2 คือจำนวนเฉพาะ\n3.  `elif n % 2 == 0: return False` - จำนวนเต็มที่มากกว่า 2 และหารด้วย 2 ลงตัว จะไม่เป็นจำนวนเฉพาะ\n4.  `for i in range(3, int(math.sqrt(n)) + 1, 2): if n % i == 0: return False` - ตรวจสอบว่ามีจำนวนเต็มใดๆ `i` ที่อยู่ระหว่าง 2 ถึง `sqrt(n)` และหารด้วย `i` ลงตัวหรือไม่ หากพบ `i` ที่หารลงตัว ก็จะไม่เป็นจำนวนเฉพาะ\n\nหากไม่มีเงื่อนไขเหล่านี้เป็นจริง ฟังก์ชันจะคืนค่า `True`, หมายความว่า `n` เป็นจำนวนเฉพาะ",
+      "tokens": 364
+    },
+    {
+      "timestamp": 1784424216.5649552,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED\nSCORE: 5",
+      "tokens": 4
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784424163.6929345,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 7.7,
+      "ram_used_mb": 455.4,
+      "gpu": null,
+      "gpu_all": []
+    },
+    {
+      "timestamp": 1784424216.5746877,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 7.7,
+      "ram_used_mb": 456.2,
+      "gpu": null,
+      "gpu_all": []
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 52.76,
+    "total_tokens": 403,
+    "quality_score": 5,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "coding_task",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "function_name",
+        "description": "ระบุฟังก์ชัน is_prime"
+      },
+      {
+        "id": "boolean_return",
+        "description": "คืนค่า True/False"
+      },
+      {
+        "id": "n_le_1",
+        "description": "อธิบาย/จัดการ n <= 1"
+      },
+      {
+        "id": "two_case",
+        "description": "จัดการเลข 2"
+      },
+      {
+        "id": "sqrt_bound",
+        "description": "ตรวจถึงรากที่สองหรือ i*i <= n"
+      },
+      {
+        "id": "explanation",
+        "description": "มีคำอธิบายหลักการ"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 6/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "gpu_monitoring_available": false,
+  "ended_at": 1784424216.6804647
+}

@@ -1,0 +1,105 @@
+{
+  "run_id": "767b794e",
+  "task_name": "planning_decision_hard",
+  "run_index": 10,
+  "started_at": 1784222605.739258,
+  "network_condition": {
+    "name": "t2mr_high_loss",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 30,
+    "note": "",
+    "experiment_phase": "tier2_multiround",
+    "trial_key": "tier2_multiround::no_match::no_side::t2mr_high_loss::planning_decision_hard::run10"
+  },
+  "messages": [
+    {
+      "timestamp": 1784222605.9584012,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: บริษัทมีงบจำกัดสามารถลงทุนได้แค่ 2 จาก 5 โครงการต่อไปนี้ในไตรมาสหน้า: (1) ปรับปรุง UX หน้าชำระเงิน คาดว่าลด cart-abandonment 8% (2) เพิ่ม feature ใหม่ที่ลูกค้า enterprise 3 รายขอมา มูลค่าสัญญารวม 2 ล้านบาท/ปี (3) แก้ bug ค้างเก่าด้าน security ที่ยังไม่มีการโจมตีเกิดขึ้นจริงแต่มีความเสี่ยงสูง (4) migrate ระบบฐานข้อมูลเก่าที่ค่า maintenance สูงขึ้นเรื่อยๆ ทุกปี (5) จ้างทีม support เพิ่มเพื่อลด response time จาก 24 ชม. เหลือ 4 ชม. ให้ (ก) จัดลำดับความสำคัญทั้ง 5 โครงการจากสำคัญที่สุดไปน้อยที่สุด พร้อมให้คะแนน impact/urgency/risk/cost แต่ละโครงการเป็นตัวเลข 1-5, (ข) เลือก 2 โครงการที่จะลงทุนจริงพร้อมเหตุผลที่อ้างอิงคะแนนจากข้อ (ก), (ค) ระบุความเสี่ยงของการ 'ไม่เลือก' โครงการที่เหลืออีก 3 โครงการ อย่างน้อยโครงการละ 1 ความเสี่ยง",
+      "tokens": 186
+    },
+    {
+      "timestamp": 1784222809.1213078,
+      "from": "Worker",
+      "to": "group",
+      "content": "**ก) จัดลำดับความสำคัญและคะแนนของแต่ละโครงการ**  \n| ลำดับ | โครงการ | Impact (1-5) | Urgency (1-5) | Risk (1-5) | Cost (1-5) |  \n|-------|--------|--------------|----------------|------------|------------|  \n| 1     | (4) Migrate ระบบฐานข้อมูล | 4 | 4 | 4 | 4 |  \n| 2     | (2) เพิ่ม feature ใหม่ | 5 | 2 | 2 | 5 |  \n| 3     | (3) แก้ bug ค้างด้าน security | 3 | 5 | 5 | 1 |  \n| 4     | (5) จ้างทีม support เพิ่ม | 3 | 3 | 3 | 3 |  \n| 5     | (1) ปรับปรุง UX หน้าชำระเงิน | 4 | 1 | 1 | 2 |  \n\n**ข) เลือก 2 โครงการที่จะลงทุนจริง**  \n- **โครงการ (4) Migrate ระบบฐานข้อมูล** (Impact 4, Urgency 4, Risk 4, Cost 4):  \n  โครงการนี้มีความสำคัญสูงเนื่องจากค่า maintenance ของระบบฐานข้อมูลเพิ่มขึ้นทุกปี ซึ่งส่งผลต่อต้นทุนระยะยาว หากไม่ดำเนินการจะสูญเสียรายได้จากค่าใช้จ่ายที่เพิ่มขึ้นอย่างมาก  \n\n- **โครงการ (2) เพิ่ม feature ใหม่** (Impact 5, Urgency 2, Risk 2, Cost 5):  \n  โครงการนี้มีผลกระทบสูงต่อรายได้ (มูลค่าสัญญา 2 ล้านบาท/ปี) แม้จะมีต้นทุนสูง แต่เป็นการลงทุนที่มีผลตอบแทนระยะยาว โดยเฉพาะการตอบสนองความต้องการของลูกค้า enterprise ที่มีศักยภาพสูง  \n\n**ค) ความเสี่ยงของการ 'ไม่เลือก' โครงการที่เหลืออีก 3 โครงการ**  \n1. **โครงการ (1) ปรับปรุง UX หน้าชำระเงิน**:  \n   - **ความเสี่ยง**: อาจสูญเสียรายได้จาก cart-abandonment ที่เพิ่มขึ้น 8% ซึ่งส่งผลต่อยอดขายโดยตรง  \n\n2. **โครงการ (3) แก้ bug ค้างด้าน security**:  \n   - **ความเสี่ยง**: อาจเกิดการโจมตีทางไซเบอร์ที่ทำลายชื่อเสียงบริษัทและส่งผลต่อความเชื่อมั่นของลูกค้า รวมถึงค่าใช้จ่ายในการแก้ไขปัญหาที่เกิดขึ้นจริง  \n\n3. **โครงการ (5) จ้างทีม support เพิ่ม**:  \n   - **ความเสี่ยง**: อาจส่งผลต่อประสบการณ์ลูกค้าจากเวลาตอบสนองที่ช้า ทำให้ลูกค้าเปลี่ยนไปใช้คู่แข่งและสูญเสียรายได้ในระยะยาว",
+      "tokens": 408
+    },
+    {
+      "timestamp": 1784222858.529992,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED งานครบถ้วนตามเงื่อนไขทั้งหมด จัดลำดับโครงการครบ 5 โครงการ ระบุเหตุผลเลือก 2 โครงการ และระบุความเสี่ยงของโครงการที่เหลือครบ  \nSCORE: 5",
+      "tokens": 35
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784222605.739265,
+      "tag": "start",
+      "cpu_percent": 1.8,
+      "ram_percent": 7.8,
+      "ram_used_mb": 463.1
+    },
+    {
+      "timestamp": 1784222858.5444477,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 7.8,
+      "ram_used_mb": 463.4
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 252.67,
+    "total_tokens": 629,
+    "quality_score": 5,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "planning_decision_hard",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "ranks_all_five",
+        "description": "จัดลำดับทั้ง 5 โครงการ"
+      },
+      {
+        "id": "scores_given",
+        "description": "ให้คะแนน impact/urgency/risk/cost"
+      },
+      {
+        "id": "selects_two",
+        "description": "เลือก 2 โครงการชัดเจน"
+      },
+      {
+        "id": "risk_of_not_choosing",
+        "description": "ระบุความเสี่ยงของโครงการที่ไม่เลือก"
+      },
+      {
+        "id": "structured_abc",
+        "description": "ตอบครบตามโครงสร้าง ก/ข/ค หรือเทียบเท่า"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 5/5 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "ended_at": 1784222858.6561315
+}

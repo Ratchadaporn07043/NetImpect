@@ -1,0 +1,223 @@
+{
+  "run_id": "1470e4be",
+  "task_name": "research_summary",
+  "run_index": 5,
+  "started_at": 1785617852.8950462,
+  "network_condition": {
+    "name": "t8in_baseline",
+    "scenario_type": "ingress_subset",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 0,
+    "bandwidth_kbit": null,
+    "note": "falsification check: IFB path เองต้องไม่ทำให้ completion ตก",
+    "role": "falsification_baseline",
+    "experiment_phase": "tier8_ingress__both"
+  },
+  "messages": [
+    {
+      "timestamp": 1785617853.1781638,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1785617967.299257,
+      "from": "Worker",
+      "to": "group",
+      "content": "**ข้อดี-ข้อเสียของ RAG เทียบกับการ Fine-tune โมเดลโดยตรง (5 ข้อ):**  \n\n1. **ข้อมูลที่เป็นปัจจุบัน (Data Freshness):**  \n   - **RAG:** สามารถเข้าถึงข้อมูลที่อัปเดตได้ทันทีจากแหล่งข้อมูลภายนอก ไม่ต้องพึ่งพาข้อมูลฝึกที่ถูกตั้งค่าไว้ตั้งแต่แรก  \n   - **Fine-tune:** ข้อมูลฝึกเป็นข้อมูลคงที่ ไม่สามารถปรับตัวตามข้อมูลใหม่ได้โดยไม่ต้องฝึกโมเดลอีกครั้ง  \n\n2. **ประสิทธิภาพด้านทรัพยากร (Resource Efficiency):**  \n   - **RAG:** ใช้ทรัพยากรน้อยกว่าการฝึกโมเดลใหม่ทั้งหมด เนื่องจากไม่ต้องฝึกโมเดลจากศูนย์ แต่ใช้โมเดลเดิมร่วมกับระบบค้นหา  \n   - **Fine-tune:** ต้องใช้ทรัพยากรการคำนวณสูงและเวลาฝึกโมเดลใหม่ทั้งหมด ซึ่งอาจไม่เหมาะกับการปรับใช้ทันที  \n\n3. **ความยืดหยุ่น (Flexibility):**  \n   - **RAG:** ปรับใช้งานได้หลากหลายโดยไม่ต้องฝึกโมเดลใหม่ แค่ปรับระบบค้นหาและโมเดลสร้างข้อมูล  \n   - **Fine-tune:** ต้องฝึกโมเดลใหม่สำหรับแต่ละงาน ทำให้ไม่เหมาะกับงานที่เปลี่ยนแปลงบ่อย  \n\n4. **ความแม่นยำ (Accuracy):**  \n   - **RAG:** อาจมีข้อผิดพลาดจากการค้นหาข้อมูลที่ไม่ถูกต้อง หรือการสร้างข้อมูลจากข้อมูลที่ไม่ครบถ้วน  \n   - **Fine-tune:** สร้างผลลัพธ์ที่แม่นยำกว่าเนื่องจากโมเดลเรียนรู้จากข้อมูลเฉพาะงานโดยตรง  \n\n5. **ความปลอดภัยของข้อมูล (Data Privacy):**  \n   - **RAG:** มีความเสี่ยงด้านความเป็นส่วนตัวหากใช้ข้อมูลภายนอกที่ไม่ปลอดภัย  \n   - **Fine-tune:** ข้อมูลฝึกอยู่ภายในระบบ ลดความเสี่ยงด้านความเป็นส่วนตัว  \n\n**สรุป:** RAG เหมาะกับงานที่ต้องการข้อมูลใหม่และยืดหยุ่น แต่เสี่ยงต่อความผิดพลาดจากข้อมูลภายนอก ส่วน Fine-tune ให้ความแม่นยำสูงแต่ต้องใช้ทรัพยากรและข้อมูลมากกว่า",
+      "tokens": 364
+    },
+    {
+      "timestamp": 1785618023.663239,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED งานสอดคล้องกับแผนและมีข้อมูลที่ถูกต้องครบถ้วน  \nSCORE: 5",
+      "tokens": 16
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1785617852.8950481,
+      "tag": "start",
+      "cpu_percent": 1.5,
+      "ram_percent": 61.1,
+      "ram_used_mb": 6778.7
+    },
+    {
+      "timestamp": 1785618023.6738317,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 64.4,
+      "ram_used_mb": 7163.9
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 170.65,
+    "total_tokens": 413,
+    "quality_score": 5,
+    "ground_truth_score": 3,
+    "ground_truth_passed": false,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "research_summary",
+    "score": 3,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": false,
+    "coverage": 0.667,
+    "matched_points": [
+      {
+        "id": "rag_mentioned",
+        "description": "กล่าวถึง RAG"
+      },
+      {
+        "id": "fine_tune_mentioned",
+        "description": "กล่าวถึง fine-tune"
+      },
+      {
+        "id": "rag_advantage",
+        "description": "มีข้อดีของ RAG"
+      },
+      {
+        "id": "finetune_disadvantage",
+        "description": "มีข้อเสียของ fine-tuning"
+      }
+    ],
+    "missing_points": [
+      {
+        "id": "rag_disadvantage",
+        "description": "มีข้อเสียของ RAG"
+      },
+      {
+        "id": "finetune_advantage",
+        "description": "มีข้อดีของ fine-tuning"
+      }
+    ],
+    "rationale": "matched 4/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "achieved": null,
+  "cpu_gate": {
+    "waited_seconds": 0.0,
+    "final_cpu_percent": 2.4,
+    "readings": [
+      2.4
+    ],
+    "gate_passed": true
+  },
+  "network_commands": [
+    {
+      "action": "apply",
+      "result": {
+        "returncode": 0,
+        "stdout": "baseline (no impairment)",
+        "stderr": "",
+        "cmd": "baseline",
+        "clear_before_apply": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "Error: Cannot delete qdisc with handle of zero.\n",
+          "cmd": "tc qdisc del dev eth0 root",
+          "note": "clear skipped: no existing qdisc",
+          "ingress": {
+            "returncode": 0,
+            "stdout": "",
+            "stderr": "Error: Invalid handle.\n",
+            "cmd": "tc qdisc del dev eth0 ingress",
+            "note": "clear skipped: no existing ingress qdisc"
+          },
+          "ifb": {
+            "returncode": 0,
+            "stdout": "",
+            "stderr": "Error: Cannot delete qdisc with handle of zero.\n",
+            "cmd": "tc qdisc del dev ifb0 root",
+            "note": "clear skipped: no existing qdisc"
+          }
+        },
+        "ingress_setup": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "cmd": "setup ingress redirect",
+          "steps": [
+            {
+              "step": "ip_link_add_ifb",
+              "result": {
+                "returncode": 0,
+                "stdout": "",
+                "stderr": "RTNETLINK answers: File exists\n",
+                "cmd": "ip link add ifb0 type ifb",
+                "note": "ifb device already exists"
+              }
+            },
+            {
+              "step": "ip_link_set_ifb_up",
+              "result": {
+                "returncode": 0,
+                "stdout": "",
+                "stderr": "",
+                "cmd": "ip link set dev ifb0 up"
+              }
+            },
+            {
+              "step": "tc_ingress_qdisc",
+              "result": {
+                "returncode": 0,
+                "stdout": "",
+                "stderr": "",
+                "cmd": "tc qdisc add dev eth0 ingress"
+              }
+            },
+            {
+              "step": "tc_ingress_redirect",
+              "result": {
+                "returncode": 0,
+                "stdout": "",
+                "stderr": "",
+                "cmd": "tc filter add dev eth0 parent ffff: protocol all u32 match u32 0 0 action mirred egress redirect dev ifb0"
+              }
+            }
+          ]
+        },
+        "ingress": null
+      }
+    },
+    {
+      "action": "clear",
+      "result": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "Error: Cannot delete qdisc with handle of zero.\n",
+        "cmd": "tc qdisc del dev eth0 root",
+        "note": "clear skipped: no existing qdisc",
+        "ingress": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "cmd": "tc qdisc del dev eth0 ingress"
+        },
+        "ifb": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "Error: Cannot delete qdisc with handle of zero.\n",
+          "cmd": "tc qdisc del dev ifb0 root",
+          "note": "clear skipped: no existing qdisc"
+        }
+      }
+    }
+  ],
+  "impairment_direction": "both",
+  "ended_at": 1785618023.783868
+}

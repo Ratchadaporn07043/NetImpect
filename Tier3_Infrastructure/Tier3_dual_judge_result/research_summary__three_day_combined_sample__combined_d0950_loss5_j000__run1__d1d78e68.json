@@ -1,0 +1,175 @@
+{
+  "run_id": "d1d78e68",
+  "task_name": "research_summary",
+  "run_index": 1,
+  "started_at": 1783829052.0034225,
+  "network_condition": {
+    "name": "combined_d0950_loss5_j000",
+    "scenario_type": "combined",
+    "delay_ms": 950,
+    "requested_delay_ms": 950,
+    "jitter_ms": 0,
+    "loss_pct": 5,
+    "combined_levels": {
+      "delay_ms": 950,
+      "loss_pct": 5,
+      "jitter_ms": 0
+    },
+    "note": "",
+    "experiment_phase": "three_day_combined_sample",
+    "trial_key": "three_day_combined_sample::no_match::no_side::combined_d0950_loss5_j000::research_summary::run1"
+  },
+  "messages": [
+    {
+      "timestamp": 1783829052.2148488,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1783829140.6696439,
+      "from": "Worker",
+      "to": "group",
+      "content": "1. **ข้อดีของ RAG**: สามารถเข้าถึงข้อมูลที่อัปเดตได้ทันทีจากแหล่งข้อมูลภายนอก ขณะที่การ fine-tune โมเดลโดยตรงต้องพึ่งพาข้อมูลที่ถูกฝึกมาตั้งแต่เริ่มต้น  \n2. **ข้อเสียของ RAG**: ขึ้นอยู่กับประสิทธิภาพของระบบค้นหาข้อมูล หากข้อมูลที่ค้นพบไม่ถูกต้องหรือไม่เกี่ยวข้อง อาจทำให้คำตอบผิดพลาด  \n3. **ข้อดีของ fine-tune**: โมเดลจะมีความเฉพาะเจาะจงและปรับตัวได้ดีกับงานเฉพาะด้าน ไม่ต้องพึ่งพาข้อมูลภายนอกในระหว่างการตอบคำถาม  \n4. **ข้อเสียของ fine-tune**: ต้องใช้ข้อมูลฝึกจำนวนมากและทรัพยากรการคำนวณสูง ซึ่งอาจไม่เหมาะกับงานที่ข้อมูลเปลี่ยนแปลงบ่อย  \n5. **ข้อดีของ RAG**: ลดความเสี่ยงในการฝึกโมเดลซ้ำซ้อน สามารถใช้งานได้กับหลายงานโดยไม่ต้องปรับโมเดลใหม่ทั้งหมด",
+      "tokens": 162
+    },
+    {
+      "timestamp": 1783829311.6168911,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED งานมีใจความครบถ้วน ตรงตามโจทย์  \nSCORE: 5",
+      "tokens": 12
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1783829052.0034308,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.4,
+      "ram_used_mb": 512.2
+    },
+    {
+      "timestamp": 1783829311.6301122,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.4,
+      "ram_used_mb": 507.2
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 259.5,
+    "total_tokens": 207,
+    "quality_score": 5,
+    "ground_truth_score": 3,
+    "ground_truth_passed": false,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0,
+    "posthoc_ground_truth_score": null,
+    "posthoc_ground_truth_passed": null,
+    "posthoc_ground_truth_mode": "both"
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "research_summary",
+    "score": 3,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": false,
+    "coverage": 0.667,
+    "matched_points": [
+      {
+        "id": "rag_mentioned",
+        "description": "กล่าวถึง RAG"
+      },
+      {
+        "id": "fine_tune_mentioned",
+        "description": "กล่าวถึง fine-tune"
+      },
+      {
+        "id": "rag_advantage",
+        "description": "มีข้อดีของ RAG"
+      },
+      {
+        "id": "finetune_disadvantage",
+        "description": "มีข้อเสียของ fine-tuning"
+      }
+    ],
+    "missing_points": [
+      {
+        "id": "rag_disadvantage",
+        "description": "มีข้อเสียของ RAG"
+      },
+      {
+        "id": "finetune_advantage",
+        "description": "มีข้อดีของ fine-tuning"
+      }
+    ],
+    "rationale": "matched 4/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "ended_at": 1783829311.7366672,
+  "posthoc_evaluation": {
+    "enabled": true,
+    "mode": "both",
+    "task_name": "research_summary",
+    "judge_model_name": "qwen3:8b",
+    "score": null,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": null,
+    "missing_points": [
+      "LLM evaluator failed"
+    ],
+    "rationale": "OpenAI API call timed out. This could be due to congestion or too small a timeout value. The timeout can be specified by setting the 'timeout' value (in seconds) in the llm_config (if you are using agents) or the OpenAIWrapper constructor (if you are using the OpenAIWrapper directly).",
+    "error_type": "TimeoutError",
+    "heuristic_reference": {
+      "enabled": true,
+      "mode": "heuristic",
+      "task_name": "research_summary",
+      "score": 3,
+      "max_score": 5,
+      "pass_score": 4,
+      "passed": false,
+      "coverage": 0.667,
+      "matched_points": [
+        {
+          "id": "rag_mentioned",
+          "description": "กล่าวถึง RAG"
+        },
+        {
+          "id": "fine_tune_mentioned",
+          "description": "กล่าวถึง fine-tune"
+        },
+        {
+          "id": "rag_advantage",
+          "description": "มีข้อดีของ RAG"
+        },
+        {
+          "id": "finetune_disadvantage",
+          "description": "มีข้อเสียของ fine-tuning"
+        }
+      ],
+      "missing_points": [
+        {
+          "id": "rag_disadvantage",
+          "description": "มีข้อเสียของ RAG"
+        },
+        {
+          "id": "finetune_advantage",
+          "description": "มีข้อดีของ fine-tuning"
+        }
+      ],
+      "rationale": "matched 4/6 rubric checks"
+    },
+    "posthoc": true,
+    "evaluated_at": "2026-07-17T23:00:55+0000"
+  }
+}

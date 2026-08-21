@@ -1,0 +1,116 @@
+{
+  "run_id": "95a133cc",
+  "task_name": "coding_task",
+  "run_index": 1,
+  "started_at": 1784504860.9119081,
+  "network_condition": {
+    "name": "main_jitter_j020",
+    "scenario_type": "main_effect",
+    "main_effect_axis": "jitter",
+    "delay_ms": 50,
+    "requested_delay_ms": 0,
+    "jitter_ms": 20,
+    "loss_pct": 0,
+    "note": "requested delay=0ms แต่ jitter=20ms ต้องใช้ delay=50ms ขั้นต่ำ เพราะ netem ต้องมี delay>0",
+    "experiment_phase": "three_day_main_effect",
+    "trial_key": "three_day_main_effect::no_match::no_side::main_jitter_j020::coding_task::run1"
+  },
+  "messages": [
+    {
+      "timestamp": 1784504861.1295092,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ",
+      "tokens": 35
+    },
+    {
+      "timestamp": 1784504937.632305,
+      "from": "Worker",
+      "to": "group",
+      "content": "```python\ndef is_prime(n):\n    if n <= 1:\n        return False\n    if n == 2:\n        return True\n    if n % 2 == 0:\n        return False\n    max_divisor = int(n ** 0.5) + 1\n    for i in range(3, max_divisor, 2):\n        if n % i == 0:\n            return False\n    return True\n```\n\n### หลักการ:\n1. **กรณีพิเศษ**: \n   - หาก `n <= 1` ไม่ใช่จำนวนเฉพาะ (คืนค่า `False`)\n   - หาก `n == 2` เป็นจำนวนเฉพาะ (คืนค่า `True`)\n   - หาก `n` เป็นเลขคู่ (หารด้วย 2 ลงตัว) ไม่ใช่จำนวนเฉพาะ (คืนค่า `False`)\n2. **ตรวจสอบตัวหาร**: \n   - ตรวจสอบตัวหารจาก `3` ถึง `sqrt(n)` โดยข้ามเลขคู่ (เพื่อเพิ่มประสิทธิภาพ)\n   - หากพบตัวหารที่หารลงตัว คืนค่า `False`\n   - หากไม่พบตัวหารใดๆ คืนค่า `True` (หมายถึงเป็นจำนวนเฉพาะ)\n\n### ตัวอย่าง:\n- `is_prime(2)` → `True`\n- `is_prime(9)` → `False` (เพราะ 3 หาร 9 ลงตัว)\n- `is_prime(17)` → `True` (ไม่มีตัวหารระหว่าง 3 ถึง 4.123)",
+      "tokens": 210
+    },
+    {
+      "timestamp": 1784504973.937039,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED ฟังก์ชันทำงานถูกต้องตามหลักการตรวจสอบจำนวนเฉพาะ\nSCORE: 5",
+      "tokens": 16
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784504860.9119143,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.1,
+      "ram_used_mb": 489.4,
+      "gpu": null,
+      "gpu_all": []
+    },
+    {
+      "timestamp": 1784504973.944604,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.1,
+      "ram_used_mb": 489.7,
+      "gpu": null,
+      "gpu_all": []
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 112.9,
+    "total_tokens": 261,
+    "quality_score": 5,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "coding_task",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "function_name",
+        "description": "ระบุฟังก์ชัน is_prime"
+      },
+      {
+        "id": "boolean_return",
+        "description": "คืนค่า True/False"
+      },
+      {
+        "id": "n_le_1",
+        "description": "อธิบาย/จัดการ n <= 1"
+      },
+      {
+        "id": "two_case",
+        "description": "จัดการเลข 2"
+      },
+      {
+        "id": "sqrt_bound",
+        "description": "ตรวจถึงรากที่สองหรือ i*i <= n"
+      },
+      {
+        "id": "explanation",
+        "description": "มีคำอธิบายหลักการ"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 6/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "gpu_monitoring_available": false,
+  "ended_at": 1784504974.0466785
+}

@@ -1,0 +1,116 @@
+{
+  "run_id": "8a424323",
+  "task_name": "coding_task",
+  "run_index": 5,
+  "started_at": 1784449409.1925757,
+  "network_condition": {
+    "name": "main_delay_d0250",
+    "scenario_type": "main_effect",
+    "main_effect_axis": "delay",
+    "delay_ms": 250,
+    "requested_delay_ms": 250,
+    "jitter_ms": 0,
+    "loss_pct": 0,
+    "note": "",
+    "experiment_phase": "tier4_main_effect_replicate__llama3.1_8b",
+    "trial_key": "tier4_main_effect_replicate__llama3.1_8b::no_match::no_side::main_delay_d0250::coding_task::run5"
+  },
+  "messages": [
+    {
+      "timestamp": 1784449409.4092836,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ",
+      "tokens": 35
+    },
+    {
+      "timestamp": 1784449437.3982756,
+      "from": "Worker",
+      "to": "group",
+      "content": "ฟังก์ชัน `is_prime(n)` จะตรวจสอบว่าจำนวนที่ให้มาเป็นจำนวนเฉพาะหรือไม่ โดยใช้หลักการว่าถ้าจำนวนใดๆ มีตัวประกอบนอกเหนือจาก 1 และตัวมันเอง ก็จะไม่ใช่จำนวนเฉพาะ\n\n```python\ndef is_prime(n):\n    if n < 2:\n        return False  # จำนวนเต็มทั้งหมดต้องมากกว่าหรือเท่ากับ 2\n    for i in range(2, int(n ** 0.5) + 1):\n        if n % i == 0:  # ถ้าหารด้วยตัวเลขใดๆ ลงตัว ก็ไม่ใช่จำนวนเฉพาะ\n            return False\n    return True  # ถ้าไม่มีตัวประกอบนอกเหนือจาก 1 และตัวมันเอง ก็เป็นจำนวนเฉพาะ\n\n# ตัวอย่างการใช้งาน:\nprint(is_prime(5))   # True\nprint(is_prime(6))   # False\nprint(is_prime(23))  # True\nprint(is_prime(48))  # False\n```\n\nการทำงานของฟังก์ชันนี้คือ:\n\n1. ตรวจสอบว่าจำนวนเต็มที่ให้มาเป็นลบหรือไม่ ถ้าเป็น ให้คืน `False`\n2. ตรวจสอบว่าจำนวนเต็มนั้นมากกว่าหรือเท่ากับ 2 หรือไม่ ถ้าไม่ ให้คืน `False` เพราะ จำนวนเฉพาะต้องมากกว่าหรือเท่ากับ 2\n3. ใช้การวนลูปเพื่อตรวจสอบตัวประกอบของจำนวนเต็ม โดยเริ่มจาก 2 และดำเนินไปจนถึงรากที่สองของจำนวนเต็ม (เนื่องจากหากต้องการตรวจสอบว่าจำนวนเต็มเป็นจำนวนเฉพาะหรือไม่ เราสามารถตรวจสอบได้จนถึงรากที่สองของจำนวนเท่านั้น)\n4. หากพบตัวประกอบใดๆ ที่หารด้วยจำนวนเต็ม ลงตัว ให้คืน `False`\n5. ถ้าไม่มีตัวประกอบใดๆ หารด้วยจำนวนเต็ม ลงตัว ก็ให้คืน `True` ซึ่งหมายความว่าจำนวนเต็มนั้นเป็นจำนวนเฉพาะ",
+      "tokens": 303
+    },
+    {
+      "timestamp": 1784449442.361784,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED\nSCORE: 5",
+      "tokens": 4
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784449409.1925807,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.0,
+      "ram_used_mb": 479.0,
+      "gpu": null,
+      "gpu_all": []
+    },
+    {
+      "timestamp": 1784449442.3652787,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.0,
+      "ram_used_mb": 479.5,
+      "gpu": null,
+      "gpu_all": []
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 33.05,
+    "total_tokens": 342,
+    "quality_score": 5,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "coding_task",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "function_name",
+        "description": "ระบุฟังก์ชัน is_prime"
+      },
+      {
+        "id": "boolean_return",
+        "description": "คืนค่า True/False"
+      },
+      {
+        "id": "n_le_1",
+        "description": "อธิบาย/จัดการ n <= 1"
+      },
+      {
+        "id": "two_case",
+        "description": "จัดการเลข 2"
+      },
+      {
+        "id": "sqrt_bound",
+        "description": "ตรวจถึงรากที่สองหรือ i*i <= n"
+      },
+      {
+        "id": "explanation",
+        "description": "มีคำอธิบายหลักการ"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 6/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "gpu_monitoring_available": false,
+  "ended_at": 1784449442.4761505
+}

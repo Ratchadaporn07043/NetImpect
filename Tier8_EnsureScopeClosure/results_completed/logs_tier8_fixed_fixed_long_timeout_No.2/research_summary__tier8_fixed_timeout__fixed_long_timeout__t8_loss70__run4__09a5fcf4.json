@@ -1,0 +1,140 @@
+{
+  "run_id": "09a5fcf4",
+  "task_name": "research_summary",
+  "run_index": 4,
+  "started_at": 1785521528.306796,
+  "network_condition": {
+    "name": "t8_loss70",
+    "scenario_type": "main_effect",
+    "main_effect_axis": "loss",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 70,
+    "bandwidth_kbit": null,
+    "note": "",
+    "experiment_phase": "tier8_fixed_timeout__fixed_long_timeout"
+  },
+  "messages": [
+    {
+      "timestamp": 1785521528.6209645,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1785521693.3732877,
+      "from": "Worker",
+      "to": "group",
+      "content": "1. **ข้อดีของ RAG**: สามารถเข้าถึงข้อมูลที่อัปเดตได้ทันทีจากแหล่งข้อมูลภายนอก ทำให้ตอบคำถามได้แม่นยำและทันสมัยมากขึ้น ขณะที่การ fine-tune โมเดลโดยตรงต้องพึ่งพาข้อมูลที่มีอยู่ในช่วงการฝึกอบรมเท่านั้น  \n2. **ข้อดีของ RAG**: รองรับคำถามเฉพาะด้านได้ดีกว่า เพราะสามารถดึงข้อมูลจากเอกสารเฉพาะทางได้โดยตรง ขณะที่การ fine-tune ต้องใช้ข้อมูลฝึกอบรมที่ครอบคลุมด้านนั้นมากขึ้น  \n3. **ข้อเสียของ RAG**: ความสามารถในการสร้างเนื้อหาใหม่หรือแก้ไขข้อมูลอาจต่ำกว่าโมเดลที่ fine-tune อย่างละเอียด เนื่องจากพึ่งพาข้อมูลที่ดึงมาได้จากฐานข้อมูล  \n4. **ข้อเสียของ RAG**: ระบบการดึงข้อมูลและจัดการฐานข้อมูลอาจซับซ้อนและต้องใช้ทรัพยากรมากกว่าการ fine-tune โมเดลที่เป็นไปได้ในระดับที่ง่ายกว่า  \n5. **ข้อดีของ fine-tune**: โมเดลที่ fine-tune สามารถปรับตัวให้เหมาะสมกับงานเฉพาะได้ดีกว่า RAG โดยไม่ต้องพึ่งพาข้อมูลภายนอก ทำให้ประสิทธิภาพสูงขึ้นในงานที่ต้องการความแม่นยำสูง",
+      "tokens": 211
+    },
+    {
+      "timestamp": 1785521814.3291342,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED งานมีโครงสร้างชัดเจน ครบ 5 ข้อ ตรงตามโจทย์  \nSCORE: 5",
+      "tokens": 15
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1785521528.3068216,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 81.6,
+      "ram_used_mb": 9117.1
+    },
+    {
+      "timestamp": 1785521814.3414783,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 84.4,
+      "ram_used_mb": 9435.5
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 285.91,
+    "total_tokens": 259,
+    "quality_score": 5,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "research_summary",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "rag_mentioned",
+        "description": "กล่าวถึง RAG"
+      },
+      {
+        "id": "fine_tune_mentioned",
+        "description": "กล่าวถึง fine-tune"
+      },
+      {
+        "id": "rag_advantage",
+        "description": "มีข้อดีของ RAG"
+      },
+      {
+        "id": "rag_disadvantage",
+        "description": "มีข้อเสียของ RAG"
+      },
+      {
+        "id": "finetune_advantage",
+        "description": "มีข้อดีของ fine-tuning"
+      },
+      {
+        "id": "finetune_disadvantage",
+        "description": "มีข้อเสียของ fine-tuning"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 6/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "achieved": null,
+  "network_commands": [
+    {
+      "action": "apply",
+      "result": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "cmd": "tc qdisc add dev eth0 root handle 1: netem loss 70%",
+        "clear_before_apply": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "Error: Cannot delete qdisc with handle of zero.\n",
+          "cmd": "tc qdisc del dev eth0 root",
+          "note": "clear skipped: no existing qdisc"
+        },
+        "tbf": null
+      }
+    },
+    {
+      "action": "clear",
+      "result": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "cmd": "tc qdisc del dev eth0 root"
+      }
+    }
+  ],
+  "ended_at": 1785521814.4480054
+}

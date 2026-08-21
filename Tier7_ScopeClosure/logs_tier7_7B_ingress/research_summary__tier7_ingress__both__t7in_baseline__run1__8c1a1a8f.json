@@ -1,0 +1,246 @@
+{
+  "run_id": "8c1a1a8f",
+  "task_name": "research_summary",
+  "run_index": 1,
+  "started_at": 1785301993.062536,
+  "network_condition": {
+    "name": "t7in_baseline",
+    "scenario_type": "ingress_subset",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 0,
+    "bandwidth_kbit": null,
+    "note": "falsification check: IFB path เองต้องไม่ทำให้ completion ตก",
+    "experiment_phase": "tier7_ingress__both"
+  },
+  "messages": [
+    {
+      "timestamp": 1785301993.4195707,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1785302357.1098714,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1785302720.6680796,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    }
+  ],
+  "errors": [
+    {
+      "timestamp": 1785302356.5089242,
+      "error_type": "timeout",
+      "detail": "OpenAI API call timed out. This could be due to congestion or too small a timeout value. The timeout can be specified by setting the 'timeout' value (in seconds) in the llm_config (if you are using agents) or the OpenAIWrapper constructor (if you are using the OpenAIWrapper directly).",
+      "agent": "Worker"
+    },
+    {
+      "timestamp": 1785302356.5089633,
+      "error_type": "retry",
+      "detail": "attempt 1 failed with TimeoutError, retrying",
+      "agent": "Worker"
+    },
+    {
+      "timestamp": 1785302720.1942122,
+      "error_type": "timeout",
+      "detail": "OpenAI API call timed out. This could be due to congestion or too small a timeout value. The timeout can be specified by setting the 'timeout' value (in seconds) in the llm_config (if you are using agents) or the OpenAIWrapper constructor (if you are using the OpenAIWrapper directly).",
+      "agent": "Worker"
+    },
+    {
+      "timestamp": 1785302720.1942468,
+      "error_type": "retry",
+      "detail": "attempt 2 failed with TimeoutError, retrying",
+      "agent": "Worker"
+    },
+    {
+      "timestamp": 1785303083.501645,
+      "error_type": "timeout",
+      "detail": "OpenAI API call timed out. This could be due to congestion or too small a timeout value. The timeout can be specified by setting the 'timeout' value (in seconds) in the llm_config (if you are using agents) or the OpenAIWrapper constructor (if you are using the OpenAIWrapper directly).",
+      "agent": "Worker"
+    }
+  ],
+  "resource_snapshots": [
+    {
+      "timestamp": 1785301993.0625403,
+      "tag": "start",
+      "cpu_percent": 15.7,
+      "ram_percent": 65.7,
+      "ram_used_mb": 7307.9,
+      "gpu": null,
+      "gpu_all": []
+    },
+    {
+      "timestamp": 1785303083.525564,
+      "tag": "end",
+      "cpu_percent": 100.0,
+      "ram_percent": 78.0,
+      "ram_used_mb": 8713.8,
+      "gpu": null,
+      "gpu_all": []
+    }
+  ],
+  "outcome": {
+    "success": false,
+    "rounds": 1,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 1090.18,
+    "total_tokens": 99,
+    "quality_score": null,
+    "ground_truth_score": 1,
+    "ground_truth_passed": false,
+    "retry_count": 2,
+    "timeout_count": 3,
+    "total_error_count": 5
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "research_summary",
+    "score": 1,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": false,
+    "coverage": 0.0,
+    "matched_points": [],
+    "missing_points": [
+      {
+        "id": "rag_mentioned",
+        "description": "กล่าวถึง RAG"
+      },
+      {
+        "id": "fine_tune_mentioned",
+        "description": "กล่าวถึง fine-tune"
+      },
+      {
+        "id": "rag_advantage",
+        "description": "มีข้อดีของ RAG"
+      },
+      {
+        "id": "rag_disadvantage",
+        "description": "มีข้อเสียของ RAG"
+      },
+      {
+        "id": "finetune_advantage",
+        "description": "มีข้อดีของ fine-tuning"
+      },
+      {
+        "id": "finetune_disadvantage",
+        "description": "มีข้อเสียของ fine-tuning"
+      }
+    ],
+    "rationale": "matched 0/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "gpu_monitoring_available": false,
+  "network_commands": [
+    {
+      "action": "apply",
+      "result": {
+        "returncode": 0,
+        "stdout": "baseline (no impairment)",
+        "stderr": "",
+        "cmd": "baseline",
+        "clear_before_apply": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "Error: Cannot delete qdisc with handle of zero.\n",
+          "cmd": "tc qdisc del dev eth0 root",
+          "note": "clear skipped: no existing qdisc",
+          "ingress": {
+            "returncode": 2,
+            "stdout": "",
+            "stderr": "Error: Invalid handle.\n",
+            "cmd": "tc qdisc del dev eth0 ingress"
+          },
+          "ifb": {
+            "returncode": 0,
+            "stdout": "",
+            "stderr": "Error: Cannot delete qdisc with handle of zero.\n",
+            "cmd": "tc qdisc del dev ifb0 root",
+            "note": "clear skipped: no existing qdisc"
+          }
+        },
+        "ingress_setup": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "cmd": "setup ingress redirect",
+          "steps": [
+            {
+              "step": "ip_link_add_ifb",
+              "result": {
+                "returncode": 0,
+                "stdout": "",
+                "stderr": "RTNETLINK answers: File exists\n",
+                "cmd": "ip link add ifb0 type ifb",
+                "note": "ifb device already exists"
+              }
+            },
+            {
+              "step": "ip_link_set_ifb_up",
+              "result": {
+                "returncode": 0,
+                "stdout": "",
+                "stderr": "",
+                "cmd": "ip link set dev ifb0 up"
+              }
+            },
+            {
+              "step": "tc_ingress_qdisc",
+              "result": {
+                "returncode": 0,
+                "stdout": "",
+                "stderr": "",
+                "cmd": "tc qdisc add dev eth0 ingress"
+              }
+            },
+            {
+              "step": "tc_ingress_redirect",
+              "result": {
+                "returncode": 0,
+                "stdout": "",
+                "stderr": "",
+                "cmd": "tc filter add dev eth0 parent ffff: protocol all u32 match u32 0 0 action mirred egress redirect dev ifb0"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "action": "clear",
+      "result": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "Error: Cannot delete qdisc with handle of zero.\n",
+        "cmd": "tc qdisc del dev eth0 root",
+        "note": "clear skipped: no existing qdisc",
+        "ingress": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "cmd": "tc qdisc del dev eth0 ingress"
+        },
+        "ifb": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "Error: Cannot delete qdisc with handle of zero.\n",
+          "cmd": "tc qdisc del dev ifb0 root",
+          "note": "clear skipped: no existing qdisc"
+        }
+      }
+    }
+  ],
+  "impairment_direction": "both",
+  "ended_at": 1785303083.6266959
+}

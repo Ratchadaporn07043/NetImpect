@@ -1,0 +1,165 @@
+{
+  "run_id": "3ec07535",
+  "task_name": "planning_decision",
+  "run_index": 1,
+  "started_at": 1783803724.1434603,
+  "network_condition": {
+    "name": "combined_d0450_loss0_j005",
+    "scenario_type": "combined",
+    "delay_ms": 450,
+    "requested_delay_ms": 450,
+    "jitter_ms": 5,
+    "loss_pct": 0,
+    "combined_levels": {
+      "delay_ms": 450,
+      "loss_pct": 0,
+      "jitter_ms": 5
+    },
+    "note": "",
+    "experiment_phase": "three_day_combined_sample",
+    "trial_key": "three_day_combined_sample::no_match::no_side::combined_d0450_loss0_j005::planning_decision::run1"
+  },
+  "messages": [
+    {
+      "timestamp": 1783803724.3620036,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: ทีมมีงบ 3 อย่างให้เลือกลงทุนอย่างใดอย่างหนึ่ง: (1) ปรับปรุง UX, (2) เพิ่ม feature ใหม่, (3) แก้ bug ค้างเก่า ช่วยวางแผนว่าควรเลือกอะไรก่อน พร้อมเหตุผลสั้นๆ",
+      "tokens": 42
+    },
+    {
+      "timestamp": 1783803761.1604643,
+      "from": "Worker",
+      "to": "group",
+      "content": "**แผนการลงทุนที่แนะนำ:**  \n1. **แก้ bug ค้างเก่า** (หากมีผลกระทบต่อความเสถียรหรือความปลอดภัย)  \n   - เหตุผล: ปัญหา bug ที่ค้างอาจส่งผลต่อประสบการณ์ผู้ใช้หรือความน่าเชื่อถือของระบบ ควรแก้ไขก่อนเพื่อป้องกันความเสียหายที่อาจเกิดขึ้น  \n\n2. **ปรับปรุง UX**  \n   - เหตุผล: การปรับ UX ช่วยเพิ่มความพึงพอใจของผู้ใช้และลดอัตราการยกเลิกการใช้งาน ควรลงทุนหลังจากแก้ไขปัญหาด้านความเสถียร  \n\n3. **เพิ่ม feature ใหม่**  \n   - เหตุผล: การเพิ่ม feature ควรทำเมื่อระบบมีความเสถียรและ UX ดีแล้ว เพื่อตอบโจทย์ความต้องการของผู้ใช้และสร้างความแตกต่างในตลาด  \n\n**เหตุผลสั้นๆ:**  \n- แก้ bug ค้างก่อนเพื่อให้ระบบทำงานได้อย่างมั่นคง  \n- ปรับ UX เพื่อเพิ่มความพึงพอใจผู้ใช้  \n- เพิ่ม feature ใหม่เมื่อมีฐานผู้ใช้ที่มั่นคงและระบบเสถียร",
+      "tokens": 177
+    },
+    {
+      "timestamp": 1783803784.621547,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED แผนมีลำดับความสำคัญชัดเจน แก้ไข bug ก่อนเพื่อความเสถียร แล้วปรับ UX เพิ่มความพึงพอใจ จึงลงทุนเพิ่ม feature หลังมั่นคง  \nSCORE: 5",
+      "tokens": 34
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1783803724.1434746,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.4,
+      "ram_used_mb": 511.7
+    },
+    {
+      "timestamp": 1783803784.6323907,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.4,
+      "ram_used_mb": 512.6
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 60.36,
+    "total_tokens": 253,
+    "quality_score": 5,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0,
+    "posthoc_ground_truth_score": 4,
+    "posthoc_ground_truth_passed": true,
+    "posthoc_ground_truth_mode": "both"
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "planning_decision",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "clear_choice",
+        "description": "มีการเลือก/จัดลำดับชัดเจน"
+      },
+      {
+        "id": "mentions_options",
+        "description": "กล่าวถึงตัวเลือกหลัก"
+      },
+      {
+        "id": "impact_reason",
+        "description": "มีเหตุผลด้านผลกระทบ/ลูกค้า"
+      },
+      {
+        "id": "risk_urgency",
+        "description": "มีเหตุผลด้านความเสี่ยงหรือความเร่งด่วน"
+      },
+      {
+        "id": "action_plan",
+        "description": "มีแผนดำเนินการ"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 5/5 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "ended_at": 1783803784.741894,
+  "posthoc_evaluation": {
+    "enabled": true,
+    "mode": "both",
+    "task_name": "planning_decision",
+    "judge_model_name": "qwen3:8b",
+    "score": 4,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "missing_points": [
+      "แผนปฏิบัติสั้นๆ เช่น ประเมินข้อมูล วัดผล ทำ sprint"
+    ],
+    "rationale": "คำตอบระบุลำดับความสำคัญชัดเจน (bug > UX > feature) และให้เหตุผลเชิง impact/urgency ได้ดี แต่ขาดรายละเอียดแผนปฏิบัติเชิงปฏิบัติ เช่น การประเมินข้อมูลหรือกำหนด timeline ชัดเจน ทำให้ส่วนนี้ยังไม่ครบตาม rubric",
+    "raw_response": "{\n  \"score\": 4,\n  \"passed\": true,\n  \"missing_points\": [\"แผนปฏิบัติสั้นๆ เช่น ประเมินข้อมูล วัดผล ทำ sprint\"],\n  \"rationale\": \"คำตอบระบุลำดับความสำคัญชัดเจน (bug > UX > feature) และให้เหตุผลเชิง impact/urgency ได้ดี แต่ขาดรายละเอียดแผนปฏิบัติเชิงปฏิบัติ เช่น การประเมินข้อมูลหรือกำหนด timeline ชัดเจน ทำให้ส่วนนี้ยังไม่ครบตาม rubric\"\n}",
+    "heuristic_reference": {
+      "enabled": true,
+      "mode": "heuristic",
+      "task_name": "planning_decision",
+      "score": 5,
+      "max_score": 5,
+      "pass_score": 4,
+      "passed": true,
+      "coverage": 1.0,
+      "matched_points": [
+        {
+          "id": "clear_choice",
+          "description": "มีการเลือก/จัดลำดับชัดเจน"
+        },
+        {
+          "id": "mentions_options",
+          "description": "กล่าวถึงตัวเลือกหลัก"
+        },
+        {
+          "id": "impact_reason",
+          "description": "มีเหตุผลด้านผลกระทบ/ลูกค้า"
+        },
+        {
+          "id": "risk_urgency",
+          "description": "มีเหตุผลด้านความเสี่ยงหรือความเร่งด่วน"
+        },
+        {
+          "id": "action_plan",
+          "description": "มีแผนดำเนินการ"
+        }
+      ],
+      "missing_points": [],
+      "rationale": "matched 5/5 rubric checks"
+    },
+    "posthoc": true,
+    "evaluated_at": "2026-07-17T11:52:16+0000"
+  }
+}

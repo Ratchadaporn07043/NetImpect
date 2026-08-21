@@ -1,0 +1,139 @@
+{
+  "run_id": "5e39f671",
+  "task_name": "research_summary",
+  "run_index": 1,
+  "started_at": 1784608019.4979382,
+  "network_condition": {
+    "name": "combined_d0000_loss75_j075",
+    "scenario_type": "combined",
+    "delay_ms": 50,
+    "requested_delay_ms": 0,
+    "jitter_ms": 75,
+    "loss_pct": 75,
+    "combined_levels": {
+      "delay_ms": 0,
+      "loss_pct": 75,
+      "jitter_ms": 75
+    },
+    "note": "requested delay=0ms แต่ jitter=75ms ต้องใช้ delay=50ms ขั้นต่ำ เพราะ netem ต้องมี delay>0",
+    "experiment_phase": "three_day_combined_sample",
+    "trial_key": "three_day_combined_sample::no_match::no_side::combined_d0000_loss75_j075::research_summary::run1"
+  },
+  "messages": [
+    {
+      "timestamp": 1784608019.7107828,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1784608281.4133525,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1784608365.0961258,
+      "from": "Worker",
+      "to": "group",
+      "content": "1. **ข้อดีของ RAG**: สามารถเข้าถึงข้อมูลที่อัปเดตได้ทันทีจากแหล่งข้อมูลภายนอก (เช่น วิกิพีเดีย หรือเว็บไซต์) ทำให้ตอบคำถามที่เกี่ยวข้องกับข้อมูลใหม่ได้โดยไม่ต้องฝึกโมเดลซ้ำ  \n2. **ข้อเสียของ RAG**: ข้อมูลที่ดึงมาอาจมีความคลาดเคลื่อนหรือไม่ถูกต้อง ทำให้ผลลัพธ์อาจไม่แม่นยำเท่ากับการฝึกโมเดลโดยตรง  \n3. **ข้อดีของ Fine-tune**: โมเดลสามารถปรับตัวให้เหมาะสมกับงานเฉพาะได้ดีขึ้น เนื่องจากฝึกด้วยข้อมูลเฉพาะที่เกี่ยวข้องกับงานโดยตรง  \n4. **ข้อเสียของ Fine-tune**: ต้องใช้ทรัพยากรการคำนวณสูงในการฝึกโมเดล และไม่สามารถตอบคำถามที่เกี่ยวข้องกับข้อมูลที่ไม่เคยเห็นในชุดฝึกได้  \n5. **ข้อดีของ RAG**: ลดความเสี่ยงในการฝึกโมเดลซ้ำทุกครั้ง ทำให้สามารถปรับใช้โมเดลได้หลากหลายงานโดยไม่ต้องฝึกใหม่ทั้งหมด",
+      "tokens": 171
+    },
+    {
+      "timestamp": 1784608395.4454975,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED งานสรุปครบ 5 ข้อ ตรงประเด็นและถูกต้องตามข้อมูล  \nSCORE: 5",
+      "tokens": 16
+    }
+  ],
+  "errors": [
+    {
+      "timestamp": 1784608281.3166401,
+      "error_type": "APIConnectionError",
+      "detail": "Connection error."
+    },
+    {
+      "timestamp": 1784608281.3166502,
+      "error_type": "retry",
+      "detail": "attempt 1 failed with APIConnectionError, retrying"
+    }
+  ],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784608019.4979413,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.1,
+      "ram_used_mb": 490.7,
+      "gpu": null,
+      "gpu_all": []
+    },
+    {
+      "timestamp": 1784608395.4487185,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.2,
+      "ram_used_mb": 491.4,
+      "gpu": null,
+      "gpu_all": []
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 375.83,
+    "total_tokens": 253,
+    "quality_score": 5,
+    "ground_truth_score": 2,
+    "ground_truth_passed": false,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 2
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "research_summary",
+    "score": 2,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": false,
+    "coverage": 0.5,
+    "matched_points": [
+      {
+        "id": "rag_mentioned",
+        "description": "กล่าวถึง RAG"
+      },
+      {
+        "id": "fine_tune_mentioned",
+        "description": "กล่าวถึง fine-tune"
+      },
+      {
+        "id": "rag_advantage",
+        "description": "มีข้อดีของ RAG"
+      }
+    ],
+    "missing_points": [
+      {
+        "id": "rag_disadvantage",
+        "description": "มีข้อเสียของ RAG"
+      },
+      {
+        "id": "finetune_advantage",
+        "description": "มีข้อดีของ fine-tuning"
+      },
+      {
+        "id": "finetune_disadvantage",
+        "description": "มีข้อเสียของ fine-tuning"
+      }
+    ],
+    "rationale": "matched 3/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "gpu_monitoring_available": false,
+  "ended_at": 1784608395.553295
+}

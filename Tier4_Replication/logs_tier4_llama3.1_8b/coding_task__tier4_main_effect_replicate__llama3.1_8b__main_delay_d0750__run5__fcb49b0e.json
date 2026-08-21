@@ -1,0 +1,116 @@
+{
+  "run_id": "fcb49b0e",
+  "task_name": "coding_task",
+  "run_index": 5,
+  "started_at": 1784450767.9821112,
+  "network_condition": {
+    "name": "main_delay_d0750",
+    "scenario_type": "main_effect",
+    "main_effect_axis": "delay",
+    "delay_ms": 750,
+    "requested_delay_ms": 750,
+    "jitter_ms": 0,
+    "loss_pct": 0,
+    "note": "",
+    "experiment_phase": "tier4_main_effect_replicate__llama3.1_8b",
+    "trial_key": "tier4_main_effect_replicate__llama3.1_8b::no_match::no_side::main_delay_d0750::coding_task::run5"
+  },
+  "messages": [
+    {
+      "timestamp": 1784450768.2024913,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ",
+      "tokens": 35
+    },
+    {
+      "timestamp": 1784450804.4051528,
+      "from": "Worker",
+      "to": "group",
+      "content": "ฟังก์ชัน `is_prime(n)` ในภาษา Python\n=====================================\n\n### หลักการทำงานของฟังก์ชัน\n\nฟังก์ชัน `is_prime(n)` จะตรวจสอบว่าจำนวนเต็ม `n` เป็นจำนวนเฉพาะหรือไม่ โดยใช้หลักการที่ว่า จำนวนเฉพาะคือจำนวนเต็มที่มีตัวประกอบเฉพาะเพียงตัวเดียวเท่านั้น\n\n### ฟังก์ชัน `is_prime(n)`\n\n```python\ndef is_prime(n):\n    \"\"\"\n    ตรวจสอบว่าจำนวนเต็ม n เป็นจำนวนเฉพาะหรือไม่\n    \n    Args:\n        n (int): จำนวนเต็มที่จะตรวจสอบ\n    \n    Returns:\n        bool: True หาก n เป็นจำนวนเฉพาะ False หากไม่ใช่\n    \"\"\"\n    \n    # ตรวจสอบว่า n เป็นจำนวนเต็มบวก\n    if not isinstance(n, int) or n <= 0:\n        return False\n    \n    # 1 ไม่ใช่จำนวนเฉพาะ\n    if n == 1:\n        return False\n    \n    # 2 และ 3 เป็นจำนวนเฉพาะ\n    if n == 2 or n == 3:\n        return True\n    \n    # ตรวจสอบว่า n หารด้วย 2 หรือ 3 ได้หรือไม่\n    if n % 2 == 0 or n % 3 == 0:\n        return False\n    \n    # ตรวจสอบตัวประกอบเฉพาะของ n\n    i = 5\n    while i * i <= n:\n        if n % i == 0 or n % (i + 2) == 0:\n            return False\n        i += 6\n    \n    # หากไม่พบตัวประกอบเฉพาะ คือจำนวนเฉพาะ\n    return True\n```\n\n### ตัวอย่างการใช้งาน\n\n```python\nprint(is_prime(25))  # Output: False\nprint(is_prime(23))  # Output: True\nprint(is_prime(37))  # Output: True\nprint(is_prime(48))  # Output: False\n```\n\nฟังก์ชันนี้ใช้หลักการตรวจสอบตัวประกอบเฉพาะของจำนวนเต็ม โดยเริ่มจาก 2 และ 3 (จำนวนเฉพาะที่เล็กที่สุด) แล้วเพิ่มขึ้นในลำดับของ 6 (เนื่องจากจำนวนเฉพาะถัดไปจะหารด้วย 6 ลงตัวเสมอ) หากไม่พบตัวประกอบเฉพาะ คือจำนวนเฉพาะ",
+      "tokens": 369
+    },
+    {
+      "timestamp": 1784450810.8402271,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED\nSCORE: 5",
+      "tokens": 4
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784450767.9821155,
+      "tag": "start",
+      "cpu_percent": 0.9,
+      "ram_percent": 8.1,
+      "ram_used_mb": 488.7,
+      "gpu": null,
+      "gpu_all": []
+    },
+    {
+      "timestamp": 1784450810.844317,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.1,
+      "ram_used_mb": 485.3,
+      "gpu": null,
+      "gpu_all": []
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 42.74,
+    "total_tokens": 408,
+    "quality_score": 5,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "coding_task",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "function_name",
+        "description": "ระบุฟังก์ชัน is_prime"
+      },
+      {
+        "id": "boolean_return",
+        "description": "คืนค่า True/False"
+      },
+      {
+        "id": "n_le_1",
+        "description": "อธิบาย/จัดการ n <= 1"
+      },
+      {
+        "id": "two_case",
+        "description": "จัดการเลข 2"
+      },
+      {
+        "id": "sqrt_bound",
+        "description": "ตรวจถึงรากที่สองหรือ i*i <= n"
+      },
+      {
+        "id": "explanation",
+        "description": "มีคำอธิบายหลักการ"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 6/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "gpu_monitoring_available": false,
+  "ended_at": 1784450810.9504402
+}

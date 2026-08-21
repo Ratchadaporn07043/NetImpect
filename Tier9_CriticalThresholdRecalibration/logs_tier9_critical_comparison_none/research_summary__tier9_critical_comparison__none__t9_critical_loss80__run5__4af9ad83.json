@@ -1,0 +1,170 @@
+{
+  "run_id": "4af9ad83",
+  "task_name": "research_summary",
+  "run_index": 5,
+  "started_at": 1786102147.059418,
+  "network_condition": {
+    "name": "t9_critical_loss80",
+    "scenario_type": "critical_threshold_comparison",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 80,
+    "bandwidth_kbit": null,
+    "note": "Tier 9 critical comparison ที่ loss=80% (critical threshold ใหม่ของสภาพแวดล้อมปัจจุบัน) mitigation=none",
+    "experiment_phase": "tier9_critical_comparison__none"
+  },
+  "messages": [
+    {
+      "timestamp": 1786102147.1793966,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1786102150.266409,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1786102153.3345263,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    }
+  ],
+  "errors": [
+    {
+      "timestamp": 1786102150.2585413,
+      "error_type": "ConnectionError",
+      "detail": "HTTPConnectionPool(host='host.docker.internal', port=11434): Max retries exceeded with url: /api/chat (Caused by NewConnectionError(\"HTTPConnection(host='host.docker.internal', port=11434): Failed to establish a new connection: [Errno 113] No route to host\"))",
+      "agent": "Worker"
+    },
+    {
+      "timestamp": 1786102150.2585492,
+      "error_type": "retry",
+      "detail": "attempt 1 failed with ConnectionError, retrying",
+      "agent": "Worker"
+    },
+    {
+      "timestamp": 1786102153.3301919,
+      "error_type": "ConnectionError",
+      "detail": "HTTPConnectionPool(host='host.docker.internal', port=11434): Max retries exceeded with url: /api/chat (Caused by NewConnectionError(\"HTTPConnection(host='host.docker.internal', port=11434): Failed to establish a new connection: [Errno 113] No route to host\"))",
+      "agent": "Worker"
+    },
+    {
+      "timestamp": 1786102153.3301973,
+      "error_type": "retry",
+      "detail": "attempt 2 failed with ConnectionError, retrying",
+      "agent": "Worker"
+    },
+    {
+      "timestamp": 1786102280.6058645,
+      "error_type": "timeout",
+      "detail": "HTTPConnectionPool(host='host.docker.internal', port=11434): Read timed out. (read timeout=120)",
+      "agent": "Worker"
+    }
+  ],
+  "resource_snapshots": [
+    {
+      "timestamp": 1786102147.0594258,
+      "tag": "start",
+      "cpu_percent": 1.6,
+      "ram_percent": 15.0,
+      "ram_used_mb": 1509.1
+    },
+    {
+      "timestamp": 1786102280.6233766,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 15.0,
+      "ram_used_mb": 1510.8
+    }
+  ],
+  "outcome": {
+    "success": false,
+    "rounds": 1,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 133.43,
+    "total_tokens": 99,
+    "quality_score": null,
+    "ground_truth_score": 1,
+    "ground_truth_passed": false,
+    "retry_count": 2,
+    "timeout_count": 1,
+    "total_error_count": 5
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "research_summary",
+    "score": 1,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": false,
+    "coverage": 0.0,
+    "matched_points": [],
+    "missing_points": [
+      {
+        "id": "rag_mentioned",
+        "description": "กล่าวถึง RAG"
+      },
+      {
+        "id": "fine_tune_mentioned",
+        "description": "กล่าวถึง fine-tune"
+      },
+      {
+        "id": "rag_advantage",
+        "description": "มีข้อดีของ RAG"
+      },
+      {
+        "id": "rag_disadvantage",
+        "description": "มีข้อเสียของ RAG"
+      },
+      {
+        "id": "finetune_advantage",
+        "description": "มีข้อดีของ fine-tuning"
+      },
+      {
+        "id": "finetune_disadvantage",
+        "description": "มีข้อเสียของ fine-tuning"
+      }
+    ],
+    "rationale": "matched 0/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "achieved": null,
+  "network_commands": [
+    {
+      "action": "apply",
+      "result": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "cmd": "tc qdisc add dev eth0 root handle 1: netem loss 80%",
+        "clear_before_apply": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "Error: Cannot delete qdisc with handle of zero.\n",
+          "cmd": "tc qdisc del dev eth0 root",
+          "note": "clear skipped: no existing qdisc"
+        },
+        "tbf": null
+      }
+    },
+    {
+      "action": "clear",
+      "result": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "cmd": "tc qdisc del dev eth0 root"
+      }
+    }
+  ],
+  "ended_at": 1786102280.7261512
+}

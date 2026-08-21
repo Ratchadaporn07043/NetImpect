@@ -1,0 +1,138 @@
+{
+  "run_id": "8582d8a1",
+  "task_name": "coding_task",
+  "run_index": 5,
+  "started_at": 1785657039.8330135,
+  "network_condition": {
+    "name": "tier8_loss_loss10",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 10,
+    "bandwidth_kbit": null,
+    "note": ""
+  },
+  "messages": [
+    {
+      "timestamp": 1785657040.0961645,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ",
+      "tokens": 35
+    },
+    {
+      "timestamp": 1785657206.3605087,
+      "from": "Worker",
+      "to": "group",
+      "content": "```python\ndef is_prime(n):\n    if n < 2:\n        return False\n    if n == 2:\n        return True\n    if n % 2 == 0:\n        return False\n    max_divisor = int(n**0.5) + 1\n    for i in range(3, max_divisor, 2):\n        if n % i == 0:\n            return False\n    return True\n```\n\n### หลักการสั้นๆ:\n1. **ตรวจสอบกรณีพิเศษ**: ถ้า `n < 2` คืนค่า `False` (ไม่ใช่จำนวนเฉพาะ) และถ้า `n == 2` คืนค่า `True` (2 เป็นจำนวนเฉพาะ)\n2. **ตรวจสอบเลขคู่**: หาก `n` เป็นเลขคู่ (หารด้วย 2 ลงตัว) และมากกว่า 2 คืนค่า `False`\n3. **ตรวจสอบตัวหาร**: ตรวจสอบตัวหารจาก 3 ถึง `sqrt(n)` โดยเพิ่มขึ้นทีละ 2 (เพื่อข้ามเลขคู่) หากพบตัวหารที่หารลงตัว คืนค่า `False`\n4. **คืนค่า True**: หากผ่านการตรวจสอบทั้งหมด คืนค่า `True` (เป็นจำนวนเฉพาะ)",
+      "tokens": 177
+    },
+    {
+      "timestamp": 1785657318.1818845,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED ฟังก์ชันทำงานถูกต้องและมีการอธิบายชัดเจน  \nSCORE: 5",
+      "tokens": 15
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1785657039.833015,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 82.1,
+      "ram_used_mb": 9185.1
+    },
+    {
+      "timestamp": 1785657318.1913648,
+      "tag": "end",
+      "cpu_percent": 1.5,
+      "ram_percent": 87.4,
+      "ram_used_mb": 9784.0
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 278.24,
+    "total_tokens": 227,
+    "quality_score": 5,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "coding_task",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "function_name",
+        "description": "ระบุฟังก์ชัน is_prime"
+      },
+      {
+        "id": "boolean_return",
+        "description": "คืนค่า True/False"
+      },
+      {
+        "id": "n_le_1",
+        "description": "อธิบาย/จัดการ n <= 1"
+      },
+      {
+        "id": "two_case",
+        "description": "จัดการเลข 2"
+      },
+      {
+        "id": "sqrt_bound",
+        "description": "ตรวจถึงรากที่สองหรือ i*i <= n"
+      },
+      {
+        "id": "explanation",
+        "description": "มีคำอธิบายหลักการ"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 6/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "achieved": null,
+  "execution_sequence_index": 123,
+  "network_commands": [
+    {
+      "action": "apply",
+      "result": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "cmd": "tc qdisc add dev eth0 root handle 1: netem loss 10%",
+        "clear_before_apply": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "Error: Cannot delete qdisc with handle of zero.\n",
+          "cmd": "tc qdisc del dev eth0 root",
+          "note": "clear skipped: no existing qdisc"
+        },
+        "tbf": null
+      }
+    },
+    {
+      "action": "clear",
+      "result": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "cmd": "tc qdisc del dev eth0 root"
+      }
+    }
+  ],
+  "ended_at": 1785657318.3012643
+}

@@ -1,0 +1,112 @@
+{
+  "run_id": "9b253725",
+  "task_name": "planning_decision",
+  "run_index": 1,
+  "started_at": 1784423245.981737,
+  "network_condition": {
+    "name": "main_delay_d0400",
+    "scenario_type": "main_effect",
+    "main_effect_axis": "delay",
+    "delay_ms": 400,
+    "requested_delay_ms": 400,
+    "jitter_ms": 0,
+    "loss_pct": 0,
+    "note": "",
+    "experiment_phase": "tier4_main_effect_replicate__llama3.1_8b",
+    "trial_key": "tier4_main_effect_replicate__llama3.1_8b::no_match::no_side::main_delay_d0400::planning_decision::run1"
+  },
+  "messages": [
+    {
+      "timestamp": 1784423246.2052314,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: ทีมมีงบ 3 อย่างให้เลือกลงทุนอย่างใดอย่างหนึ่ง: (1) ปรับปรุง UX, (2) เพิ่ม feature ใหม่, (3) แก้ bug ค้างเก่า ช่วยวางแผนว่าควรเลือกอะไรก่อน พร้อมเหตุผลสั้นๆ",
+      "tokens": 42
+    },
+    {
+      "timestamp": 1784423265.5041466,
+      "from": "Worker",
+      "to": "group",
+      "content": "การวางแผนการจัดลำดับความสำคัญของงานที่ต้องทำในโครงการนี้น่าจะเป็นดังนี้\n\n1. **แก้ bug ค้างเก่า** : เนื่องจากมี bug ที่ยังไม่ได้แก้ไข หากไม่ตอบสนองอย่างรวดเร็ว อาจส่งผลกระทบต่อประสิทธิภาพและความปลอดภัยของระบบ ซึ่งอาจทำให้เกิดปัญหาที่รุนแรงขึ้น\n\n2. **ปรับปรุง UX** : การปรับปรุง User Experience (UX) จะช่วยให้การใช้งานระบบง่ายขึ้น และเพิ่มความพึงพอใจของผู้ใช้ นอกจากนี้ยังสามารถนำไปสู่การเพิ่มประสิทธิภาพและลดต้นทุนในการสนับสนุน\n\n3. **เพิ่ม feature ใหม่** : การเพิ่ม feature ใหม่อาจจะดึงดูดลูกค้าให้มากขึ้น แต่ก็อาจไม่ใช่เรื่องสำคัญที่สุดในขณะนี้ หากไม่มีการแก้ไข bug หรือปรับปรุง UX ก่อน อาจทำให้ระบบยังไม่ได้พร้อมใช้งานอย่างเต็มที่\n\nการวางลำดับความสำคัญเช่นนี้จะช่วยให้ทีมสามารถจัดการกับปัญหาที่เกิดขึ้นได้อย่างมีประสิทธิภาพและลดความเสี่ยง",
+      "tokens": 184
+    },
+    {
+      "timestamp": 1784423272.3039474,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED เหตุผล: การแก้ bug ค้างเก่าเป็นเรื่องสำคัญที่สุด เนื่องจากอาจส่งผลกระทบต่อประสิทธิภาพและความปลอดภัยของระบบ\n\nSCORE: 5",
+      "tokens": 31
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784423245.981743,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 7.6,
+      "ram_used_mb": 448.4,
+      "gpu": null,
+      "gpu_all": []
+    },
+    {
+      "timestamp": 1784423272.3071613,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 7.6,
+      "ram_used_mb": 450.6,
+      "gpu": null,
+      "gpu_all": []
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 26.21,
+    "total_tokens": 257,
+    "quality_score": 5,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "planning_decision",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "clear_choice",
+        "description": "มีการเลือก/จัดลำดับชัดเจน"
+      },
+      {
+        "id": "mentions_options",
+        "description": "กล่าวถึงตัวเลือกหลัก"
+      },
+      {
+        "id": "impact_reason",
+        "description": "มีเหตุผลด้านผลกระทบ/ลูกค้า"
+      },
+      {
+        "id": "risk_urgency",
+        "description": "มีเหตุผลด้านความเสี่ยงหรือความเร่งด่วน"
+      },
+      {
+        "id": "action_plan",
+        "description": "มีแผนดำเนินการ"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 5/5 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "gpu_monitoring_available": false,
+  "ended_at": 1784423272.4094129
+}

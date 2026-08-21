@@ -1,0 +1,114 @@
+{
+  "run_id": "3b1bef43",
+  "task_name": "research_summary",
+  "run_index": 4,
+  "started_at": 1784738788.177557,
+  "network_condition": {
+    "name": "tier5_loss_loss75",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 75,
+    "note": "",
+    "experiment_phase": "tier5_mitigation__none",
+    "trial_key": "tier5_mitigation__none::no_match::no_side::tier5_loss_loss75::research_summary::run4"
+  },
+  "messages": [
+    {
+      "timestamp": 1784738788.4049063,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1784738981.5563822,
+      "from": "Worker",
+      "to": "group",
+      "content": "**ข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง**  \n\n1. **ข้อมูลที่อัปเดตได้ทันที vs. ความรู้ที่คงที่**  \n   - RAG สามารถเข้าถึงข้อมูลใหม่ได้โดยไม่ต้องฝึกโมเดลใหม่ (เช่น ข่าวล่าสุด) ขณะที่การ fine-tune ต้องใช้ข้อมูลที่มีอยู่ในช่วงการฝึก ซึ่งอาจล้าสมัย  \n\n2. **การจัดการคำถามนอกขอบเขต (Out-of-Domain) vs. ข้อจำกัดของข้อมูลฝึก**  \n   - RAG สามารถตอบคำถามที่อยู่นอกขอบเขตของข้อมูลฝึกได้ดีขึ้นผ่านการค้นหาข้อมูลภายนอก ขณะที่การ fine-tune อาจไม่สามารถตอบคำถามที่ไม่เคยเจอในข้อมูลฝึกได้  \n\n3. **ต้นทุนการใช้งาน vs. ต้นทุนการฝึกโมเดล**  \n   - RAG ใช้ทรัพยากรน้อยกว่าการ fine-tune ซึ่งต้องใช้เวลากับการฝึกโมเดลใหม่และข้อมูลจำนวนมาก  \n\n4. **ความน่าเชื่อถือของข้อมูล vs. ความแม่นยำของโมเดล**  \n   - RAG อาจมีความเสี่ยงในการใช้ข้อมูลที่ไม่ถูกต้องจากระบบค้นหา ขณะที่การ fine-tune ควบคุมข้อมูลฝึกได้ดีขึ้น ทำให้ผลลัพธ์มีความแม่นยำสูงขึ้น  \n\n5. **ความเร็วในการตอบ vs. ประสิทธิภาพในการสร้างเนื้อหา**  \n   - RAG อาจช้าลงเนื่องจากต้องมีขั้นตอนค้นหาข้อมูล ขณะที่การ fine-tune ให้ผลลัพธ์ทันทีโดยไม่ต้องพึ่งพาข้อมูลภายนอก  \n\n**สรุป**: RAG เหมาะกับงานที่ต้องการข้อมูลที่อัปเดตและยืดหยุ่น ขณะที่การ fine-tune ดีกว่าในด้านความแม่นยำและความเร็ว แต่มีต้นทุนสูงกว่าและข้อจำกัดด้านข้อมูลฝึก",
+      "tokens": 302
+    },
+    {
+      "timestamp": 1784739015.068214,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED งานสอดคล้องกับแผน สรุปข้อดี-ข้อเสียครบ 5 ข้อ ชัดเจนและถูกต้อง  \nSCORE: 5",
+      "tokens": 20
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784738788.1775608,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.2,
+      "ram_used_mb": 490.6,
+      "gpu": null,
+      "gpu_all": []
+    },
+    {
+      "timestamp": 1784739015.074345,
+      "tag": "end",
+      "cpu_percent": 1.9,
+      "ram_percent": 8.2,
+      "ram_used_mb": 495.1,
+      "gpu": null,
+      "gpu_all": []
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 226.78,
+    "total_tokens": 355,
+    "quality_score": 5,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "research_summary",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "rag_mentioned",
+        "description": "กล่าวถึง RAG"
+      },
+      {
+        "id": "fine_tune_mentioned",
+        "description": "กล่าวถึง fine-tune"
+      },
+      {
+        "id": "rag_advantage",
+        "description": "มีข้อดีของ RAG"
+      },
+      {
+        "id": "rag_disadvantage",
+        "description": "มีข้อเสียของ RAG"
+      },
+      {
+        "id": "finetune_advantage",
+        "description": "มีข้อดีของ fine-tuning"
+      },
+      {
+        "id": "finetune_disadvantage",
+        "description": "มีข้อเสียของ fine-tuning"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 6/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "gpu_monitoring_available": false,
+  "ended_at": 1784739015.1766243
+}

@@ -1,0 +1,205 @@
+{
+  "run_id": "17a6e2c1",
+  "task_name": "planning_decision",
+  "run_index": 5,
+  "started_at": 1785441731.7060158,
+  "network_condition": {
+    "name": "t8ap_delay3000",
+    "scenario_type": "achieved_path_check",
+    "delay_ms": 3000,
+    "requested_delay_ms": 3000,
+    "jitter_ms": 0,
+    "loss_pct": 0,
+    "bandwidth_kbit": null,
+    "note": "จุดสูงสุดของแกน delay (sigconf.tex sec:nondetection) — วัด achieved RTT จริง",
+    "experiment_phase": "tier8_achieved_path"
+  },
+  "messages": [
+    {
+      "timestamp": 1785441745.0742571,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: ทีมมีงบ 3 อย่างให้เลือกลงทุนอย่างใดอย่างหนึ่ง: (1) ปรับปรุง UX, (2) เพิ่ม feature ใหม่, (3) แก้ bug ค้างเก่า ช่วยวางแผนว่าควรเลือกอะไรก่อน พร้อมเหตุผลสั้นๆ",
+      "tokens": 42
+    },
+    {
+      "timestamp": 1785441797.5787542,
+      "from": "Worker",
+      "to": "group",
+      "content": "**แผนการลงทุน: ปรับปรุง UX ก่อน**  \n**เหตุผล:** UX เป็นพื้นฐานสำคัญที่ส่งผลต่อประสบการณ์ผู้ใช้โดยตรง หากใช้งานง่ายและน่าใช้ ผู้ใช้จะมีความพึงพอใจสูงขึ้น ช่วยเพิ่มความภักดีและลดปัญหาการใช้งานที่ไม่จำเป็น ซึ่งเป็นสิ่งสำคัญกว่าการเพิ่มฟีเจอร์ใหม่หรือแก้บั๊กเก่าที่ไม่กระทบต่อการใช้งานโดยตรง ถ้ามีงบจำกัด ควรลงทุนในสิ่งที่สร้างผลกระทบระยะยาวได้มากที่สุด",
+      "tokens": 87
+    },
+    {
+      "timestamp": 1785441840.7935927,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED แผนเลือก UX ก่อนมีเหตุผลชัดเจนและสอดคล้องกับหลักการด้าน UX  \nSCORE: 5",
+      "tokens": 19
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1785441731.7060206,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 81.8,
+      "ram_used_mb": 9140.7
+    },
+    {
+      "timestamp": 1785441853.8965473,
+      "tag": "end",
+      "cpu_percent": 1.6,
+      "ram_percent": 83.4,
+      "ram_used_mb": 9325.8
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 95.83,
+    "total_tokens": 148,
+    "quality_score": 5,
+    "ground_truth_score": 4,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "planning_decision",
+    "score": 4,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 0.8,
+    "matched_points": [
+      {
+        "id": "clear_choice",
+        "description": "มีการเลือก/จัดลำดับชัดเจน"
+      },
+      {
+        "id": "mentions_options",
+        "description": "กล่าวถึงตัวเลือกหลัก"
+      },
+      {
+        "id": "impact_reason",
+        "description": "มีเหตุผลด้านผลกระทบ/ลูกค้า"
+      },
+      {
+        "id": "action_plan",
+        "description": "มีแผนดำเนินการ"
+      }
+    ],
+    "missing_points": [
+      {
+        "id": "risk_urgency",
+        "description": "มีเหตุผลด้านความเสี่ยงหรือความเร่งด่วน"
+      }
+    ],
+    "rationale": "matched 4/5 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "achieved": {
+    "before": {
+      "timestamp": 1785441731.8177865,
+      "qdisc_egress": {
+        "dev": "eth0",
+        "sent_bytes": 0,
+        "sent_pkts": 0,
+        "dropped": 0,
+        "overlimits": 0,
+        "requeues": 0,
+        "raw": "qdisc netem 1: root refcnt 7 limit 1000 delay 3s\n Sent 0 bytes 0 pkt (dropped 0, overlimits 0 requeues 0) \n backlog 0b 0p requeues 0\n"
+      },
+      "tcp_retrans": {
+        "retrans_segs": 1344
+      },
+      "rtt_probe": {
+        "target": "host.docker.internal",
+        "returncode": 0,
+        "raw": "PING host.docker.internal (172.17.0.1) 56(84) bytes of data.\n\n--- host.docker.internal ping statistics ---\n5 packets transmitted, 5 received, 0% packet loss, time 4103ms\nrtt min/avg/max/mdev = 3001.581/3005.366/3009.046/3.046 ms, pipe 3\n",
+        "packets_sent": 5,
+        "packets_received": 5,
+        "packet_loss_pct": 0.0,
+        "min_ms": 3001.581,
+        "avg_ms": 3005.366,
+        "max_ms": 3009.046,
+        "mdev_ms": 3.046
+      },
+      "throughput_probe": {
+        "target": "http://host.docker.internal:11434/api/tags",
+        "returncode": 0,
+        "bytes": 426,
+        "seconds": 6.016433,
+        "achieved_kbit_s": 0.566
+      }
+    },
+    "after": {
+      "timestamp": 1785441840.7937868,
+      "qdisc_egress": {
+        "dev": "eth0",
+        "sent_bytes": 12868,
+        "sent_pkts": 85,
+        "dropped": 0,
+        "overlimits": 0,
+        "requeues": 0,
+        "raw": "qdisc netem 1: root refcnt 7 limit 1000 delay 3s\n Sent 12868 bytes 85 pkt (dropped 0, overlimits 0 requeues 0) \n backlog 66b 1p requeues 0\n"
+      },
+      "tcp_retrans": {
+        "retrans_segs": 1345
+      },
+      "rtt_probe": {
+        "target": "host.docker.internal",
+        "returncode": 0,
+        "raw": "PING host.docker.internal (172.17.0.1) 56(84) bytes of data.\n\n--- host.docker.internal ping statistics ---\n5 packets transmitted, 5 received, 0% packet loss, time 4052ms\nrtt min/avg/max/mdev = 3000.240/3003.944/3007.954/2.810 ms, pipe 3\n",
+        "packets_sent": 5,
+        "packets_received": 5,
+        "packet_loss_pct": 0.0,
+        "min_ms": 3000.24,
+        "avg_ms": 3003.944,
+        "max_ms": 3007.954,
+        "mdev_ms": 2.81
+      },
+      "throughput_probe": {
+        "target": "http://host.docker.internal:11434/api/tags",
+        "returncode": 0,
+        "bytes": 426,
+        "seconds": 6.018547,
+        "achieved_kbit_s": 0.566
+      }
+    }
+  },
+  "network_commands": [
+    {
+      "action": "apply",
+      "result": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "cmd": "tc qdisc add dev eth0 root handle 1: netem delay 3000ms",
+        "clear_before_apply": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "Error: Cannot delete qdisc with handle of zero.\n",
+          "cmd": "tc qdisc del dev eth0 root",
+          "note": "clear skipped: no existing qdisc"
+        },
+        "tbf": null
+      }
+    },
+    {
+      "action": "clear",
+      "result": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "cmd": "tc qdisc del dev eth0 root"
+      }
+    }
+  ],
+  "ended_at": 1785441853.9981384
+}

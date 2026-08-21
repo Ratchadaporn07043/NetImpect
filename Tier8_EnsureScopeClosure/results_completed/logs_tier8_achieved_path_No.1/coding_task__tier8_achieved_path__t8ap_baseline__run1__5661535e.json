@@ -1,0 +1,208 @@
+{
+  "run_id": "5661535e",
+  "task_name": "coding_task",
+  "run_index": 1,
+  "started_at": 1785416951.1274884,
+  "network_condition": {
+    "name": "t8ap_baseline",
+    "scenario_type": "achieved_path_check",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 0,
+    "bandwidth_kbit": null,
+    "note": "ค่าอ้างอิง ไม่มี impairment — achieved ควรใกล้ configured (คือใกล้ 0)",
+    "experiment_phase": "tier8_achieved_path"
+  },
+  "messages": [
+    {
+      "timestamp": 1785416955.4392443,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ",
+      "tokens": 35
+    },
+    {
+      "timestamp": 1785417165.570729,
+      "from": "Worker",
+      "to": "group",
+      "content": "```python\ndef is_prime(n):\n    \"\"\"\n    ตรวจสอบว่าจำนวนเต็ม n เป็นจำนวนเฉพาะหรือไม่\n    จำนวนเฉพาะคือจำนวนที่มีค่ามากกว่า 1 และไม่มีตัวหารอื่นนอกจาก 1 และตัวมันเอง\n    \"\"\"\n    if n < 2:\n        return False  # จำนวนที่น้อยกว่า 2 ไม่ใช่จำนวนเฉพาะ\n    if n == 2:\n        return True  # 2 เป็นจำนวนเฉพาะ\n    if n % 2 == 0:\n        return False  # จำนวนคู่ที่มากกว่า 2 ไม่ใช่จำนวนเฉพาะ\n    max_divisor = int(n**0.5) + 1  # ตรวจสอบตัวหารจนถึงรากที่สองของ n\n    for i in range(3, max_divisor, 2):  # ข้ามจำนวนคู่\n        if n % i == 0:\n            return False  # ถ้ามีตัวหาร ไม่ใช่จำนวนเฉพาะ\n    return True  # ถ้าไม่มีตัวหาร คือจำนวนเฉพาะ\n```\n\n### หลักการ:\n1. **กรณีพิเศษ**: \n   - ถ้า `n < 2` คืนค่า `False` (ไม่ใช่จำนวนเฉพาะ)\n   - ถ้า `n == 2` คืนค่า `True` (2 เป็นจำนวนเฉพาะ)\n   - ถ้า `n` เป็นคู่ (หารด้วย 2 ลงตัว) คืนค่า `False` (ยกเว้น 2)\n2. **ตรวจสอบตัวหาร**: \n   - ตรวจสอบตัวหารจาก `3` ถึง `sqrt(n)` โดยข้ามจำนวนคู่ (เพราะจำนวนคู่ถูกตรวจสอบแล้ว)\n   - หากพบตัวหารที่หาร `n` ลงตัว คืนค่า `False` (ไม่ใช่จำนวนเฉพาะ)\n   - หากไม่พบตัวหารใดๆ คืนค่า `True` (เป็นจำนวนเฉพาะ)",
+      "tokens": 266
+    },
+    {
+      "timestamp": 1785417299.0440433,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED ฟังก์ชันทำงานถูกต้องและมีประสิทธิภาพ ตรวจสอบกรณีพิเศษและตัวหารทั้งหมดจนถึงรากที่สองของ n  \nSCORE: 5",
+      "tokens": 27
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1785416951.1274903,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 72.1,
+      "ram_used_mb": 8031.4
+    },
+    {
+      "timestamp": 1785417303.2212267,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 76.1,
+      "ram_used_mb": 8478.9
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 343.69,
+    "total_tokens": 328,
+    "quality_score": 5,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "coding_task",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "function_name",
+        "description": "ระบุฟังก์ชัน is_prime"
+      },
+      {
+        "id": "boolean_return",
+        "description": "คืนค่า True/False"
+      },
+      {
+        "id": "n_le_1",
+        "description": "อธิบาย/จัดการ n <= 1"
+      },
+      {
+        "id": "two_case",
+        "description": "จัดการเลข 2"
+      },
+      {
+        "id": "sqrt_bound",
+        "description": "ตรวจถึงรากที่สองหรือ i*i <= n"
+      },
+      {
+        "id": "explanation",
+        "description": "มีคำอธิบายหลักการ"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 6/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "achieved": {
+    "before": {
+      "timestamp": 1785416951.2327259,
+      "qdisc_egress": {
+        "dev": "eth0",
+        "sent_bytes": 0,
+        "sent_pkts": 0,
+        "dropped": 0,
+        "overlimits": 0,
+        "requeues": 0,
+        "raw": "qdisc noqueue 0: root refcnt 2 \n Sent 0 bytes 0 pkt (dropped 0, overlimits 0 requeues 0) \n backlog 0b 0p requeues 0\n"
+      },
+      "tcp_retrans": {
+        "retrans_segs": 4
+      },
+      "rtt_probe": {
+        "target": "host.docker.internal",
+        "returncode": 0,
+        "raw": "PING host.docker.internal (172.17.0.1) 56(84) bytes of data.\n\n--- host.docker.internal ping statistics ---\n5 packets transmitted, 5 received, 0% packet loss, time 4115ms\nrtt min/avg/max/mdev = 0.035/0.079/0.143/0.048 ms\n",
+        "packets_sent": 5,
+        "packets_received": 5,
+        "packet_loss_pct": 0.0,
+        "min_ms": 0.035,
+        "avg_ms": 0.079,
+        "max_ms": 0.143,
+        "mdev_ms": 0.048
+      },
+      "throughput_probe": {
+        "target": "http://host.docker.internal:11434/api/tags",
+        "returncode": 0,
+        "bytes": 426,
+        "seconds": 0.002237,
+        "achieved_kbit_s": 1523.469
+      }
+    },
+    "after": {
+      "timestamp": 1785417299.0464432,
+      "qdisc_egress": {
+        "dev": "eth0",
+        "sent_bytes": 0,
+        "sent_pkts": 0,
+        "dropped": 0,
+        "overlimits": 0,
+        "requeues": 0,
+        "raw": "qdisc noqueue 0: root refcnt 2 \n Sent 0 bytes 0 pkt (dropped 0, overlimits 0 requeues 0) \n backlog 0b 0p requeues 0\n"
+      },
+      "tcp_retrans": {
+        "retrans_segs": 4
+      },
+      "rtt_probe": {
+        "target": "host.docker.internal",
+        "returncode": 0,
+        "raw": "PING host.docker.internal (172.17.0.1) 56(84) bytes of data.\n\n--- host.docker.internal ping statistics ---\n5 packets transmitted, 5 received, 0% packet loss, time 4136ms\nrtt min/avg/max/mdev = 0.026/0.089/0.140/0.051 ms\n",
+        "packets_sent": 5,
+        "packets_received": 5,
+        "packet_loss_pct": 0.0,
+        "min_ms": 0.026,
+        "avg_ms": 0.089,
+        "max_ms": 0.14,
+        "mdev_ms": 0.051
+      },
+      "throughput_probe": {
+        "target": "http://host.docker.internal:11434/api/tags",
+        "returncode": 0,
+        "bytes": 426,
+        "seconds": 0.003814,
+        "achieved_kbit_s": 893.55
+      }
+    }
+  },
+  "network_commands": [
+    {
+      "action": "apply",
+      "result": {
+        "returncode": 0,
+        "stdout": "baseline (no impairment)",
+        "stderr": "",
+        "cmd": "baseline",
+        "clear_before_apply": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "Error: Cannot delete qdisc with handle of zero.\n",
+          "cmd": "tc qdisc del dev eth0 root",
+          "note": "clear skipped: no existing qdisc"
+        }
+      }
+    },
+    {
+      "action": "clear",
+      "result": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "Error: Cannot delete qdisc with handle of zero.\n",
+        "cmd": "tc qdisc del dev eth0 root",
+        "note": "clear skipped: no existing qdisc"
+      }
+    }
+  ],
+  "ended_at": 1785417303.3241322
+}

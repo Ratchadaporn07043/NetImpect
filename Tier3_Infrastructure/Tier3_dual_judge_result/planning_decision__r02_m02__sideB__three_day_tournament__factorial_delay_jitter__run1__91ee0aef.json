@@ -1,0 +1,176 @@
+{
+  "run_id": "91ee0aef",
+  "task_name": "planning_decision",
+  "run_index": 1,
+  "started_at": 1783578825.7906058,
+  "network_condition": {
+    "name": "factorial_delay_jitter",
+    "scenario_type": "factorial",
+    "delay_ms": 300,
+    "requested_delay_ms": 300,
+    "jitter_ms": 30,
+    "loss_pct": 0,
+    "factors": {
+      "delay": "on",
+      "loss": "off",
+      "jitter": "on"
+    },
+    "note": "",
+    "experiment_phase": "three_day_tournament",
+    "tournament": {
+      "match_id": "r02_m02",
+      "round_index": 2,
+      "pair_index": 2,
+      "side": "B",
+      "opponent": "factorial_delay_loss_jitter",
+      "pair": [
+        "factorial_delay_loss_jitter",
+        "factorial_delay_jitter"
+      ]
+    },
+    "trial_key": "three_day_tournament::r02_m02::B::factorial_delay_jitter::planning_decision::run1"
+  },
+  "messages": [
+    {
+      "timestamp": 1783578826.0025136,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: ทีมมีงบ 3 อย่างให้เลือกลงทุนอย่างใดอย่างหนึ่ง: (1) ปรับปรุง UX, (2) เพิ่ม feature ใหม่, (3) แก้ bug ค้างเก่า ช่วยวางแผนว่าควรเลือกอะไรก่อน พร้อมเหตุผลสั้นๆ",
+      "tokens": 42
+    },
+    {
+      "timestamp": 1783578879.996538,
+      "from": "Worker",
+      "to": "group",
+      "content": "**แผนการลงทุนที่แนะนำ:**  \n1. **แก้ bug ค้างเก่า** (ลำดับ 1)  \n   - **เหตุผล:** บั๊กที่ยังไม่ได้แก้ไขอาจส่งผลต่อประสบการณ์ผู้ใช้ (UX) และความน่าเชื่อถือของผลิตภัณฑ์ หากเป็นบั๊กที่ร้ายแรง (เช่น ระบบล่ม, ข้อมูลสูญหาย) การแก้ไขเป็นสิ่งจำเป็นเพื่อให้ผู้ใช้ใช้งานได้อย่างราบรื่น  \n\n2. **ปรับปรุง UX** (ลำดับ 2)  \n   - **เหตุผล:** หลังจากแก้ไขบั๊กแล้ว การปรับปรุง UX จะช่วยเพิ่มความพึงพอใจของผู้ใช้ ลดอัตราการยกเลิกการใช้งาน และเพิ่มการใช้งานอย่างต่อเนื่อง  \n\n3. **เพิ่ม feature ใหม่** (ลำดับ 3)  \n   - **เหตุผล:** การเพิ่มฟีเจอร์ใหม่ควรทำหลังจากที่ระบบมีความเสถียรและ UX ดีแล้ว เพื่อไม่ให้เกิดปัญหาการใช้งานที่ซับซ้อนหรือส่งผลต่อผู้ใช้ที่มีอยู่  \n\n**สรุป:** ควรเริ่มจาก \"แก้ bug ค้างเก่า\" เพื่อให้ระบบมีความเสถียร ก่อนพัฒนา UX และเพิ่มฟีเจอร์ใหม่ในลำดับถัดไป ซึ่งช่วยสร้างความเชื่อมั่นและเพิ่มคุณค่าให้กับผู้ใช้ในระยะยาว 🚀",
+      "tokens": 204
+    },
+    {
+      "timestamp": 1783578907.9472063,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED แผนมีลำดับความสำคัญชัดเจน ตามหลักการแก้ไขปัญหาเร่งด่วนก่อน แล้วพัฒนาคุณภาพเพิ่มเติม  \nSCORE: 5",
+      "tokens": 25
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1783578825.7906241,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 7.8,
+      "ram_used_mb": 469.2
+    },
+    {
+      "timestamp": 1783578907.9627728,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 7.9,
+      "ram_used_mb": 473.6
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 82.04,
+    "total_tokens": 271,
+    "quality_score": 5,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0,
+    "posthoc_ground_truth_score": 4,
+    "posthoc_ground_truth_passed": true,
+    "posthoc_ground_truth_mode": "both"
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "planning_decision",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "clear_choice",
+        "description": "มีการเลือก/จัดลำดับชัดเจน"
+      },
+      {
+        "id": "mentions_options",
+        "description": "กล่าวถึงตัวเลือกหลัก"
+      },
+      {
+        "id": "impact_reason",
+        "description": "มีเหตุผลด้านผลกระทบ/ลูกค้า"
+      },
+      {
+        "id": "risk_urgency",
+        "description": "มีเหตุผลด้านความเสี่ยงหรือความเร่งด่วน"
+      },
+      {
+        "id": "action_plan",
+        "description": "มีแผนดำเนินการ"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 5/5 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "ended_at": 1783578908.0690858,
+  "posthoc_evaluation": {
+    "enabled": true,
+    "mode": "both",
+    "task_name": "planning_decision",
+    "judge_model_name": "qwen3:8b",
+    "score": 4,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "missing_points": [
+      "แผนปฏิบัติสั้นๆ เช่น ประเมินข้อมูล วัดผล ทำ sprint"
+    ],
+    "rationale": "คำตอบเลือกลำดับความสำคัญชัดเจน (แก้ bug ค้างเก่าเป็นลำดับ 1) และให้เหตุผลเชิง risk/impact ต่อ UX และ customer value พร้อมพิจารณา trade-off ระหว่าง feature ใหม่กับการแก้ bug อย่างมีเหตุผล แต่ขาดการระบุแผนปฏิบัติสั้นๆ เช่น การประเมินข้อมูลหรือการวางแผน sprint อย่างชัดเจน ซึ่งเป็นข้อกำหนดใน rubric",
+    "raw_response": "{\n  \"score\": 4,\n  \"passed\": true,\n  \"missing_points\": [\"แผนปฏิบัติสั้นๆ เช่น ประเมินข้อมูล วัดผล ทำ sprint\"],\n  \"rationale\": \"คำตอบเลือกลำดับความสำคัญชัดเจน (แก้ bug ค้างเก่าเป็นลำดับ 1) และให้เหตุผลเชิง risk/impact ต่อ UX และ customer value พร้อมพิจารณา trade-off ระหว่าง feature ใหม่กับการแก้ bug อย่างมีเหตุผล แต่ขาดการระบุแผนปฏิบัติสั้นๆ เช่น การประเมินข้อมูลหรือการวางแผน sprint อย่างชัดเจน ซึ่งเป็นข้อกำหนดใน rubric\"\n}",
+    "heuristic_reference": {
+      "enabled": true,
+      "mode": "heuristic",
+      "task_name": "planning_decision",
+      "score": 5,
+      "max_score": 5,
+      "pass_score": 4,
+      "passed": true,
+      "coverage": 1.0,
+      "matched_points": [
+        {
+          "id": "clear_choice",
+          "description": "มีการเลือก/จัดลำดับชัดเจน"
+        },
+        {
+          "id": "mentions_options",
+          "description": "กล่าวถึงตัวเลือกหลัก"
+        },
+        {
+          "id": "impact_reason",
+          "description": "มีเหตุผลด้านผลกระทบ/ลูกค้า"
+        },
+        {
+          "id": "risk_urgency",
+          "description": "มีเหตุผลด้านความเสี่ยงหรือความเร่งด่วน"
+        },
+        {
+          "id": "action_plan",
+          "description": "มีแผนดำเนินการ"
+        }
+      ],
+      "missing_points": [],
+      "rationale": "matched 5/5 rubric checks"
+    },
+    "posthoc": true,
+    "evaluated_at": "2026-07-17T10:43:51+0000"
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "run_id": "53d5534b",
+  "task_name": "planning_decision",
+  "run_index": 1,
+  "started_at": 1783778746.5058146,
+  "network_condition": {
+    "name": "combined_d1000_loss75_j075",
+    "scenario_type": "combined",
+    "delay_ms": 1000,
+    "requested_delay_ms": 1000,
+    "jitter_ms": 75,
+    "loss_pct": 75,
+    "combined_levels": {
+      "delay_ms": 1000,
+      "loss_pct": 75,
+      "jitter_ms": 75
+    },
+    "note": "",
+    "experiment_phase": "three_day_combined_sample",
+    "trial_key": "three_day_combined_sample::no_match::no_side::combined_d1000_loss75_j075::planning_decision::run1"
+  },
+  "messages": [
+    {
+      "timestamp": 1783778746.7107716,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: ทีมมีงบ 3 อย่างให้เลือกลงทุนอย่างใดอย่างหนึ่ง: (1) ปรับปรุง UX, (2) เพิ่ม feature ใหม่, (3) แก้ bug ค้างเก่า ช่วยวางแผนว่าควรเลือกอะไรก่อน พร้อมเหตุผลสั้นๆ",
+      "tokens": 42
+    },
+    {
+      "timestamp": 1783778828.7453501,
+      "from": "Worker",
+      "to": "group",
+      "content": "**แผนการลงทุนที่แนะนำ: แก้ bug ค้างเก่า (3) ก่อน**  \n**เหตุผล:** ปัญหา bug ที่ค้างไว้อาจส่งผลต่อความน่าเชื่อถือและความเสถียรของระบบ หากไม่แก้ไขอาจทำให้ผู้ใช้สูญเสียความไว้วางใจหรือเกิดปัญหาทางเทคนิคที่รบกวนการทำงาน จึงควรแก้ไขก่อนเพื่อสร้างความมั่นคงพื้นฐาน หลังจากนั้นจึงพัฒนา UX (1) เพื่อเพิ่มประสบการณ์ผู้ใช้ และสุดท้ายค่อยเพิ่ม feature ใหม่ (2) เพื่อขยายความสามารถในระยะยาว",
+      "tokens": 94
+    },
+    {
+      "timestamp": 1783779002.8543568,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED แผนมีลำดับความสำคัญชัดเจน แก้ไขปัญหาด้านความน่าเชื่อถือก่อน แล้วค่อยพัฒนา UX และเพิ่มฟีเจอร์ใหม่ตามลำดับที่สมเหตุสมผล  \nSCORE: 5",
+      "tokens": 34
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1783778746.505818,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.5,
+      "ram_used_mb": 514.8
+    },
+    {
+      "timestamp": 1783779002.8577967,
+      "tag": "end",
+      "cpu_percent": 0.9,
+      "ram_percent": 8.4,
+      "ram_used_mb": 509.3
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 256.24,
+    "total_tokens": 170,
+    "quality_score": 5,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "planning_decision",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "clear_choice",
+        "description": "มีการเลือก/จัดลำดับชัดเจน"
+      },
+      {
+        "id": "mentions_options",
+        "description": "กล่าวถึงตัวเลือกหลัก"
+      },
+      {
+        "id": "impact_reason",
+        "description": "มีเหตุผลด้านผลกระทบ/ลูกค้า"
+      },
+      {
+        "id": "risk_urgency",
+        "description": "มีเหตุผลด้านความเสี่ยงหรือความเร่งด่วน"
+      },
+      {
+        "id": "action_plan",
+        "description": "มีแผนดำเนินการ"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 5/5 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "ended_at": 1783779002.9646118
+}

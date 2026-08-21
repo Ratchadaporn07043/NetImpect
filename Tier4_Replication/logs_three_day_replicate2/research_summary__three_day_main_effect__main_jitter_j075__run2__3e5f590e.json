@@ -1,0 +1,116 @@
+{
+  "run_id": "3e5f590e",
+  "task_name": "research_summary",
+  "run_index": 2,
+  "started_at": 1784532680.396304,
+  "network_condition": {
+    "name": "main_jitter_j075",
+    "scenario_type": "main_effect",
+    "main_effect_axis": "jitter",
+    "delay_ms": 50,
+    "requested_delay_ms": 0,
+    "jitter_ms": 75,
+    "loss_pct": 0,
+    "note": "requested delay=0ms แต่ jitter=75ms ต้องใช้ delay=50ms ขั้นต่ำ เพราะ netem ต้องมี delay>0",
+    "experiment_phase": "three_day_main_effect",
+    "trial_key": "three_day_main_effect::no_match::no_side::main_jitter_j075::research_summary::run2"
+  },
+  "messages": [
+    {
+      "timestamp": 1784532680.6119153,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1784532770.3213847,
+      "from": "Worker",
+      "to": "group",
+      "content": "**ข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง**  \n\n1. **ข้อดีของ RAG**: สามารถเข้าถึงข้อมูลอัปเดตได้โดยไม่ต้องฝึกโมเดลใหม่ (RAG ใช้ข้อมูลจากแหล่งภายนอกที่อัปเดตได้ ส่วนการ fine-tune ต้องพึ่งพาข้อมูลที่มีอยู่ในช่วงการฝึก)  \n2. **ข้อดีของ RAG**: ปรับขยายความรู้ได้ง่ายโดยเพิ่มข้อมูลใหม่ในระบบค้นหา ไม่ต้องฝึกโมเดลซ้ำ (ขณะที่การ fine-tune ต้องใช้ข้อมูลใหม่และฝึกโมเดลซ้ำทุกครั้ง)  \n3. **ข้อเสียของ RAG**: ขึ้นอยู่กับคุณภาพของระบบค้นหา หากข้อมูลที่ค้นหาไม่ถูกต้องหรือไม่เกี่ยวข้อง อาจทำให้คำตอบผิดพลาด (ส่วนการ fine-tune อาจให้คำตอบที่มั่นคงกว่าหากข้อมูลฝึกมีคุณภาพ)  \n4. **ข้อเสียของ RAG**: มีความเสี่ยงต่อการสร้างข้อมูลที่ไม่ถูกต้อง (hallucination) เนื่องจากโมเดลอาจสร้างข้อมูลจากข้อมูลที่ค้นหาไม่ครบถ้วน (ขณะที่การ fine-tune อาจควบคุมข้อมูลได้ดีกว่าหากฝึกด้วยข้อมูลเฉพาะ)  \n5. **ข้อดีของ fine-tune**: ให้ผลลัพธ์ที่มีความสอดคล้องกันสูงในงานเฉพาะทาง เนื่องจากโมเดลเรียนรู้จากข้อมูลที่เกี่ยวข้องโดยตรง (RAG อาจไม่สามารถจัดการกับข้อมูลเฉพาะได้ดีหากระบบค้นหาไม่แม่นยำ)  \n\n**สรุป**: RAG ดีที่ความยืดหยุ่นและข้อมูลอัปเดต แต่เสี่ยงต่อความผิดพลาดจากข้อมูลที่ค้นหา ส่วนการ fine-tune ให้ความแม่นยำสูงในงานเฉพาะ แต่ต้องใช้ทรัพยากรฝึกโมเดลซ้ำทุกครั้ง",
+      "tokens": 296
+    },
+    {
+      "timestamp": 1784532808.0489929,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED งานสรุปครบ 5 ข้อ ตรงตามโจทย์ ชัดเจนและเปรียบเทียบได้ดี  \nSCORE: 5",
+      "tokens": 18
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784532680.3963075,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.1,
+      "ram_used_mb": 490.7,
+      "gpu": null,
+      "gpu_all": []
+    },
+    {
+      "timestamp": 1784532808.0578182,
+      "tag": "end",
+      "cpu_percent": 0.9,
+      "ram_percent": 8.1,
+      "ram_used_mb": 487.2,
+      "gpu": null,
+      "gpu_all": []
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 127.53,
+    "total_tokens": 347,
+    "quality_score": 5,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "research_summary",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "rag_mentioned",
+        "description": "กล่าวถึง RAG"
+      },
+      {
+        "id": "fine_tune_mentioned",
+        "description": "กล่าวถึง fine-tune"
+      },
+      {
+        "id": "rag_advantage",
+        "description": "มีข้อดีของ RAG"
+      },
+      {
+        "id": "rag_disadvantage",
+        "description": "มีข้อเสียของ RAG"
+      },
+      {
+        "id": "finetune_advantage",
+        "description": "มีข้อดีของ fine-tuning"
+      },
+      {
+        "id": "finetune_disadvantage",
+        "description": "มีข้อเสียของ fine-tuning"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 6/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "gpu_monitoring_available": false,
+  "ended_at": 1784532808.1647327
+}

@@ -1,0 +1,128 @@
+{
+  "run_id": "ba419a51",
+  "task_name": "planning_decision",
+  "run_index": 1,
+  "started_at": 1784479034.8921928,
+  "network_condition": {
+    "name": "factorial_jitter",
+    "scenario_type": "factorial",
+    "delay_ms": 50,
+    "requested_delay_ms": 0,
+    "jitter_ms": 30,
+    "loss_pct": 0,
+    "factors": {
+      "delay": "off",
+      "loss": "off",
+      "jitter": "on"
+    },
+    "note": "requested delay=0ms แต่ jitter=30ms ต้องใช้ delay=50ms ขั้นต่ำ เพราะ netem ต้องมี delay>0",
+    "experiment_phase": "three_day_tournament",
+    "tournament": {
+      "match_id": "r06_m02",
+      "round_index": 6,
+      "pair_index": 2,
+      "side": "B",
+      "opponent": "factorial_loss_jitter",
+      "pair": [
+        "factorial_loss_jitter",
+        "factorial_jitter"
+      ]
+    },
+    "trial_key": "three_day_tournament::r06_m02::B::factorial_jitter::planning_decision::run1"
+  },
+  "messages": [
+    {
+      "timestamp": 1784479035.108323,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: ทีมมีงบ 3 อย่างให้เลือกลงทุนอย่างใดอย่างหนึ่ง: (1) ปรับปรุง UX, (2) เพิ่ม feature ใหม่, (3) แก้ bug ค้างเก่า ช่วยวางแผนว่าควรเลือกอะไรก่อน พร้อมเหตุผลสั้นๆ",
+      "tokens": 42
+    },
+    {
+      "timestamp": 1784479071.2774563,
+      "from": "Worker",
+      "to": "group",
+      "content": "**ลำดับการลงทุนที่แนะนำ:**  \n1. **แก้ bug ค้างเก่า**  \n2. **ปรับปรุง UX**  \n3. **เพิ่ม feature ใหม่**  \n\n**เหตุผลสั้นๆ:**  \n- **แก้ bug ค้างเก่า:** ปัญหาที่ยังไม่ได้แก้อาจส่งผลต่อความน่าเชื่อถือของระบบ หรือทำให้ผู้ใช้ประสบปัญหาซ้ำๆ ซึ่งอาจทำให้เกิดการสูญเสียผู้ใช้ (User Churn)  \n- **ปรับปรุง UX:** หลังจากแก้ไขข้อบกพร่อง ควรเน้นการปรับปรุงประสบการณ์ผู้ใช้เพื่อเพิ่มความพึงพอใจและลดอัตราการยกเลิกการใช้งาน (Retention)  \n- **เพิ่ม feature ใหม่:** ควรพิจารณาหลังจากที่ระบบมีความเสถียรและผู้ใช้พอใจ ซึ่งจะช่วยให้การเพิ่มฟีเจอร์ใหม่มีประสิทธิภาพมากขึ้น  \n\n**หมายเหตุ:** หาก bug ที่ค้างมีความสำคัญสูง (เช่น ข้อมูลผิดพลาด หรือความเสี่ยงด้านความปลอดภัย) ควรแก้ไขก่อนเสมอ ไม่ว่าจะอยู่ในลำดับใด",
+      "tokens": 171
+    },
+    {
+      "timestamp": 1784479093.2226868,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED คำตอบตรงตามแผนและมีเหตุผลชัดเจน  \nSCORE: 5",
+      "tokens": 12
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784479034.8921978,
+      "tag": "start",
+      "cpu_percent": 0.9,
+      "ram_percent": 8.1,
+      "ram_used_mb": 491.2,
+      "gpu": null,
+      "gpu_all": []
+    },
+    {
+      "timestamp": 1784479093.2315376,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.2,
+      "ram_used_mb": 493.2,
+      "gpu": null,
+      "gpu_all": []
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 58.21,
+    "total_tokens": 225,
+    "quality_score": 5,
+    "ground_truth_score": 4,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "planning_decision",
+    "score": 4,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 0.8,
+    "matched_points": [
+      {
+        "id": "clear_choice",
+        "description": "มีการเลือก/จัดลำดับชัดเจน"
+      },
+      {
+        "id": "mentions_options",
+        "description": "กล่าวถึงตัวเลือกหลัก"
+      },
+      {
+        "id": "impact_reason",
+        "description": "มีเหตุผลด้านผลกระทบ/ลูกค้า"
+      },
+      {
+        "id": "risk_urgency",
+        "description": "มีเหตุผลด้านความเสี่ยงหรือความเร่งด่วน"
+      }
+    ],
+    "missing_points": [
+      {
+        "id": "action_plan",
+        "description": "มีแผนดำเนินการ"
+      }
+    ],
+    "rationale": "matched 4/5 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "gpu_monitoring_available": false,
+  "ended_at": 1784479093.342415
+}

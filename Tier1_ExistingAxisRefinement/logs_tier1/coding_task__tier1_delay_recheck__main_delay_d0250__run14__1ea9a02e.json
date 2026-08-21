@@ -1,0 +1,112 @@
+{
+  "run_id": "1ea9a02e",
+  "task_name": "coding_task",
+  "run_index": 14,
+  "started_at": 1784050006.014896,
+  "network_condition": {
+    "name": "main_delay_d0250",
+    "scenario_type": "main_effect",
+    "main_effect_axis": "delay",
+    "delay_ms": 250,
+    "requested_delay_ms": 250,
+    "jitter_ms": 0,
+    "loss_pct": 0,
+    "note": "",
+    "tier": "tier1_delay_recheck",
+    "experiment_phase": "tier1_delay_recheck",
+    "trial_key": "tier1_delay_recheck::no_match::no_side::main_delay_d0250::coding_task::run14"
+  },
+  "messages": [
+    {
+      "timestamp": 1784050006.2156327,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ",
+      "tokens": 35
+    },
+    {
+      "timestamp": 1784050125.7462003,
+      "from": "Worker",
+      "to": "group",
+      "content": "```python\nimport math\n\ndef is_prime(n):\n    \"\"\"\n    ตรวจสอบว่าจำนวนเต็ม n เป็นจำนวนเฉพาะหรือไม่\n    จำนวนเฉพาะคือจำนวนที่มีตัวหารเฉพาะคือ 1 และตัวมันเอง\n    \"\"\"\n    if n <= 1:\n        return False  # จำนวนที่น้อยกว่าหรือเท่ากับ 1 ไม่ใช่จำนวนเฉพาะ\n    if n == 2:\n        return True  # 2 เป็นจำนวนเฉพาะ\n    if n % 2 == 0:\n        return False  # จำนวนคู่ที่มากกว่า 2 ไม่ใช่จำนวนเฉพาะ\n    max_divisor = int(math.sqrt(n)) + 1  # ตรวจสอบตัวหารจนถึงรากที่สองของ n\n    for i in range(3, max_divisor, 2):  # เริ่มจาก 3 ข้ามค่าคู่\n        if n % i == 0:\n            return False  # ถ้าหารลงตัว ไม่ใช่จำนวนเฉพาะ\n    return True  # ถ้าไม่มีตัวหาร คือจำนวนเฉพาะ\n```\n\n### หลักการสั้นๆ:\n1. **กรณีพิเศษ**: ถ้า `n <= 1` คืนค่า `False` (ไม่ใช่จำนวนเฉพาะ)  \n   - ถ้า `n == 2` คืนค่า `True` (2 เป็นจำนวนเฉพาะ)  \n   - ถ้า `n` เป็นจำนวนคู่ (หารด้วย 2 ลงตัว) คืนค่า `False` (ยกเว้น 2)  \n2. **ตรวจสอบตัวหาร**: ตรวจสอบตัวหารจาก `3` ถึง `sqrt(n)` โดยข้ามค่าคู่ (เพื่อลดการคำนวณ)  \n   - หากพบตัวหารที่หารลงตัว คืนค่า `False`  \n   - หากไม่พบตัวหารใดๆ คืนค่า `True` (เป็นจำนวนเฉพาะ)  \n\n### วิธีการทำงาน:\n- ใช้การตรวจสอบตัวหารจนถึงรากที่สองของ `n` เพื่อเพิ่มประสิทธิภาพ  \n- ข้ามค่าคู่เพื่อลดจำนวนรอบการคำนวณ (เพราะจำนวนคู่ไม่สามารถเป็นตัวหารของจำนวนคี่ได้)",
+      "tokens": 307
+    },
+    {
+      "timestamp": 1784050177.674586,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED ฟังก์ชันทำงานถูกต้องและมีประสิทธิภาพ ครอบคลุมกรณีพิเศษทั้งหมด  \nSCORE: 5",
+      "tokens": 20
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784050006.0149004,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.9,
+      "ram_used_mb": 524.5
+    },
+    {
+      "timestamp": 1784050177.683624,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 9.0,
+      "ram_used_mb": 532.6
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 171.55,
+    "total_tokens": 362,
+    "quality_score": 5,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "coding_task",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "function_name",
+        "description": "ระบุฟังก์ชัน is_prime"
+      },
+      {
+        "id": "boolean_return",
+        "description": "คืนค่า True/False"
+      },
+      {
+        "id": "n_le_1",
+        "description": "อธิบาย/จัดการ n <= 1"
+      },
+      {
+        "id": "two_case",
+        "description": "จัดการเลข 2"
+      },
+      {
+        "id": "sqrt_bound",
+        "description": "ตรวจถึงรากที่สองหรือ i*i <= n"
+      },
+      {
+        "id": "explanation",
+        "description": "มีคำอธิบายหลักการ"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 6/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "ended_at": 1784050177.7949698
+}

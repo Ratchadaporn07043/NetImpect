@@ -1,0 +1,132 @@
+{
+  "run_id": "3ed3a8af",
+  "task_name": "research_summary",
+  "run_index": 1,
+  "started_at": 1784459885.3595805,
+  "network_condition": {
+    "name": "factorial_delay_loss",
+    "scenario_type": "factorial",
+    "delay_ms": 300,
+    "requested_delay_ms": 300,
+    "jitter_ms": 0,
+    "loss_pct": 5,
+    "factors": {
+      "delay": "on",
+      "loss": "on",
+      "jitter": "off"
+    },
+    "note": "",
+    "experiment_phase": "three_day_tournament",
+    "tournament": {
+      "match_id": "r02_m01",
+      "round_index": 2,
+      "pair_index": 1,
+      "side": "B",
+      "opponent": "factorial_baseline",
+      "pair": [
+        "factorial_baseline",
+        "factorial_delay_loss"
+      ]
+    },
+    "trial_key": "three_day_tournament::r02_m01::B::factorial_delay_loss::research_summary::run1"
+  },
+  "messages": [
+    {
+      "timestamp": 1784459885.5783129,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1784459981.9753509,
+      "from": "Worker",
+      "to": "group",
+      "content": "1. **ข้อดีของ RAG**: สามารถเข้าถึงข้อมูลที่อัปเดตได้ทันทีจากแหล่งภายนอก ขณะที่การ fine-tune โมเดลโดยตรงขึ้นอยู่กับข้อมูลที่ใช้ฝึกฝนซึ่งไม่เปลี่ยนแปลง  \n2. **ข้อดีของ RAG**: รองรับคำถามที่อยู่นอกขอบเขตข้อมูลการฝึก (out-of-domain) ได้ดีกว่า ด้วยการดึงข้อมูลใหม่จากแหล่งภายนอก  \n3. **ข้อเสียของ RAG**: ต้องใช้ทรัพยากรการคำนวณเพิ่มขึ้นในการจัดการระบบค้นหาข้อมูล (retrieval system) ซึ่งอาจซับซ้อนและมีต้นทุนสูง  \n4. **ข้อดีของ fine-tune**: ตอบคำถามได้รวดเร็วกว่าโดยไม่ต้องผ่านขั้นตอนการค้นหาข้อมูล (retrieval) ทำให้ลดเวลาในการตอบ  \n5. **ข้อเสียของ fine-tune**: ประสิทธิภาพอาจลดลงเมื่อต้องจัดการกับคำถามที่อยู่นอกขอบเขตข้อมูลการฝึก (out-of-domain) เนื่องจากไม่มีข้อมูลใหม่มาปรับใช้  \n\n**สรุป**: RAG ดีในเรื่องการเข้าถึงข้อมูลใหม่และรองรับคำถามที่หลากหลาย แต่ต้องใช้ทรัพยากรมากกว่า ขณะที่ fine-tune ให้ความเร็วสูงและประสิทธิภาพดีในงานเฉพาะทาง แต่ข้อจำกัดด้านข้อมูลการฝึกอาจส่งผลต่อความแม่นยำในบางกรณี",
+      "tokens": 223
+    },
+    {
+      "timestamp": 1784460032.2992308,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED งานมีโครงสร้างชัดเจน ครบถ้วนตามโจทย์ สรุปข้อดี-ข้อเสียได้ถูกต้อง  \nSCORE: 5",
+      "tokens": 21
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784459885.3595967,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 7.6,
+      "ram_used_mb": 450.2,
+      "gpu": null,
+      "gpu_all": []
+    },
+    {
+      "timestamp": 1784460032.304994,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 7.6,
+      "ram_used_mb": 451.1,
+      "gpu": null,
+      "gpu_all": []
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 146.82,
+    "total_tokens": 277,
+    "quality_score": 5,
+    "ground_truth_score": 4,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "research_summary",
+    "score": 4,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 0.833,
+    "matched_points": [
+      {
+        "id": "rag_mentioned",
+        "description": "กล่าวถึง RAG"
+      },
+      {
+        "id": "fine_tune_mentioned",
+        "description": "กล่าวถึง fine-tune"
+      },
+      {
+        "id": "rag_advantage",
+        "description": "มีข้อดีของ RAG"
+      },
+      {
+        "id": "rag_disadvantage",
+        "description": "มีข้อเสียของ RAG"
+      },
+      {
+        "id": "finetune_advantage",
+        "description": "มีข้อดีของ fine-tuning"
+      }
+    ],
+    "missing_points": [
+      {
+        "id": "finetune_disadvantage",
+        "description": "มีข้อเสียของ fine-tuning"
+      }
+    ],
+    "rationale": "matched 5/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "gpu_monitoring_available": false,
+  "ended_at": 1784460032.4164572
+}

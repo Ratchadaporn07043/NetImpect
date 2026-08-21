@@ -1,0 +1,112 @@
+{
+  "run_id": "5bf34ea9",
+  "task_name": "planning_decision",
+  "run_index": 3,
+  "started_at": 1784538461.9928422,
+  "network_condition": {
+    "name": "main_delay_d0550",
+    "scenario_type": "main_effect",
+    "main_effect_axis": "delay",
+    "delay_ms": 550,
+    "requested_delay_ms": 550,
+    "jitter_ms": 0,
+    "loss_pct": 0,
+    "note": "",
+    "experiment_phase": "three_day_main_effect",
+    "trial_key": "three_day_main_effect::no_match::no_side::main_delay_d0550::planning_decision::run3"
+  },
+  "messages": [
+    {
+      "timestamp": 1784538462.1999223,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: ทีมมีงบ 3 อย่างให้เลือกลงทุนอย่างใดอย่างหนึ่ง: (1) ปรับปรุง UX, (2) เพิ่ม feature ใหม่, (3) แก้ bug ค้างเก่า ช่วยวางแผนว่าควรเลือกอะไรก่อน พร้อมเหตุผลสั้นๆ",
+      "tokens": 42
+    },
+    {
+      "timestamp": 1784538506.1656978,
+      "from": "Worker",
+      "to": "group",
+      "content": "**แผนการลงทุนที่แนะนำ:**  \nเลือก **(3) แก้ bug ค้างเก่า** ก่อน  \n\n**เหตุผล:**  \nการแก้ไข bug ที่ค้างอยู่เป็นสิ่งจำเป็นเพื่อให้ระบบทำงานได้อย่างมั่นคง ลดปัญหาที่อาจทำให้ผู้ใช้สูญเสียความไว้วางใจหรือใช้งานไม่ได้ ถ้าระบบไม่เสถียร การปรับปรุง UX หรือเพิ่มฟีเจอร์ใหม่จะไม่เกิดประโยชน์สูงสุด เพราะผู้ใช้อาจไม่สามารถใช้งานได้เลย ดังนั้น การแก้ bug เป็นขั้นตอนพื้นฐานที่ต้องทำก่อน เพื่อสร้างความมั่นใจให้กับผู้ใช้และทีมพัฒนาต่อไป",
+      "tokens": 105
+    },
+    {
+      "timestamp": 1784538533.318856,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED คำตอบสอดคล้องกับแผนและเหตุผลชัดเจน ชี้ให้เห็นความสำคัญของการแก้ไข bug ก่อนเพื่อความเสถียรของระบบ  \nSCORE: 5",
+      "tokens": 29
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784538461.9928532,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.1,
+      "ram_used_mb": 486.1,
+      "gpu": null,
+      "gpu_all": []
+    },
+    {
+      "timestamp": 1784538533.332791,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.1,
+      "ram_used_mb": 486.0,
+      "gpu": null,
+      "gpu_all": []
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 71.21,
+    "total_tokens": 176,
+    "quality_score": 5,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "planning_decision",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "clear_choice",
+        "description": "มีการเลือก/จัดลำดับชัดเจน"
+      },
+      {
+        "id": "mentions_options",
+        "description": "กล่าวถึงตัวเลือกหลัก"
+      },
+      {
+        "id": "impact_reason",
+        "description": "มีเหตุผลด้านผลกระทบ/ลูกค้า"
+      },
+      {
+        "id": "risk_urgency",
+        "description": "มีเหตุผลด้านความเสี่ยงหรือความเร่งด่วน"
+      },
+      {
+        "id": "action_plan",
+        "description": "มีแผนดำเนินการ"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 5/5 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "gpu_monitoring_available": false,
+  "ended_at": 1784538533.4437776
+}

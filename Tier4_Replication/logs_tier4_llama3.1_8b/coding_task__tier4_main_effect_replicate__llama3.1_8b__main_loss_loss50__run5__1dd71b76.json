@@ -1,0 +1,117 @@
+{
+  "run_id": "1dd71b76",
+  "task_name": "coding_task",
+  "run_index": 5,
+  "started_at": 1784452813.4514987,
+  "network_condition": {
+    "name": "main_loss_loss50",
+    "scenario_type": "main_effect",
+    "main_effect_axis": "loss",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 50,
+    "note": "",
+    "experiment_phase": "tier4_main_effect_replicate__llama3.1_8b",
+    "trial_key": "tier4_main_effect_replicate__llama3.1_8b::no_match::no_side::main_loss_loss50::coding_task::run5"
+  },
+  "messages": [
+    {
+      "timestamp": 1784452813.6693647,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ",
+      "tokens": 35
+    },
+    {
+      "timestamp": 1784452924.2384553,
+      "from": "Worker",
+      "to": "group",
+      "content": "**ฟังก์ชันตรวจสอบจำนวนเฉพาะ**\n=====================================\n\nเราจะเขียนฟังก์ชัน `is_prime(n)` ที่ใช้ในการตรวจสอบว่าจำนวนเต็ม `n` เป็นจำนวนเฉพาะหรือไม่\n\n### หลักการทำงาน\n-----------------\n\nหลักการทำงานของฟังก์ชันนี้คือการตรวจสอบว่าจำนวนเต็ม `n` มีตัวประกอบใดๆ นอกจาก 1 และตัวเอง หรือไม่ หากมีตัวประกอบอื่น นั่นก็หมายความว่า `n` ไม่ใช่จำนวนเฉพาะ\n\n### Implementation\n-----------------\n\n```python\ndef is_prime(n):\n    \"\"\"\n    ตรวจสอบว่าจำนวนเต็ม n เป็นจำนวนเฉพาะหรือไม่\n    :param n: จำนวนเต็มที่ต้องการตรวจสอบ\n    :return: True หากเป็นจำนวนเฉพาะ False หากไม่ใช่\n    \"\"\"\n    \n    # การตรวจสอบหาก n น้อยกว่า 2 จะไม่เป็นจำนวนเฉพาะ\n    if n < 2:\n        return False\n    \n    # ตรวจสอบหาก n เป็นเลขคู่ (หารด้วย 2 ไม่เหลือเศษ) จะไม่เป็นจำนวนเฉพาะ\n    if n % 2 == 0:\n        return False\n    \n    # ตรวจสอบตัวประกอบตั้งแต่ 3 ถึง sqrt(n)\n    for i in range(3, int(n ** 0.5) + 1, 2):\n        if n % i == 0:\n            return False\n    \n    # หากไม่มีตัวประกอบอื่น นั่นก็หมายความว่า n เป็นจำนวนเฉพาะ\n    return True\n```\n\n### ตัวอย่างการใช้งาน\n---------------------\n\n```python\nprint(is_prime(5))   # Output: True\nprint(is_prime(6))   # Output: False\nprint(is_prime(23))  # Output: True\nprint(is_prime(48))  # Output: False\n```\n\nหวังว่าฟังก์ชันนี้จะช่วยให้คุณตรวจสอบจำนวนเฉพาะได้อย่างง่ายดาย!",
+      "tokens": 321
+    },
+    {
+      "timestamp": 1784452931.431545,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED เนื่องจากฟังก์ชัน `is_prime(n)` ได้เขียนตามโจทย์และหลักการทำงานที่ถูกต้อง\n\nSCORE: 5",
+      "tokens": 23
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784452813.4515026,
+      "tag": "start",
+      "cpu_percent": 0.9,
+      "ram_percent": 8.0,
+      "ram_used_mb": 484.4,
+      "gpu": null,
+      "gpu_all": []
+    },
+    {
+      "timestamp": 1784452931.4384267,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.1,
+      "ram_used_mb": 484.7,
+      "gpu": null,
+      "gpu_all": []
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 117.86,
+    "total_tokens": 379,
+    "quality_score": 5,
+    "ground_truth_score": 4,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "coding_task",
+    "score": 4,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 0.833,
+    "matched_points": [
+      {
+        "id": "function_name",
+        "description": "ระบุฟังก์ชัน is_prime"
+      },
+      {
+        "id": "boolean_return",
+        "description": "คืนค่า True/False"
+      },
+      {
+        "id": "n_le_1",
+        "description": "อธิบาย/จัดการ n <= 1"
+      },
+      {
+        "id": "sqrt_bound",
+        "description": "ตรวจถึงรากที่สองหรือ i*i <= n"
+      },
+      {
+        "id": "explanation",
+        "description": "มีคำอธิบายหลักการ"
+      }
+    ],
+    "missing_points": [
+      {
+        "id": "two_case",
+        "description": "จัดการเลข 2"
+      }
+    ],
+    "rationale": "matched 5/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "gpu_monitoring_available": false,
+  "ended_at": 1784452931.5492482
+}

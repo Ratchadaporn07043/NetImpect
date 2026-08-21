@@ -1,0 +1,237 @@
+{
+  "run_id": "cd5c50cc",
+  "task_name": "coding_task",
+  "run_index": 2,
+  "started_at": 1785599383.5691423,
+  "network_condition": {
+    "name": "t8in_bw50",
+    "scenario_type": "ingress_subset",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 0,
+    "bandwidth_kbit": 50,
+    "note": "จุดที่ egress-only ให้ null — ทดสอบว่า null รอด symmetric shaping ไหม",
+    "role": "test_point",
+    "experiment_phase": "tier8_ingress__both"
+  },
+  "messages": [
+    {
+      "timestamp": 1785599383.8355994,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ",
+      "tokens": 35
+    },
+    {
+      "timestamp": 1785599498.53004,
+      "from": "Worker",
+      "to": "group",
+      "content": "```python\ndef is_prime(n):\n    if n <= 1:\n        return False\n    if n == 2:\n        return True\n    if n % 2 == 0:\n        return False\n    for i in range(3, int(n**0.5) + 1, 2):\n        if n % i == 0:\n            return False\n    return True\n```\n\n**หลักการสั้นๆ:**  \nฟังก์ชันตรวจสอบว่าจำนวนเต็ม `n` เป็นจำนวนเฉพาะหรือไม่ โดย:  \n1. คืนค่า `False` ถ้า `n <= 1` (จำนวนเฉพาะต้องมากกว่า 1)  \n2. คืนค่า `True` ถ้า `n == 2` (2 เป็นจำนวนเฉพาะ)  \n3. คืนค่า `False` ถ้า `n` เป็นเลขคู่ (หารด้วย 2 ลงตัว)  \n4. ตรวจสอบการหารด้วยตัวเลขคี่จาก 3 ถึงรากที่สองของ `n` (ถ้าหารลงตัว ไม่ใช่จำนวนเฉพาะ)  \n5. ถ้าผ่านทุกขั้นตอน คืนค่า `True` (เป็นจำนวนเฉพาะ)  \n\n**ตัวอย่าง:**  \n- `is_prime(7)` → `True` (7 หารด้วย 3 หรือ 5 ไม่ลงตัว)  \n- `is_prime(15)` → `False` (15 % 3 == 0)  \n- `is_prime(1)` → `False` (ไม่ตรงเงื่อนไข)",
+      "tokens": 199
+    },
+    {
+      "timestamp": 1785599595.686147,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED ฟังก์ชันทำงานถูกต้องตามหลักการตรวจสอบจำนวนเฉพาะ\nSCORE: 5",
+      "tokens": 16
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1785599383.5691452,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 76.1,
+      "ram_used_mb": 8493.3
+    },
+    {
+      "timestamp": 1785599595.7005239,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 78.9,
+      "ram_used_mb": 8808.2
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 211.98,
+    "total_tokens": 250,
+    "quality_score": 5,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "coding_task",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "function_name",
+        "description": "ระบุฟังก์ชัน is_prime"
+      },
+      {
+        "id": "boolean_return",
+        "description": "คืนค่า True/False"
+      },
+      {
+        "id": "n_le_1",
+        "description": "อธิบาย/จัดการ n <= 1"
+      },
+      {
+        "id": "two_case",
+        "description": "จัดการเลข 2"
+      },
+      {
+        "id": "sqrt_bound",
+        "description": "ตรวจถึงรากที่สองหรือ i*i <= n"
+      },
+      {
+        "id": "explanation",
+        "description": "มีคำอธิบายหลักการ"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 6/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "achieved": null,
+  "cpu_gate": {
+    "waited_seconds": 0.0,
+    "final_cpu_percent": 1.3,
+    "readings": [
+      1.3
+    ],
+    "gate_passed": true
+  },
+  "network_commands": [
+    {
+      "action": "apply",
+      "result": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "cmd": "tc qdisc add dev eth0 root handle 1: netem",
+        "clear_before_apply": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "Error: Cannot delete qdisc with handle of zero.\n",
+          "cmd": "tc qdisc del dev eth0 root",
+          "note": "clear skipped: no existing qdisc",
+          "ingress": {
+            "returncode": 0,
+            "stdout": "",
+            "stderr": "Error: Invalid handle.\n",
+            "cmd": "tc qdisc del dev eth0 ingress",
+            "note": "clear skipped: no existing ingress qdisc"
+          },
+          "ifb": {
+            "returncode": 0,
+            "stdout": "",
+            "stderr": "Error: Cannot delete qdisc with handle of zero.\n",
+            "cmd": "tc qdisc del dev ifb0 root",
+            "note": "clear skipped: no existing qdisc"
+          }
+        },
+        "tbf": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "cmd": "tc qdisc add dev eth0 parent 1: handle 10: tbf rate 50kbit burst 32kbit latency 400ms"
+        },
+        "ingress_setup": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "cmd": "setup ingress redirect",
+          "steps": [
+            {
+              "step": "ip_link_add_ifb",
+              "result": {
+                "returncode": 0,
+                "stdout": "",
+                "stderr": "RTNETLINK answers: File exists\n",
+                "cmd": "ip link add ifb0 type ifb",
+                "note": "ifb device already exists"
+              }
+            },
+            {
+              "step": "ip_link_set_ifb_up",
+              "result": {
+                "returncode": 0,
+                "stdout": "",
+                "stderr": "",
+                "cmd": "ip link set dev ifb0 up"
+              }
+            },
+            {
+              "step": "tc_ingress_qdisc",
+              "result": {
+                "returncode": 0,
+                "stdout": "",
+                "stderr": "",
+                "cmd": "tc qdisc add dev eth0 ingress"
+              }
+            },
+            {
+              "step": "tc_ingress_redirect",
+              "result": {
+                "returncode": 0,
+                "stdout": "",
+                "stderr": "",
+                "cmd": "tc filter add dev eth0 parent ffff: protocol all u32 match u32 0 0 action mirred egress redirect dev ifb0"
+              }
+            }
+          ]
+        },
+        "ingress": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "cmd": "tc qdisc add dev ifb0 root handle 1: netem",
+          "tbf": {
+            "returncode": 0,
+            "stdout": "",
+            "stderr": "",
+            "cmd": "tc qdisc add dev ifb0 parent 1: handle 10: tbf rate 50kbit burst 32kbit latency 400ms"
+          }
+        }
+      }
+    },
+    {
+      "action": "clear",
+      "result": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "cmd": "tc qdisc del dev eth0 root",
+        "ingress": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "cmd": "tc qdisc del dev eth0 ingress"
+        },
+        "ifb": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "cmd": "tc qdisc del dev ifb0 root"
+        }
+      }
+    }
+  ],
+  "impairment_direction": "both",
+  "ended_at": 1785599595.801753
+}

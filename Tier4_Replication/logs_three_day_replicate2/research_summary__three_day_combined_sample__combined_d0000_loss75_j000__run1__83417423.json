@@ -1,0 +1,121 @@
+{
+  "run_id": "83417423",
+  "task_name": "research_summary",
+  "run_index": 1,
+  "started_at": 1784603332.5502658,
+  "network_condition": {
+    "name": "combined_d0000_loss75_j000",
+    "scenario_type": "combined",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 75,
+    "combined_levels": {
+      "delay_ms": 0,
+      "loss_pct": 75,
+      "jitter_ms": 0
+    },
+    "note": "",
+    "experiment_phase": "three_day_combined_sample",
+    "trial_key": "three_day_combined_sample::no_match::no_side::combined_d0000_loss75_j000::research_summary::run1"
+  },
+  "messages": [
+    {
+      "timestamp": 1784603332.7838664,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1784603425.7011542,
+      "from": "Worker",
+      "to": "group",
+      "content": "1. **RAG สามารถเข้าถึงข้อมูลที่อัปเดตได้โดยไม่ต้องฝึกโมเดลใหม่**  \n   RAG ใช้ระบบค้นหาข้อมูลภายนอกเพื่อให้ข้อมูลล่าสุด แม้โมเดลจะไม่ได้ฝึกจากข้อมูลนั้น ขณะที่การ fine-tune ต้องพึ่งพาข้อมูลที่มีอยู่ในช่วงฝึก ซึ่งอาจล้าสมัย  \n\n2. **RAG ลดความต้องการข้อมูลฝึกที่มีการป้ายกำกับ (labeled data)**  \n   RAG ใช้ข้อมูลทั่วไปจากแหล่งภายนอก ไม่ต้องการข้อมูลที่มีการป้ายกำกับซึ่งมีต้นทุนสูง ขณะที่การ fine-tune ต้องการข้อมูลฝึกที่มีความแม่นยำสูง  \n\n3. **RAG ให้ความโปร่งใสและสามารถอธิบายได้ดีกว่า**  \n   ข้อมูลที่ใช้สร้างคำตอบมาจากแหล่งที่สามารถตรวจสอบได้ ทำให้เข้าใจแหล่งที่มาของคำตอบได้ง่ายกว่าการ fine-tune ซึ่งข้อมูลฝึกอาจซ่อนเร้น  \n\n4. **การ fine-tune มีประสิทธิภาพสูงในงานเฉพาะทางที่มีข้อมูลฝึกคุณภาพสูง**  \n   โมเดลที่ fine-tune สามารถปรับตัวให้เหมาะสมกับงานเฉพาะได้ดีขึ้น ถ้าข้อมูลฝึกมีความเกี่ยวข้องและมีคุณภาพสูง  \n\n5. **การ fine-tune มีความเร็วในการตอบคำถามสูงกว่า RAG**  \n   การ fine-tune ไม่ต้องใช้ขั้นตอนค้นหาข้อมูลเพิ่มเติม ทำให้ตอบคำถามได้เร็วกว่า RAG ซึ่งต้องใช้เวลาค้นหาและสร้างคำตอบจากแหล่งข้อมูลภายนอก",
+      "tokens": 252
+    },
+    {
+      "timestamp": 1784603709.6912782,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED งานมีโครงสร้างชัดเจน สรุปข้อดี-ข้อเสียครบ 5 ข้อ ตรงตามโจทย์  \nSCORE: 5",
+      "tokens": 19
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784603332.5502696,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.2,
+      "ram_used_mb": 495.7,
+      "gpu": null,
+      "gpu_all": []
+    },
+    {
+      "timestamp": 1784603709.702083,
+      "tag": "end",
+      "cpu_percent": 1.0,
+      "ram_percent": 8.2,
+      "ram_used_mb": 496.2,
+      "gpu": null,
+      "gpu_all": []
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 377.03,
+    "total_tokens": 304,
+    "quality_score": 5,
+    "ground_truth_score": 4,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "research_summary",
+    "score": 4,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 0.833,
+    "matched_points": [
+      {
+        "id": "rag_mentioned",
+        "description": "กล่าวถึง RAG"
+      },
+      {
+        "id": "fine_tune_mentioned",
+        "description": "กล่าวถึง fine-tune"
+      },
+      {
+        "id": "rag_advantage",
+        "description": "มีข้อดีของ RAG"
+      },
+      {
+        "id": "finetune_advantage",
+        "description": "มีข้อดีของ fine-tuning"
+      },
+      {
+        "id": "finetune_disadvantage",
+        "description": "มีข้อเสียของ fine-tuning"
+      }
+    ],
+    "missing_points": [
+      {
+        "id": "rag_disadvantage",
+        "description": "มีข้อเสียของ RAG"
+      }
+    ],
+    "rationale": "matched 5/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "gpu_monitoring_available": false,
+  "ended_at": 1784603709.8047972
+}

@@ -1,0 +1,238 @@
+{
+  "run_id": "6466e633",
+  "task_name": "research_summary",
+  "run_index": 1,
+  "started_at": 1785593300.4470973,
+  "network_condition": {
+    "name": "t8in_bw50",
+    "scenario_type": "ingress_subset",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 0,
+    "bandwidth_kbit": 50,
+    "note": "จุดที่ egress-only ให้ null — ทดสอบว่า null รอด symmetric shaping ไหม",
+    "role": "test_point",
+    "experiment_phase": "tier8_ingress__both"
+  },
+  "messages": [
+    {
+      "timestamp": 1785593300.6733325,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1785593442.0730906,
+      "from": "Worker",
+      "to": "group",
+      "content": "1. **ข้อดีของ RAG**: สามารถเข้าถึงข้อมูลที่อัปเดตได้แบบเรียลไทม์ ทำให้ตอบคำถามที่ต้องการข้อมูลใหม่ๆ ได้อย่างแม่นยำ  \n2. **ข้อดีของ RAG**: ลดความต้องการข้อมูลฝึกที่มีป้าย (labeled data) เพราะใช้ข้อมูลจากแหล่งภายนอกแทนการฝึกโมเดลซ้ำ  \n3. **ข้อเสียของ RAG**: ความน่าเชื่อถือและความเร็วในการค้นหาข้อมูลขึ้นอยู่กับระบบการค้นหา (retrieval system) ซึ่งอาจมีข้อผิดพลาดหรือความล่าช้า  \n4. **ข้อเสียของ RAG**: มีความเสี่ยงต่อการสร้างข้อมูลเท็จ (hallucination) หากโมเดลใช้ข้อมูลที่ไม่เกี่ยวข้องหรือไม่ถูกต้องจากแหล่งข้อมูล  \n5. **ข้อเสียของการ fine-tune**: ต้องใช้ทรัพยากรการคำนวณสูงและเวลาในการฝึกโมเดล รวมถึงข้อมูลความรู้ของโมเดลถูกจำกัดเฉพาะข้อมูลฝึกที่ใช้ในการฝึก",
+      "tokens": 164
+    },
+    {
+      "timestamp": 1785593525.198989,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED งานสอดคล้องกับโจทย์ สรุปข้อดี-ข้อเสียครบ 5 ข้อ ชัดเจนและถูกต้อง  \nSCORE: 5",
+      "tokens": 20
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1785593300.447104,
+      "tag": "start",
+      "cpu_percent": 1.5,
+      "ram_percent": 81.1,
+      "ram_used_mb": 9053.4
+    },
+    {
+      "timestamp": 1785593525.2182527,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 84.8,
+      "ram_used_mb": 9476.9
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 224.62,
+    "total_tokens": 217,
+    "quality_score": 5,
+    "ground_truth_score": 4,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "research_summary",
+    "score": 4,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 0.833,
+    "matched_points": [
+      {
+        "id": "rag_mentioned",
+        "description": "กล่าวถึง RAG"
+      },
+      {
+        "id": "fine_tune_mentioned",
+        "description": "กล่าวถึง fine-tune"
+      },
+      {
+        "id": "rag_advantage",
+        "description": "มีข้อดีของ RAG"
+      },
+      {
+        "id": "rag_disadvantage",
+        "description": "มีข้อเสียของ RAG"
+      },
+      {
+        "id": "finetune_disadvantage",
+        "description": "มีข้อเสียของ fine-tuning"
+      }
+    ],
+    "missing_points": [
+      {
+        "id": "finetune_advantage",
+        "description": "มีข้อดีของ fine-tuning"
+      }
+    ],
+    "rationale": "matched 5/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "achieved": null,
+  "cpu_gate": {
+    "waited_seconds": 0.0,
+    "final_cpu_percent": 1.5,
+    "readings": [
+      1.5
+    ],
+    "gate_passed": true
+  },
+  "network_commands": [
+    {
+      "action": "apply",
+      "result": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "cmd": "tc qdisc add dev eth0 root handle 1: netem",
+        "clear_before_apply": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "Error: Cannot delete qdisc with handle of zero.\n",
+          "cmd": "tc qdisc del dev eth0 root",
+          "note": "clear skipped: no existing qdisc",
+          "ingress": {
+            "returncode": 0,
+            "stdout": "",
+            "stderr": "Error: Invalid handle.\n",
+            "cmd": "tc qdisc del dev eth0 ingress",
+            "note": "clear skipped: no existing ingress qdisc"
+          },
+          "ifb": {
+            "returncode": 0,
+            "stdout": "",
+            "stderr": "Error: Cannot delete qdisc with handle of zero.\n",
+            "cmd": "tc qdisc del dev ifb0 root",
+            "note": "clear skipped: no existing qdisc"
+          }
+        },
+        "tbf": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "cmd": "tc qdisc add dev eth0 parent 1: handle 10: tbf rate 50kbit burst 32kbit latency 400ms"
+        },
+        "ingress_setup": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "cmd": "setup ingress redirect",
+          "steps": [
+            {
+              "step": "ip_link_add_ifb",
+              "result": {
+                "returncode": 0,
+                "stdout": "",
+                "stderr": "RTNETLINK answers: File exists\n",
+                "cmd": "ip link add ifb0 type ifb",
+                "note": "ifb device already exists"
+              }
+            },
+            {
+              "step": "ip_link_set_ifb_up",
+              "result": {
+                "returncode": 0,
+                "stdout": "",
+                "stderr": "",
+                "cmd": "ip link set dev ifb0 up"
+              }
+            },
+            {
+              "step": "tc_ingress_qdisc",
+              "result": {
+                "returncode": 0,
+                "stdout": "",
+                "stderr": "",
+                "cmd": "tc qdisc add dev eth0 ingress"
+              }
+            },
+            {
+              "step": "tc_ingress_redirect",
+              "result": {
+                "returncode": 0,
+                "stdout": "",
+                "stderr": "",
+                "cmd": "tc filter add dev eth0 parent ffff: protocol all u32 match u32 0 0 action mirred egress redirect dev ifb0"
+              }
+            }
+          ]
+        },
+        "ingress": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "cmd": "tc qdisc add dev ifb0 root handle 1: netem",
+          "tbf": {
+            "returncode": 0,
+            "stdout": "",
+            "stderr": "",
+            "cmd": "tc qdisc add dev ifb0 parent 1: handle 10: tbf rate 50kbit burst 32kbit latency 400ms"
+          }
+        }
+      }
+    },
+    {
+      "action": "clear",
+      "result": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "cmd": "tc qdisc del dev eth0 root",
+        "ingress": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "cmd": "tc qdisc del dev eth0 ingress"
+        },
+        "ifb": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "cmd": "tc qdisc del dev ifb0 root"
+        }
+      }
+    }
+  ],
+  "impairment_direction": "both",
+  "ended_at": 1785593525.327446
+}

@@ -1,0 +1,131 @@
+{
+  "run_id": "931b8a27",
+  "task_name": "coding_task",
+  "run_index": 1,
+  "started_at": 1784479640.516426,
+  "network_condition": {
+    "name": "factorial_delay_loss_jitter",
+    "scenario_type": "factorial",
+    "delay_ms": 300,
+    "requested_delay_ms": 300,
+    "jitter_ms": 30,
+    "loss_pct": 5,
+    "factors": {
+      "delay": "on",
+      "loss": "on",
+      "jitter": "on"
+    },
+    "note": "",
+    "experiment_phase": "three_day_tournament",
+    "tournament": {
+      "match_id": "r06_m03",
+      "round_index": 6,
+      "pair_index": 3,
+      "side": "B",
+      "opponent": "factorial_delay",
+      "pair": [
+        "factorial_delay",
+        "factorial_delay_loss_jitter"
+      ]
+    },
+    "trial_key": "three_day_tournament::r06_m03::B::factorial_delay_loss_jitter::coding_task::run1"
+  },
+  "messages": [
+    {
+      "timestamp": 1784479640.7430613,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ",
+      "tokens": 35
+    },
+    {
+      "timestamp": 1784479746.7248716,
+      "from": "Worker",
+      "to": "group",
+      "content": "```python\nimport math\n\ndef is_prime(n):\n    \"\"\"\n    ตรวจสอบว่าจำนวนเต็ม n เป็นจำนวนเฉพาะหรือไม่\n    จำนวนเฉพาะคือจำนวนที่มีตัวหารเฉพาะ 1 และตัวมันเอง\n    \"\"\"\n    if n <= 1:\n        return False  # จำนวนที่น้อยกว่าหรือเท่ากับ 1 ไม่ใช่จำนวนเฉพาะ\n    if n <= 3:\n        return True   # 2 และ 3 เป็นจำนวนเฉพาะ\n    if n % 2 == 0:\n        return False  # จำนวนคู่ (ยกเว้น 2) ไม่ใช่จำนวนเฉพาะ\n    # ตรวจสอบตัวหารจาก 3 ถึง sqrt(n) เดินข้ามจำนวนคู่\n    max_divisor = int(math.sqrt(n)) + 1\n    for i in range(3, max_divisor, 2):\n        if n % i == 0:\n            return False\n    return True\n```\n\n### คำอธิบายหลักการ\n1. **กรณีพิเศษ**: \n   - ถ้า `n <= 1` คืนค่า `False` (ไม่ใช่จำนวนเฉพาะ)\n   - ถ้า `n == 2` หรือ `n == 3` คืนค่า `True` (จำนวนเฉพาะ)\n2. **ตรวจสอบจำนวนคู่**: \n   - ถ้า `n` เป็นจำนวนคู่ (หารด้วย 2 ลงตัว) คืนค่า `False` (ยกเว้น 2)\n3. **ตรวจสอบตัวหาร**: \n   - เดินลูปจาก `3` ถึง `sqrt(n)` เดินข้ามจำนวนคู่ (เพิ่ม 2 ทุกครั้ง)\n   - หากพบตัวหารที่หาร `n` ลงตัว คืนค่า `False`\n   - หากไม่พบตัวหารใดๆ คืนค่า `True` (เป็นจำนวนเฉพาะ)",
+      "tokens": 256
+    },
+    {
+      "timestamp": 1784479790.417235,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED ฟังก์ชันและคำอธิบายตรงตามข้อกำหนด ตรวจสอบกรณีพิเศษและตัวหารได้ครบถ้วน  \nSCORE: 5",
+      "tokens": 22
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784479640.5164304,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.1,
+      "ram_used_mb": 487.5,
+      "gpu": null,
+      "gpu_all": []
+    },
+    {
+      "timestamp": 1784479790.422197,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.1,
+      "ram_used_mb": 487.0,
+      "gpu": null,
+      "gpu_all": []
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 149.78,
+    "total_tokens": 313,
+    "quality_score": 5,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "coding_task",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "function_name",
+        "description": "ระบุฟังก์ชัน is_prime"
+      },
+      {
+        "id": "boolean_return",
+        "description": "คืนค่า True/False"
+      },
+      {
+        "id": "n_le_1",
+        "description": "อธิบาย/จัดการ n <= 1"
+      },
+      {
+        "id": "two_case",
+        "description": "จัดการเลข 2"
+      },
+      {
+        "id": "sqrt_bound",
+        "description": "ตรวจถึงรากที่สองหรือ i*i <= n"
+      },
+      {
+        "id": "explanation",
+        "description": "มีคำอธิบายหลักการ"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 6/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "gpu_monitoring_available": false,
+  "ended_at": 1784479790.5330398
+}

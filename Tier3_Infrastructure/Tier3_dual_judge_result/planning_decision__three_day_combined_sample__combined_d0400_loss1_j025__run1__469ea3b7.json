@@ -1,0 +1,165 @@
+{
+  "run_id": "469ea3b7",
+  "task_name": "planning_decision",
+  "run_index": 1,
+  "started_at": 1783802475.8350406,
+  "network_condition": {
+    "name": "combined_d0400_loss1_j025",
+    "scenario_type": "combined",
+    "delay_ms": 400,
+    "requested_delay_ms": 400,
+    "jitter_ms": 25,
+    "loss_pct": 1,
+    "combined_levels": {
+      "delay_ms": 400,
+      "loss_pct": 1,
+      "jitter_ms": 25
+    },
+    "note": "",
+    "experiment_phase": "three_day_combined_sample",
+    "trial_key": "three_day_combined_sample::no_match::no_side::combined_d0400_loss1_j025::planning_decision::run1"
+  },
+  "messages": [
+    {
+      "timestamp": 1783802476.0537038,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: ทีมมีงบ 3 อย่างให้เลือกลงทุนอย่างใดอย่างหนึ่ง: (1) ปรับปรุง UX, (2) เพิ่ม feature ใหม่, (3) แก้ bug ค้างเก่า ช่วยวางแผนว่าควรเลือกอะไรก่อน พร้อมเหตุผลสั้นๆ",
+      "tokens": 42
+    },
+    {
+      "timestamp": 1783802515.238821,
+      "from": "Worker",
+      "to": "group",
+      "content": "**คำตอบสุดท้าย:**  \nควรเลือก \"แก้ bug ค้างเก่า\" ก่อน เนื่องจาก bug ที่ไม่ได้รับการแก้ไขอาจส่งผลต่อประสบการณ์ผู้ใช้โดยตรง ทำให้เกิดความไม่ไว้วางใจหรือการยกเลิกการใช้งาน ซึ่งส่งผลต่อความน่าเชื่อถือของผลิตภัณฑ์โดยตรง ถ้าไม่แก้ไขจะทำให้การปรับปรุง UX หรือเพิ่มฟีเจอร์ใหม่ไม่มีประสิทธิภาพ เพราะผู้ใช้อาจไม่สามารถใช้งานได้ตามคาด ดังนั้น การแก้ bug ค้างเป็นขั้นตอนพื้นฐานที่ต้องทำก่อนเพื่อสร้างความมั่นคงให้กับผลิตภัณฑ์",
+      "tokens": 103
+    },
+    {
+      "timestamp": 1783802537.0325522,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED คำตอบชัดเจนและมีเหตุผล ชี้ให้เห็นความสำคัญของการแก้ bug ก่อนเพื่อไม่ให้ส่งผลกระทบต่อผู้ใช้และประสิทธิภาพของงานอื่น  \nSCORE: 5",
+      "tokens": 33
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1783802475.8350484,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.4,
+      "ram_used_mb": 510.5
+    },
+    {
+      "timestamp": 1783802537.039031,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.4,
+      "ram_used_mb": 510.7
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 61.08,
+    "total_tokens": 178,
+    "quality_score": 5,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0,
+    "posthoc_ground_truth_score": 3,
+    "posthoc_ground_truth_passed": false,
+    "posthoc_ground_truth_mode": "both"
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "planning_decision",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "clear_choice",
+        "description": "มีการเลือก/จัดลำดับชัดเจน"
+      },
+      {
+        "id": "mentions_options",
+        "description": "กล่าวถึงตัวเลือกหลัก"
+      },
+      {
+        "id": "impact_reason",
+        "description": "มีเหตุผลด้านผลกระทบ/ลูกค้า"
+      },
+      {
+        "id": "risk_urgency",
+        "description": "มีเหตุผลด้านความเสี่ยงหรือความเร่งด่วน"
+      },
+      {
+        "id": "action_plan",
+        "description": "มีแผนดำเนินการ"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 5/5 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "ended_at": 1783802537.1466136,
+  "posthoc_evaluation": {
+    "enabled": true,
+    "mode": "both",
+    "task_name": "planning_decision",
+    "judge_model_name": "qwen3:8b",
+    "score": 3,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": false,
+    "missing_points": [
+      "มีแผนปฏิบัติสั้นๆ เช่น ประเมินข้อมูล วัดผล ทำ sprint"
+    ],
+    "rationale": "คำตอบระบุลำดับความสำคัญชัดเจนและให้เหตุผลเชิง impact/urgency ได้ดี แต่ไม่มีแผนปฏิบัติสั้นๆ เช่น การประเมินข้อมูลหรือทำ sprint ซึ่งเป็นข้อกำหนดใน rubric จึงขาดจุดนี้",
+    "raw_response": "{\n  \"score\": 3,\n  \"passed\": false,\n  \"missing_points\": [\n    \"มีแผนปฏิบัติสั้นๆ เช่น ประเมินข้อมูล วัดผล ทำ sprint\"\n  ],\n  \"rationale\": \"คำตอบระบุลำดับความสำคัญชัดเจนและให้เหตุผลเชิง impact/urgency ได้ดี แต่ไม่มีแผนปฏิบัติสั้นๆ เช่น การประเมินข้อมูลหรือทำ sprint ซึ่งเป็นข้อกำหนดใน rubric จึงขาดจุดนี้\"\n}",
+    "heuristic_reference": {
+      "enabled": true,
+      "mode": "heuristic",
+      "task_name": "planning_decision",
+      "score": 5,
+      "max_score": 5,
+      "pass_score": 4,
+      "passed": true,
+      "coverage": 1.0,
+      "matched_points": [
+        {
+          "id": "clear_choice",
+          "description": "มีการเลือก/จัดลำดับชัดเจน"
+        },
+        {
+          "id": "mentions_options",
+          "description": "กล่าวถึงตัวเลือกหลัก"
+        },
+        {
+          "id": "impact_reason",
+          "description": "มีเหตุผลด้านผลกระทบ/ลูกค้า"
+        },
+        {
+          "id": "risk_urgency",
+          "description": "มีเหตุผลด้านความเสี่ยงหรือความเร่งด่วน"
+        },
+        {
+          "id": "action_plan",
+          "description": "มีแผนดำเนินการ"
+        }
+      ],
+      "missing_points": [],
+      "rationale": "matched 5/5 rubric checks"
+    },
+    "posthoc": true,
+    "evaluated_at": "2026-07-17T11:51:10+0000"
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "run_id": "886e653e",
+  "task_name": "coding_task",
+  "run_index": 1,
+  "started_at": 1784475826.138863,
+  "network_condition": {
+    "name": "factorial_delay_jitter",
+    "scenario_type": "factorial",
+    "delay_ms": 300,
+    "requested_delay_ms": 300,
+    "jitter_ms": 30,
+    "loss_pct": 0,
+    "factors": {
+      "delay": "on",
+      "loss": "off",
+      "jitter": "on"
+    },
+    "note": "",
+    "experiment_phase": "three_day_tournament",
+    "tournament": {
+      "match_id": "r05_m03",
+      "round_index": 5,
+      "pair_index": 3,
+      "side": "A",
+      "opponent": "factorial_jitter",
+      "pair": [
+        "factorial_delay_jitter",
+        "factorial_jitter"
+      ]
+    },
+    "trial_key": "three_day_tournament::r05_m03::A::factorial_delay_jitter::coding_task::run1"
+  },
+  "messages": [
+    {
+      "timestamp": 1784475826.3606946,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ",
+      "tokens": 35
+    },
+    {
+      "timestamp": 1784475887.066501,
+      "from": "Worker",
+      "to": "group",
+      "content": "```python\ndef is_prime(n):\n    \"\"\"\n    ตรวจสอบว่าจำนวนเต็ม n เป็นจำนวนเฉพาะหรือไม่\n    จำนวนเฉพาะคือจำนวนที่มีตัวหารเฉพาะ 1 และตัวเอง\n    \"\"\"\n    if n < 2:\n        return False  # จำนวนน้อยกว่า 2 ไม่ใช่จำนวนเฉพาะ\n    if n == 2:\n        return True  # 2 เป็นจำนวนเฉพาะ\n    if n % 2 == 0:\n        return False  # จำนวนคู่ (มากกว่า 2) ไม่ใช่จำนวนเฉพาะ\n    max_divisor = int(n**0.5) + 1  # ตรวจสอบตัวหารจนถึงรากที่สองของ n\n    for d in range(3, max_divisor, 2):  # เดินหาตัวหารเฉพาะคี่\n        if n % d == 0:\n            return False\n    return True\n```\n\n**หลักการสั้นๆ:**  \nฟังก์ชันตรวจสอบจำนวนเฉพาะโดย:  \n1. ตัดกรณีที่ไม่เป็นจำนวนเฉพาะ (n < 2, จำนวนคู่)  \n2. ใช้การเดินหาตัวหารจาก 3 ถึงรากที่สองของ n (ข้ามคู่) เพื่อลดการคำนวณ  \n3. หากพบตัวหารใดๆ คืนค่า `False` ถ้าไม่พบ คืนค่า `True`",
+      "tokens": 195
+    },
+    {
+      "timestamp": 1784475953.3038816,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED ฟังก์ชันทำงานถูกต้องและมีประสิทธิภาพ ตรวจสอบกรณีพิเศษและตัวหารที่จำเป็น\nSCORE: 5",
+      "tokens": 22
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784475826.1388674,
+      "tag": "start",
+      "cpu_percent": 0.9,
+      "ram_percent": 8.2,
+      "ram_used_mb": 493.1,
+      "gpu": null,
+      "gpu_all": []
+    },
+    {
+      "timestamp": 1784475953.308643,
+      "tag": "end",
+      "cpu_percent": 0.9,
+      "ram_percent": 8.1,
+      "ram_used_mb": 490.3,
+      "gpu": null,
+      "gpu_all": []
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 127.04,
+    "total_tokens": 252,
+    "quality_score": 5,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "coding_task",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "function_name",
+        "description": "ระบุฟังก์ชัน is_prime"
+      },
+      {
+        "id": "boolean_return",
+        "description": "คืนค่า True/False"
+      },
+      {
+        "id": "n_le_1",
+        "description": "อธิบาย/จัดการ n <= 1"
+      },
+      {
+        "id": "two_case",
+        "description": "จัดการเลข 2"
+      },
+      {
+        "id": "sqrt_bound",
+        "description": "ตรวจถึงรากที่สองหรือ i*i <= n"
+      },
+      {
+        "id": "explanation",
+        "description": "มีคำอธิบายหลักการ"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 6/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "gpu_monitoring_available": false,
+  "ended_at": 1784475953.4184082
+}

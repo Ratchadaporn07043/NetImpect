@@ -1,0 +1,168 @@
+{
+  "run_id": "3980691d",
+  "task_name": "planning_decision",
+  "run_index": 1,
+  "started_at": 1783742571.5911365,
+  "network_condition": {
+    "name": "combined_d0000_loss20_j075",
+    "scenario_type": "combined",
+    "delay_ms": 50,
+    "requested_delay_ms": 0,
+    "jitter_ms": 75,
+    "loss_pct": 20,
+    "combined_levels": {
+      "delay_ms": 0,
+      "loss_pct": 20,
+      "jitter_ms": 75
+    },
+    "note": "requested delay=0ms แต่ jitter=75ms ต้องใช้ delay=50ms ขั้นต่ำ เพราะ netem ต้องมี delay>0",
+    "experiment_phase": "three_day_combined_sample",
+    "trial_key": "three_day_combined_sample::no_match::no_side::combined_d0000_loss20_j075::planning_decision::run1"
+  },
+  "messages": [
+    {
+      "timestamp": 1783742571.807511,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: ทีมมีงบ 3 อย่างให้เลือกลงทุนอย่างใดอย่างหนึ่ง: (1) ปรับปรุง UX, (2) เพิ่ม feature ใหม่, (3) แก้ bug ค้างเก่า ช่วยวางแผนว่าควรเลือกอะไรก่อน พร้อมเหตุผลสั้นๆ",
+      "tokens": 42
+    },
+    {
+      "timestamp": 1783742608.3983777,
+      "from": "Worker",
+      "to": "group",
+      "content": "**คำตอบสุดท้าย:**  \nควรเลือก **แก้ bug ค้างเก่า** ก่อน เนื่องจาก bug ที่ยังไม่ได้แก้ไขอาจส่งผลต่อความน่าเชื่อถือและประสบการณ์ผู้ใช้โดยตรง หากไม่แก้ไข อาจทำให้ผู้ใช้สูญเสียความไว้วางใจหรือใช้งานไม่ได้ หลังจากนั้นจึงควรปรับปรุง UX เพื่อเพิ่มความพึงพอใจของผู้ใช้ แล้วจึงพัฒนา feature ใหม่เพื่อขยายฟังก์ชันและดึงดูดผู้ใช้ใหม่  \n\n**เหตุผลสั้นๆ:**  \n1. **แก้ bug ค้างเก่า** → ป้องกันปัญหาการใช้งานและรักษาความน่าเชื่อถือ  \n2. **ปรับปรุง UX** → เพิ่มประสบการณ์ผู้ใช้หลังจากแก้ไขปัญหาพื้นฐาน  \n3. **เพิ่ม feature ใหม่** → สร้างความแตกต่างและขยายการใช้งานในระยะยาว",
+      "tokens": 138
+    },
+    {
+      "timestamp": 1783742631.0294838,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED  \nSCORE: 5",
+      "tokens": 4
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1783742571.5911398,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.3,
+      "ram_used_mb": 501.8
+    },
+    {
+      "timestamp": 1783742631.0358312,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.3,
+      "ram_used_mb": 502.3
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 59.32,
+    "total_tokens": 184,
+    "quality_score": 5,
+    "ground_truth_score": 4,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0,
+    "posthoc_ground_truth_score": 4,
+    "posthoc_ground_truth_passed": true,
+    "posthoc_ground_truth_mode": "both"
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "planning_decision",
+    "score": 4,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 0.8,
+    "matched_points": [
+      {
+        "id": "clear_choice",
+        "description": "มีการเลือก/จัดลำดับชัดเจน"
+      },
+      {
+        "id": "mentions_options",
+        "description": "กล่าวถึงตัวเลือกหลัก"
+      },
+      {
+        "id": "impact_reason",
+        "description": "มีเหตุผลด้านผลกระทบ/ลูกค้า"
+      },
+      {
+        "id": "risk_urgency",
+        "description": "มีเหตุผลด้านความเสี่ยงหรือความเร่งด่วน"
+      }
+    ],
+    "missing_points": [
+      {
+        "id": "action_plan",
+        "description": "มีแผนดำเนินการ"
+      }
+    ],
+    "rationale": "matched 4/5 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "ended_at": 1783742631.140375,
+  "posthoc_evaluation": {
+    "enabled": true,
+    "mode": "both",
+    "task_name": "planning_decision",
+    "judge_model_name": "qwen3:8b",
+    "score": 4,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "missing_points": [
+      "แผนปฏิบัติสั้นๆ เช่น ประเมินข้อมูล วัดผล ทำ sprint",
+      "trade-off ระหว่าง UX, feature ใหม่, bug ค้างเก่า"
+    ],
+    "rationale": "คำตอบเลือกแก้ bug ค้างเก่าเป็นลำดับแรกและให้เหตุผลเชิง risk/customer value ได้ชัดเจน แต่ขาดการระบุแผนปฏิบัติเชิงปฏิบัติ (เช่น วัดผล ทำ sprint) และการวิเคราะห์ trade-off ระหว่าง UX/feature ใหม่/bug ค้างเก่าอย่างละเอียด ทำให้ไม่ครบตาม rubric ทั้งหมด แต่ยังถือว่าผ่านเกณฑ์คะแนน 4",
+    "raw_response": "{\n  \"score\": 4,\n  \"passed\": true,\n  \"missing_points\": [\n    \"แผนปฏิบัติสั้นๆ เช่น ประเมินข้อมูล วัดผล ทำ sprint\",\n    \"trade-off ระหว่าง UX, feature ใหม่, bug ค้างเก่า\"\n  ],\n  \"rationale\": \"คำตอบเลือกแก้ bug ค้างเก่าเป็นลำดับแรกและให้เหตุผลเชิง risk/customer value ได้ชัดเจน แต่ขาดการระบุแผนปฏิบัติเชิงปฏิบัติ (เช่น วัดผล ทำ sprint) และการวิเคราะห์ trade-off ระหว่าง UX/feature ใหม่/bug ค้างเก่าอย่างละเอียด ทำให้ไม่ครบตาม rubric ทั้งหมด แต่ยังถือว่าผ่านเกณฑ์คะแนน 4\"\n}",
+    "heuristic_reference": {
+      "enabled": true,
+      "mode": "heuristic",
+      "task_name": "planning_decision",
+      "score": 4,
+      "max_score": 5,
+      "pass_score": 4,
+      "passed": true,
+      "coverage": 0.8,
+      "matched_points": [
+        {
+          "id": "clear_choice",
+          "description": "มีการเลือก/จัดลำดับชัดเจน"
+        },
+        {
+          "id": "mentions_options",
+          "description": "กล่าวถึงตัวเลือกหลัก"
+        },
+        {
+          "id": "impact_reason",
+          "description": "มีเหตุผลด้านผลกระทบ/ลูกค้า"
+        },
+        {
+          "id": "risk_urgency",
+          "description": "มีเหตุผลด้านความเสี่ยงหรือความเร่งด่วน"
+        }
+      ],
+      "missing_points": [
+        {
+          "id": "action_plan",
+          "description": "มีแผนดำเนินการ"
+        }
+      ],
+      "rationale": "matched 4/5 rubric checks"
+    },
+    "posthoc": true,
+    "evaluated_at": "2026-07-17T11:31:10+0000"
+  }
+}

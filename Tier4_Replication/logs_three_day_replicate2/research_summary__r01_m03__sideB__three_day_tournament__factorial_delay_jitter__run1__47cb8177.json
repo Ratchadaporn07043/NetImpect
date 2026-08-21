@@ -1,0 +1,132 @@
+{
+  "run_id": "47cb8177",
+  "task_name": "research_summary",
+  "run_index": 1,
+  "started_at": 1784457839.379952,
+  "network_condition": {
+    "name": "factorial_delay_jitter",
+    "scenario_type": "factorial",
+    "delay_ms": 300,
+    "requested_delay_ms": 300,
+    "jitter_ms": 30,
+    "loss_pct": 0,
+    "factors": {
+      "delay": "on",
+      "loss": "off",
+      "jitter": "on"
+    },
+    "note": "",
+    "experiment_phase": "three_day_tournament",
+    "tournament": {
+      "match_id": "r01_m03",
+      "round_index": 1,
+      "pair_index": 3,
+      "side": "B",
+      "opponent": "factorial_loss",
+      "pair": [
+        "factorial_loss",
+        "factorial_delay_jitter"
+      ]
+    },
+    "trial_key": "three_day_tournament::r01_m03::B::factorial_delay_jitter::research_summary::run1"
+  },
+  "messages": [
+    {
+      "timestamp": 1784457839.618946,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1784457932.371895,
+      "from": "Worker",
+      "to": "group",
+      "content": "1. **การเข้าถึงข้อมูลแบบเรียลไทม์**: RAG สามารถดึงข้อมูลที่อัปเดตได้จากแหล่งภายนอก ขณะที่การ fine-tune โมเดลโดยตรงจะถูกจำกัดด้วยข้อมูลที่ใช้ฝึกอบรมในช่วงเวลาที่กำหนด  \n2. **ความพึ่งพาข้อมูลฝึกอบรม**: RAG ต้องการข้อมูลมีป้ายชัดเจนน้อยกว่า ทำให้ลดต้นทุนการจัดการข้อมูล ขณะที่การ fine-tune ต้องการข้อมูลฝึกอบรมจำนวนมากและมีคุณภาพสูง  \n3. **ความโปร่งใส**: RAG ให้เหตุผลที่สามารถติดตามได้จากเอกสารที่ดึงมา ทำให้การตัดสินใจมีความชัดเจนกว่าการ fine-tune ที่พึ่งพาความรู้ภายในโมเดล  \n4. **ต้นทุนการคำนวณ**: RAG อาจมีประสิทธิภาพสูงขึ้นหากระบบดึงข้อมูลถูกต้อง แต่การ fine-tune ต้องใช้ทรัพยากรการคำนวณมหาศาลในการฝึกอบรม  \n5. **ประสิทธิภาพเฉพาะงาน**: การ fine-tune ให้ผลลัพธ์ที่ดีกว่าในงานเฉพาะด้านเนื่องจากฝึกอบรมโดยตรง ขณะที่ RAG อาจล้มเหลวในงานที่ต้องความเชี่ยวชาญลึกหากแหล่งข้อมูลไม่เพียงพอ",
+      "tokens": 195
+    },
+    {
+      "timestamp": 1784457960.6945102,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED งานมีโครงสร้างชัดเจน ครอบคลุมข้อดี-ข้อเสียทั้งสองวิธี ตรงตามโจทย์  \nSCORE: 5",
+      "tokens": 21
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784457839.3799577,
+      "tag": "start",
+      "cpu_percent": 1.0,
+      "ram_percent": 7.7,
+      "ram_used_mb": 456.8,
+      "gpu": null,
+      "gpu_all": []
+    },
+    {
+      "timestamp": 1784457960.7042186,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 7.7,
+      "ram_used_mb": 457.6,
+      "gpu": null,
+      "gpu_all": []
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 121.2,
+    "total_tokens": 249,
+    "quality_score": 5,
+    "ground_truth_score": 3,
+    "ground_truth_passed": false,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "research_summary",
+    "score": 3,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": false,
+    "coverage": 0.667,
+    "matched_points": [
+      {
+        "id": "rag_mentioned",
+        "description": "กล่าวถึง RAG"
+      },
+      {
+        "id": "fine_tune_mentioned",
+        "description": "กล่าวถึง fine-tune"
+      },
+      {
+        "id": "rag_advantage",
+        "description": "มีข้อดีของ RAG"
+      },
+      {
+        "id": "finetune_disadvantage",
+        "description": "มีข้อเสียของ fine-tuning"
+      }
+    ],
+    "missing_points": [
+      {
+        "id": "rag_disadvantage",
+        "description": "มีข้อเสียของ RAG"
+      },
+      {
+        "id": "finetune_advantage",
+        "description": "มีข้อดีของ fine-tuning"
+      }
+    ],
+    "rationale": "matched 4/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "gpu_monitoring_available": false,
+  "ended_at": 1784457960.8144867
+}

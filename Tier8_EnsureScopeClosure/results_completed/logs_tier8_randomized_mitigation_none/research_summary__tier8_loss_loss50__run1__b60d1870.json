@@ -1,0 +1,139 @@
+{
+  "run_id": "b60d1870",
+  "task_name": "research_summary",
+  "run_index": 1,
+  "started_at": 1785769479.056327,
+  "network_condition": {
+    "name": "tier8_loss_loss50",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 50,
+    "bandwidth_kbit": null,
+    "note": ""
+  },
+  "messages": [
+    {
+      "timestamp": 1785769479.2592256,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1785769576.359144,
+      "from": "Worker",
+      "to": "group",
+      "content": "**ข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง (5 ข้อ):**  \n\n1. **RAG ให้ข้อมูลทันสมัยได้ดีกว่า**  \n   - RAG สามารถดึงข้อมูลจากแหล่งข้อมูลภายนอก (เช่น หนังสือหรือเว็บไซต์) ที่อัปเดตได้ทันที ขณะที่การ fine-tune โมเดลโดยตรงต้องพึ่งพาข้อมูลที่ฝึกมาตั้งแต่เริ่มต้น ซึ่งอาจล้าสมัย  \n\n2. **RAG จัดการกับข้อมูลนอกโดเมนได้ดีกว่า**  \n   - RAG สามารถตอบคำถามที่เกี่ยวข้องกับข้อมูลที่ไม่เคยฝึกมาได้โดยใช้การค้นหาข้อมูลภายนอก ขณะที่โมเดลที่ fine-tune อาจไม่สามารถจัดการกับข้อมูลใหม่ได้ดีหากไม่ได้ฝึกมา  \n\n3. **RAG ต้องการทรัพยากรน้อยกว่าในการอัปเดต**  \n   - การอัปเดต RAG ต้องการเพียงการปรับปรุงระบบค้นหาข้อมูล ไม่ต้องฝึกโมเดลใหม่ทั้งหมด ขณะที่การ fine-tune ต้องใช้ทรัพยากรการคำนวณสูงในการฝึกโมเดลซ้ำ  \n\n4. **การ fine-tune ลดความเสี่ยงของ hallucination (การสร้างข้อมูลเท็จ)**  \n   - โมเดลที่ fine-tune จะสร้างคำตอบจากข้อมูลที่ฝึกมา ซึ่งมีความสอดคล้องกับข้อมูลเดิมมากกว่า RAG ที่อาจสร้างข้อมูลที่ไม่ตรงกับแหล่งข้อมูลที่ค้นได้  \n\n5. **RAG มีความล่าช้าในการตอบคำถาม**  \n   - RAG ต้องใช้เวลาเพิ่มในการค้นหาข้อมูลก่อนสร้างคำตอบ ขณะที่โมเดลที่ fine-tune สามารถตอบได้รวดเร็วกว่าโดยไม่ต้องผ่านขั้นตอนค้นหาข้อมูล  \n\n**สรุป:** RAG เหมาะกับงานที่ต้องการข้อมูลทันสมัยและยืดหยุ่น ขณะที่การ fine-tune ดีกว่าในด้านความแม่นยำและประสิทธิภาพการตอบคำถามเร็วขึ้น แต่ต้องแลกเปลี่ยนกับการใช้ทรัพยากรมากขึ้นและข้อจำกัดด้านข้อมูลฝึกโมเดล",
+      "tokens": 337
+    },
+    {
+      "timestamp": 1785769627.710155,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED งานสรุปครบ 5 ข้อ ชัดเจนและถูกต้องตามหลักการของ RAG vs fine-tune  \nSCORE: 5",
+      "tokens": 20
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1785769479.0563295,
+      "tag": "start",
+      "cpu_percent": 7.6,
+      "ram_percent": 68.0,
+      "ram_used_mb": 7571.8
+    },
+    {
+      "timestamp": 1785769627.7309372,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 71.3,
+      "ram_used_mb": 7957.1
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 148.54,
+    "total_tokens": 390,
+    "quality_score": 5,
+    "ground_truth_score": 4,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "research_summary",
+    "score": 4,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 0.833,
+    "matched_points": [
+      {
+        "id": "rag_mentioned",
+        "description": "กล่าวถึง RAG"
+      },
+      {
+        "id": "fine_tune_mentioned",
+        "description": "กล่าวถึง fine-tune"
+      },
+      {
+        "id": "rag_advantage",
+        "description": "มีข้อดีของ RAG"
+      },
+      {
+        "id": "rag_disadvantage",
+        "description": "มีข้อเสียของ RAG"
+      },
+      {
+        "id": "finetune_disadvantage",
+        "description": "มีข้อเสียของ fine-tuning"
+      }
+    ],
+    "missing_points": [
+      {
+        "id": "finetune_advantage",
+        "description": "มีข้อดีของ fine-tuning"
+      }
+    ],
+    "rationale": "matched 5/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "achieved": null,
+  "execution_sequence_index": 588,
+  "network_commands": [
+    {
+      "action": "apply",
+      "result": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "cmd": "tc qdisc add dev eth0 root handle 1: netem loss 50%",
+        "clear_before_apply": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "Error: Cannot delete qdisc with handle of zero.\n",
+          "cmd": "tc qdisc del dev eth0 root",
+          "note": "clear skipped: no existing qdisc"
+        },
+        "tbf": null
+      }
+    },
+    {
+      "action": "clear",
+      "result": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "cmd": "tc qdisc del dev eth0 root"
+      }
+    }
+  ],
+  "ended_at": 1785769627.8417692
+}

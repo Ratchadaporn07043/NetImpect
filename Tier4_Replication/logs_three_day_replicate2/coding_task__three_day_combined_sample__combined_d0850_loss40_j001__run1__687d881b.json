@@ -1,0 +1,138 @@
+{
+  "run_id": "687d881b",
+  "task_name": "coding_task",
+  "run_index": 1,
+  "started_at": 1784686575.5451264,
+  "network_condition": {
+    "name": "combined_d0850_loss40_j001",
+    "scenario_type": "combined",
+    "delay_ms": 850,
+    "requested_delay_ms": 850,
+    "jitter_ms": 1,
+    "loss_pct": 40,
+    "combined_levels": {
+      "delay_ms": 850,
+      "loss_pct": 40,
+      "jitter_ms": 1
+    },
+    "note": "",
+    "experiment_phase": "three_day_combined_sample",
+    "trial_key": "three_day_combined_sample::no_match::no_side::combined_d0850_loss40_j001::coding_task::run1"
+  },
+  "messages": [
+    {
+      "timestamp": 1784686575.7828465,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ",
+      "tokens": 35
+    },
+    {
+      "timestamp": 1784686941.3566167,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ",
+      "tokens": 35
+    },
+    {
+      "timestamp": 1784687249.930949,
+      "from": "Worker",
+      "to": "group",
+      "content": "```python\ndef is_prime(n):\n    \"\"\"\n    ตรวจสอบว่าจำนวนเต็ม n เป็นจำนวนเฉพาะหรือไม่\n    จำนวนเฉพาะคือจำนวนที่มีตัวหารเฉพาะ 1 และตัวมันเอง\n    ฟังก์ชันนี้ทำงานโดย:\n    1. คืนค่า False ถ้า n <= 1 (ไม่ใช่จำนวนเฉพาะ)\n    2. คืนค่า True ถ้า n == 2 (จำนวนเฉพาะที่เล็กที่สุด)\n    3. คืนค่า False ถ้า n เป็นเลขคู่ (ยกเว้น 2)\n    4. ตรวจสอบการหารด้วยตัวเลขคี่จาก 3 ถึง sqrt(n) ถ้าไม่มีตัวหาร คืนค่า True\n    \"\"\"\n    if n <= 1:\n        return False\n    if n == 2:\n        return True\n    if n % 2 == 0:\n        return False\n    for i in range(3, int(n**0.5) + 1, 2):\n        if n % i == 0:\n            return False\n    return True\n```\n\n**ตัวอย่างการใช้งาน:**\n```python\nprint(is_prime(2))   # True\nprint(is_prime(4))   # False\nprint(is_prime(7))   # True\nprint(is_prime(15))  # False\nprint(is_prime(1))   # False\n```\n\n**หลักการ:**  \n- จำนวนเฉพาะต้องมากกว่า 1 และไม่มีตัวหารอื่นนอกจาก 1 และตัวมันเอง  \n- การตรวจสอบตัวหารถึง `sqrt(n)` ช่วยเพิ่มประสิทธิภาพ เพราะหากมีตัวหารมากกว่า `sqrt(n)` จะมีตัวหารที่น้อยกว่า `sqrt(n)` ที่ถูกตรวจสอบแล้ว  \n- การข้ามเลขคู่ (หลังจากตรวจสอบ 2) ช่วยลดการวนลูปได้มาก",
+      "tokens": 270
+    },
+    {
+      "timestamp": 1784687317.3767288,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED ฟังก์ชันทำงานถูกต้องตามหลักการตรวจสอบจำนวนเฉพาะ\nSCORE: 5",
+      "tokens": 16
+    }
+  ],
+  "errors": [
+    {
+      "timestamp": 1784686941.2555819,
+      "error_type": "timeout",
+      "detail": "OpenAI API call timed out. This could be due to congestion or too small a timeout value. The timeout can be specified by setting the 'timeout' value (in seconds) in the llm_config (if you are using agents) or the OpenAIWrapper constructor (if you are using the OpenAIWrapper directly)."
+    },
+    {
+      "timestamp": 1784686941.2556229,
+      "error_type": "retry",
+      "detail": "attempt 1 failed with TimeoutError, retrying"
+    }
+  ],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784686575.5451374,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.2,
+      "ram_used_mb": 496.6,
+      "gpu": null,
+      "gpu_all": []
+    },
+    {
+      "timestamp": 1784687317.3944762,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.2,
+      "ram_used_mb": 495.8,
+      "gpu": null,
+      "gpu_all": []
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 741.71,
+    "total_tokens": 356,
+    "quality_score": 5,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 1,
+    "total_error_count": 2
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "coding_task",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "function_name",
+        "description": "ระบุฟังก์ชัน is_prime"
+      },
+      {
+        "id": "boolean_return",
+        "description": "คืนค่า True/False"
+      },
+      {
+        "id": "n_le_1",
+        "description": "อธิบาย/จัดการ n <= 1"
+      },
+      {
+        "id": "two_case",
+        "description": "จัดการเลข 2"
+      },
+      {
+        "id": "sqrt_bound",
+        "description": "ตรวจถึงรากที่สองหรือ i*i <= n"
+      },
+      {
+        "id": "explanation",
+        "description": "มีคำอธิบายหลักการ"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 6/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "gpu_monitoring_available": false,
+  "ended_at": 1784687317.502615
+}

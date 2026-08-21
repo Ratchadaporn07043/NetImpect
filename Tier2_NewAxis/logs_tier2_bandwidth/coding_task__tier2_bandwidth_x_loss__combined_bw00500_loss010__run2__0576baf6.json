@@ -1,0 +1,116 @@
+{
+  "run_id": "0576baf6",
+  "task_name": "coding_task",
+  "run_index": 2,
+  "started_at": 1784089909.3175511,
+  "network_condition": {
+    "name": "combined_bw00500_loss010",
+    "scenario_type": "combined",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 10,
+    "bandwidth_kbit": 500,
+    "combined_levels": {
+      "bandwidth_kbit": 500,
+      "loss_pct": 10
+    },
+    "note": "",
+    "tier": "tier2_bandwidth_x_loss",
+    "experiment_phase": "tier2_bandwidth_x_loss",
+    "trial_key": "tier2_bandwidth_x_loss::no_match::no_side::combined_bw00500_loss010::coding_task::run2"
+  },
+  "messages": [
+    {
+      "timestamp": 1784089909.5272725,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ",
+      "tokens": 35
+    },
+    {
+      "timestamp": 1784089973.8151278,
+      "from": "Worker",
+      "to": "group",
+      "content": "```python\ndef is_prime(n):\n    \"\"\"\n    ตรวจสอบว่าจำนวนเต็ม n เป็นจำนวนเฉพาะหรือไม่\n    จำนวนเฉพาะคือจำนวนที่มีค่ามากกว่า 1 และไม่มีตัวหารอื่นนอกจาก 1 และตัวมันเอง\n    \"\"\"\n    if n <= 1:\n        return False  # จำนวนที่น้อยกว่าหรือเท่ากับ 1 ไม่ใช่จำนวนเฉพาะ\n    if n == 2:\n        return True  # 2 เป็นจำนวนเฉพาะ\n    if n % 2 == 0:\n        return False  # จำนวนคู่ที่มากกว่า 2 ไม่ใช่จำนวนเฉพาะ\n    \n    # ตรวจสอบตัวหารจาก 3 ถึง sqrt(n) โดยเพิ่มขึ้น 2 ขั้น (ข้ามค่าคู่)\n    for i in range(3, int(n**0.5) + 1, 2):\n        if n % i == 0:\n            return False  # พบตัวหาร ไม่ใช่จำนวนเฉพาะ\n    \n    return True  # ไม่พบตัวหาร คือจำนวนเฉพาะ\n```\n\n### หลักการ:\n1. **กรณีพิเศษ**: \n   - ถ้า `n <= 1` → ไม่ใช่จำนวนเฉพาะ\n   - ถ้า `n == 2` → เป็นจำนวนเฉพาะ\n   - ถ้า `n` เป็นคู่ (หารด้วย 2 ลงตัว) → ไม่ใช่จำนวนเฉพาะ\n2. **ตรวจสอบตัวหาร**: \n   - ตัวหารที่เป็นไปได้ต้องอยู่ระหว่าง `3` ถึง `sqrt(n)` (เพื่อความเร็ว)\n   - ข้ามค่าคู่ (เพิ่มขึ้น 2 ขั้น) เพราะจำนวนคู่ไม่สามารถหาร n (คี่) ได้\n\n### ตัวอย่าง:\n- `is_prime(2)` → `True`\n- `is_prime(9)` → `False` (เพราะ 3 หาร 9 ลงตัว)\n- `is_prime(17)` → `True` (ไม่มีตัวหารระหว่าง 3 ถึง 4.123)",
+      "tokens": 280
+    },
+    {
+      "timestamp": 1784090022.2969308,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED ฟังก์ชันทำงานถูกต้องตามหลักการตรวจสอบจำนวนเฉพาะ\nSCORE: 5",
+      "tokens": 16
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784089909.3175554,
+      "tag": "start",
+      "cpu_percent": 0.9,
+      "ram_percent": 8.8,
+      "ram_used_mb": 514.9
+    },
+    {
+      "timestamp": 1784090022.3052018,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.7,
+      "ram_used_mb": 513.4
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 112.86,
+    "total_tokens": 331,
+    "quality_score": 5,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "coding_task",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "function_name",
+        "description": "ระบุฟังก์ชัน is_prime"
+      },
+      {
+        "id": "boolean_return",
+        "description": "คืนค่า True/False"
+      },
+      {
+        "id": "n_le_1",
+        "description": "อธิบาย/จัดการ n <= 1"
+      },
+      {
+        "id": "two_case",
+        "description": "จัดการเลข 2"
+      },
+      {
+        "id": "sqrt_bound",
+        "description": "ตรวจถึงรากที่สองหรือ i*i <= n"
+      },
+      {
+        "id": "explanation",
+        "description": "มีคำอธิบายหลักการ"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 6/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "ended_at": 1784090022.4161277
+}

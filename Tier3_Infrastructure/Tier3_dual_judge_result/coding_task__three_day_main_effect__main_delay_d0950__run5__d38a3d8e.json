@@ -1,0 +1,167 @@
+{
+  "run_id": "d38a3d8e",
+  "task_name": "coding_task",
+  "run_index": 5,
+  "started_at": 1783724072.89156,
+  "network_condition": {
+    "name": "main_delay_d0950",
+    "scenario_type": "main_effect",
+    "main_effect_axis": "delay",
+    "delay_ms": 950,
+    "requested_delay_ms": 950,
+    "jitter_ms": 0,
+    "loss_pct": 0,
+    "note": "",
+    "experiment_phase": "three_day_main_effect",
+    "trial_key": "three_day_main_effect::no_match::no_side::main_delay_d0950::coding_task::run5"
+  },
+  "messages": [
+    {
+      "timestamp": 1783724073.1029727,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ",
+      "tokens": 35
+    },
+    {
+      "timestamp": 1783724196.209257,
+      "from": "Worker",
+      "to": "group",
+      "content": "```python\nimport math\n\ndef is_prime(n):\n    \"\"\"\n    ตรวจสอบว่าจำนวนเต็ม n เป็นจำนวนเฉพาะหรือไม่\n    จำนวนเฉพาะคือจำนวนที่มีตัวหารเฉพาะ 1 และตัวมันเอง\n    ฟังก์ชันนี้ทำงานดังนี้:\n    1. ถ้า n <= 1 → ไม่ใช่จำนวนเฉพาะ\n    2. ถ้า n == 2 → เป็นจำนวนเฉพาะ\n    3. ถ้า n เป็นเลขคู่ (n % 2 == 0) → ไม่ใช่จำนวนเฉพาะ\n    4. ตรวจสอบตัวหารจาก 3 ถึง sqrt(n) โดยข้ามเลขคู่เพื่อเพิ่มประสิทธิภาพ\n    \"\"\"\n    if n <= 1:\n        return False\n    if n == 2:\n        return True\n    if n % 2 == 0:\n        return False\n    max_divisor = math.isqrt(n)\n    for i in range(3, max_divisor + 1, 2):\n        if n % i == 0:\n            return False\n    return True\n```\n\n**คำอธิบาย:**  \nฟังก์ชัน `is_prime(n)` ตรวจสอบว่าจำนวนเต็ม `n` เป็นจำนวนเฉพาะหรือไม่ โดยใช้หลักการต่อไปนี้:  \n1. **กรณีพิเศษ:** ถ้า `n` น้อยกว่าหรือเท่ากับ 1 → ไม่ใช่จำนวนเฉพาะ  \n2. **กรณีเลขคู่:** ถ้า `n` เป็นเลขคู่ (ยกเว้น 2) → ไม่ใช่จำนวนเฉพาะ  \n3. **ตรวจสอบตัวหาร:** ตรวจสอบตัวหารจาก 3 ถึง `sqrt(n)` โดยข้ามเลขคู่ (เพื่อลดการคำนวณ)  \n   - หากพบตัวหารใดๆ → ไม่ใช่จำนวนเฉพาะ  \n   - หากไม่พบตัวหาร → เป็นจำนวนเฉพาะ  \n\n**ตัวอย่างการใช้งาน:**  \n```python\nprint(is_prime(7))   # True (7 เป็นจำนวนเฉพาะ)\nprint(is_prime(15))  # False (15 หารได้ด้วย 3 และ 5)\nprint(is_prime(1))   # False (1 ไม่ใช่จำนวนเฉพาะ)\n```",
+      "tokens": 312
+    },
+    {
+      "timestamp": 1783724246.3846443,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED ฟังก์ชันทำงานถูกต้องและมีประสิทธิภาพ ตรวจสอบกรณีพิเศษและตัวหารครบถ้วน\nSCORE: 5",
+      "tokens": 21
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1783724072.8915792,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.4,
+      "ram_used_mb": 510.6
+    },
+    {
+      "timestamp": 1783724246.396776,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.4,
+      "ram_used_mb": 511.3
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 173.38,
+    "total_tokens": 368,
+    "quality_score": 5,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0,
+    "posthoc_ground_truth_score": 5,
+    "posthoc_ground_truth_passed": true,
+    "posthoc_ground_truth_mode": "both"
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "coding_task",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "function_name",
+        "description": "ระบุฟังก์ชัน is_prime"
+      },
+      {
+        "id": "boolean_return",
+        "description": "คืนค่า True/False"
+      },
+      {
+        "id": "n_le_1",
+        "description": "อธิบาย/จัดการ n <= 1"
+      },
+      {
+        "id": "two_case",
+        "description": "จัดการเลข 2"
+      },
+      {
+        "id": "sqrt_bound",
+        "description": "ตรวจถึงรากที่สองหรือ i*i <= n"
+      },
+      {
+        "id": "explanation",
+        "description": "มีคำอธิบายหลักการ"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 6/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "ended_at": 1783724246.5080686,
+  "posthoc_evaluation": {
+    "enabled": true,
+    "mode": "both",
+    "task_name": "coding_task",
+    "judge_model_name": "qwen3:8b",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "missing_points": [],
+    "rationale": "ฟังก์ชัน is_prime(n) มีโครงสร้างครบถ้วนตามรูปแบบที่กำหนด 1. ชื่อฟังก์ชันถูกต้อง 2. คืนค่า boolean 3. จัดการ n <= 1 เป็น False 4. จัดการ 2 เป็น True และเลขคู่เป็น False 5. ตรวจสอบตัวหารถึง sqrt(n) ด้วยการใช้ math.isqrt และ loop ข้ามเลขคู่ 6. มีคำอธิบายหลักการใน docstring ทั้งหมดตรงตามเกณฑ์",
+    "raw_response": "{\"score\": 5, \"passed\": true, \"missing_points\": [], \"rationale\": \"ฟังก์ชัน is_prime(n) มีโครงสร้างครบถ้วนตามรูปแบบที่กำหนด 1. ชื่อฟังก์ชันถูกต้อง 2. คืนค่า boolean 3. จัดการ n <= 1 เป็น False 4. จัดการ 2 เป็น True และเลขคู่เป็น False 5. ตรวจสอบตัวหารถึง sqrt(n) ด้วยการใช้ math.isqrt และ loop ข้ามเลขคู่ 6. มีคำอธิบายหลักการใน docstring ทั้งหมดตรงตามเกณฑ์\"}",
+    "heuristic_reference": {
+      "enabled": true,
+      "mode": "heuristic",
+      "task_name": "coding_task",
+      "score": 5,
+      "max_score": 5,
+      "pass_score": 4,
+      "passed": true,
+      "coverage": 1.0,
+      "matched_points": [
+        {
+          "id": "function_name",
+          "description": "ระบุฟังก์ชัน is_prime"
+        },
+        {
+          "id": "boolean_return",
+          "description": "คืนค่า True/False"
+        },
+        {
+          "id": "n_le_1",
+          "description": "อธิบาย/จัดการ n <= 1"
+        },
+        {
+          "id": "two_case",
+          "description": "จัดการเลข 2"
+        },
+        {
+          "id": "sqrt_bound",
+          "description": "ตรวจถึงรากที่สองหรือ i*i <= n"
+        },
+        {
+          "id": "explanation",
+          "description": "มีคำอธิบายหลักการ"
+        }
+      ],
+      "missing_points": [],
+      "rationale": "matched 6/6 rubric checks"
+    },
+    "posthoc": true,
+    "evaluated_at": "2026-07-17T03:28:56+0000"
+  }
+}

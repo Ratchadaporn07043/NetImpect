@@ -1,0 +1,139 @@
+{
+  "run_id": "987c8589",
+  "task_name": "research_summary",
+  "run_index": 2,
+  "started_at": 1785772384.6651318,
+  "network_condition": {
+    "name": "tier8_loss_loss75",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 75,
+    "bandwidth_kbit": null,
+    "note": ""
+  },
+  "messages": [
+    {
+      "timestamp": 1785772384.8821447,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1785772537.0271597,
+      "from": "Worker",
+      "to": "group",
+      "content": "1. **RAG สามารถเข้าถึงข้อมูลที่อัปเดตได้ทันที** ขณะที่การ fine-tune ต้องพึ่งพาข้อมูลที่ถูกต้องและสมบูรณ์ในช่วงเวลาที่ต้องการการฝึก  \n2. **RAG ช่วยลดต้นทุนในการฝึกโมเดลซ้ำ ๆ** ขณะที่การ fine-tune ต้องใช้ทรัพยากรการคำนวณสูงและเวลาในการปรับแต่ง  \n3. **RAG อาจมีความเสี่ยงในการสูญเสียความแม่นยำหากระบบค้นหาข้อมูลไม่แม่นยำ** ขณะที่การ fine-tune ให้ผลลัพธ์ที่มั่นคงหากข้อมูลฝึกมีคุณภาพ  \n4. **การ fine-tune ทำให้โมเดลปรับตัวได้ดีขึ้นสำหรับงานเฉพาะที่มีข้อมูลฝึกมาก** ขณะที่ RAG อาจไม่สามารถปรับตัวได้ดีในงานที่ต้องการความเชี่ยวชาญเฉพาะด้าน  \n5. **การ fine-tune ต้องใช้ข้อมูลฝึกที่มีคุณภาพสูงและปริมาณมาก** ซึ่งอาจไม่สามารถเข้าถึงได้เสมอ ขณะที่ RAG สามารถใช้ข้อมูลที่มีอยู่ในระบบค้นหาได้ทันที",
+      "tokens": 171
+    },
+    {
+      "timestamp": 1785772671.0191042,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED งานมีใจความครบถ้วน ตรงตามโจทย์  \nSCORE: 5",
+      "tokens": 12
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1785772384.6651337,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 66.6,
+      "ram_used_mb": 7411.2
+    },
+    {
+      "timestamp": 1785772671.0286624,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 59.8,
+      "ram_used_mb": 6638.1
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 286.24,
+    "total_tokens": 216,
+    "quality_score": 5,
+    "ground_truth_score": 3,
+    "ground_truth_passed": false,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "research_summary",
+    "score": 3,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": false,
+    "coverage": 0.667,
+    "matched_points": [
+      {
+        "id": "rag_mentioned",
+        "description": "กล่าวถึง RAG"
+      },
+      {
+        "id": "fine_tune_mentioned",
+        "description": "กล่าวถึง fine-tune"
+      },
+      {
+        "id": "rag_advantage",
+        "description": "มีข้อดีของ RAG"
+      },
+      {
+        "id": "finetune_disadvantage",
+        "description": "มีข้อเสียของ fine-tuning"
+      }
+    ],
+    "missing_points": [
+      {
+        "id": "rag_disadvantage",
+        "description": "มีข้อเสียของ RAG"
+      },
+      {
+        "id": "finetune_advantage",
+        "description": "มีข้อดีของ fine-tuning"
+      }
+    ],
+    "rationale": "matched 4/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "achieved": null,
+  "execution_sequence_index": 601,
+  "network_commands": [
+    {
+      "action": "apply",
+      "result": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "cmd": "tc qdisc add dev eth0 root handle 1: netem loss 75%",
+        "clear_before_apply": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "Error: Cannot delete qdisc with handle of zero.\n",
+          "cmd": "tc qdisc del dev eth0 root",
+          "note": "clear skipped: no existing qdisc"
+        },
+        "tbf": null
+      }
+    },
+    {
+      "action": "clear",
+      "result": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "cmd": "tc qdisc del dev eth0 root"
+      }
+    }
+  ],
+  "ended_at": 1785772671.1382682
+}

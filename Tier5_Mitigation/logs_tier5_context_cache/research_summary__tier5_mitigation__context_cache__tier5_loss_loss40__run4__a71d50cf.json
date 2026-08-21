@@ -1,0 +1,115 @@
+{
+  "run_id": "a71d50cf",
+  "task_name": "research_summary",
+  "run_index": 4,
+  "started_at": 1784818738.8318152,
+  "network_condition": {
+    "name": "tier5_loss_loss40",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 40,
+    "note": "",
+    "experiment_phase": "tier5_mitigation__context_cache",
+    "trial_key": "tier5_mitigation__context_cache::no_match::no_side::tier5_loss_loss40::research_summary::run4"
+  },
+  "messages": [
+    {
+      "timestamp": 1784818739.0425754,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1784818816.3265111,
+      "from": "Worker",
+      "to": "group",
+      "content": "**ข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง (5 ข้อ):**  \n\n1. **ข้อดีของ RAG:**  \n   - สามารถเข้าถึงข้อมูลที่อัปเดตได้ทันที (Real-time) โดยการดึงข้อมูลจากแหล่งข้อมูลภายนอก ขณะที่การ fine-tune โมเดลโดยตรงจะพึ่งพาข้อมูลที่ใช้ฝึกฝนในอดีต  \n\n2. **ข้อเสียของ RAG:**  \n   - อาจมีความล่าช้า (Latency) เนื่องจากต้องผ่านขั้นตอนการดึงข้อมูล (Retrieval) ก่อนการสร้างคำตอบ ซึ่งอาจส่งผลต่อประสิทธิภาพการทำงาน  \n\n3. **ข้อดีของ fine-tune โมเดลโดยตรง:**  \n   - ให้ผลลัพธ์ที่แม่นยำและเฉพาะเจาะจงในงานที่กำหนดได้ดีกว่า เพราะโมเดลถูกฝึกฝนโดยตรงจากข้อมูลเฉพาะของงาน  \n\n4. **ข้อเสียของ fine-tune โมเดลโดยตรง:**  \n   - ต้องใช้ทรัพยากรการคำนวณและข้อมูลฝึกฝนจำนวนมาก ซึ่งอาจไม่เหมาะกับงานที่ข้อมูลไม่เพียงพอหรือมีความซับซ้อนสูง  \n\n5. **ข้อจำกัดของ RAG:**  \n   - ประสิทธิภาพขึ้นอยู่กับคุณภาพของระบบดึงข้อมูล (Retrieval System) หากระบบไม่สามารถค้นหาข้อมูลที่เกี่ยวข้องได้ คำตอบอาจไม่ถูกต้องหรือไม่ครบถ้วน  \n\n**สรุป:** RAG เหมาะกับงานที่ต้องการข้อมูลที่อัปเดตและไม่ต้องการข้อมูลฝึกฝนจำนวนมาก ในขณะที่ fine-tune โมเดลโดยตรงเหมาะกับงานที่ต้องการความแม่นยำสูงในงานเฉพาะ แต่ต้องใช้ทรัพยากรมากกว่า",
+      "tokens": 279
+    },
+    {
+      "timestamp": 1784818863.2516797,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED งานมีโครงสร้างชัดเจน ครบถ้วนตามโจทย์ 5 ข้อ แต่ข้อ 5 ควรระบุเป็นข้อเสียของ RAG มากกว่าข้อจำกัด\nSCORE: 5",
+      "tokens": 27
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1784818738.8318217,
+      "tag": "start",
+      "cpu_percent": 1.0,
+      "ram_percent": 8.0,
+      "ram_used_mb": 480.0,
+      "gpu": null,
+      "gpu_all": []
+    },
+    {
+      "timestamp": 1784818863.2603743,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.0,
+      "ram_used_mb": 479.6,
+      "gpu": null,
+      "gpu_all": []
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 124.3,
+    "total_tokens": 339,
+    "quality_score": 5,
+    "ground_truth_score": 4,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "research_summary",
+    "score": 4,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 0.833,
+    "matched_points": [
+      {
+        "id": "rag_mentioned",
+        "description": "กล่าวถึง RAG"
+      },
+      {
+        "id": "fine_tune_mentioned",
+        "description": "กล่าวถึง fine-tune"
+      },
+      {
+        "id": "rag_advantage",
+        "description": "มีข้อดีของ RAG"
+      },
+      {
+        "id": "rag_disadvantage",
+        "description": "มีข้อเสียของ RAG"
+      },
+      {
+        "id": "finetune_disadvantage",
+        "description": "มีข้อเสียของ fine-tuning"
+      }
+    ],
+    "missing_points": [
+      {
+        "id": "finetune_advantage",
+        "description": "มีข้อดีของ fine-tuning"
+      }
+    ],
+    "rationale": "matched 5/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "gpu_monitoring_available": false,
+  "ended_at": 1784818863.3671393
+}

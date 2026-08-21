@@ -1,0 +1,139 @@
+{
+  "run_id": "c1f29f58",
+  "task_name": "research_summary",
+  "run_index": 2,
+  "started_at": 1785643411.6386254,
+  "network_condition": {
+    "name": "tier8_loss_loss15",
+    "delay_ms": 0,
+    "requested_delay_ms": 0,
+    "jitter_ms": 0,
+    "loss_pct": 15,
+    "bandwidth_kbit": null,
+    "note": ""
+  },
+  "messages": [
+    {
+      "timestamp": 1785643411.8466015,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: สรุปข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง ให้ได้ใจความภายใน 5 ข้อ",
+      "tokens": 33
+    },
+    {
+      "timestamp": 1785643527.8136544,
+      "from": "Worker",
+      "to": "group",
+      "content": "**ข้อดี-ข้อเสียของการใช้ Retrieval-Augmented Generation (RAG) เทียบกับการ fine-tune โมเดลโดยตรง**  \n\n1. **ข้อดีของ RAG**: สามารถเข้าถึงข้อมูลที่อัปเดตได้ทันทีจากแหล่งภายนอก ขณะที่การ fine-tune ต้องการการฝึกโมเดลใหม่เพื่อปรับให้รองรับข้อมูลใหม่  \n2. **ข้อเสียของ RAG**: อาจมีความล่าช้าในการตอบคำถาม เนื่องจากต้องผ่านขั้นตอนการค้นหาข้อมูล (retrieval) ขณะที่การ fine-tune สามารถตอบได้รวดเร็วหลังจากฝึกเสร็จ  \n3. **ข้อดีของ RAG**: สามารถจัดการคำถามเฉพาะด้านได้ดีโดยใช้ข้อมูลที่ค้นพบจากเอกสารที่เกี่ยวข้อง ขณะที่การ fine-tune ต้องการข้อมูลฝึกที่เฉพาะเจาะจงเพื่อให้ได้ผลลัพธ์ที่ดี  \n4. **ข้อเสียของ RAG**: ขึ้นอยู่กับคุณภาพและความเกี่ยวข้องของข้อมูลที่ค้นพบ ขณะที่การ fine-tune ใช้ข้อมูลภายในที่ผู้ใช้ควบคุมได้โดยตรง  \n5. **ข้อดีของ fine-tune**: ให้ผลลัพธ์ที่แม่นยำและเป็นไปตามเป้าหมายเฉพาะของงานได้ดีกว่า RAG ซึ่งขึ้นอยู่กับประสิทธิภาพของการค้นหาข้อมูล  \n\n**สรุป**: RAG เหมาะกับงานที่ต้องการข้อมูลทันสมัยและลดต้นทุนการฝึกโมเดล ขณะที่ fine-tune ให้ความแม่นยำสูงในงานที่มีข้อมูลฝึกเฉพาะ แต่ต้องใช้ทรัพยากรมากกว่า",
+      "tokens": 251
+    },
+    {
+      "timestamp": 1785643583.0164547,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED งานสรุปครบ 5 ข้อ ตรงประเด็นและมีความถูกต้อง  \nSCORE: 5",
+      "tokens": 15
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1785643411.638627,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 77.5,
+      "ram_used_mb": 8659.6
+    },
+    {
+      "timestamp": 1785643583.0231302,
+      "tag": "end",
+      "cpu_percent": 0.0,
+      "ram_percent": 80.4,
+      "ram_used_mb": 8994.1
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 171.27,
+    "total_tokens": 299,
+    "quality_score": 5,
+    "ground_truth_score": 4,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "research_summary",
+    "score": 4,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 0.833,
+    "matched_points": [
+      {
+        "id": "rag_mentioned",
+        "description": "กล่าวถึง RAG"
+      },
+      {
+        "id": "fine_tune_mentioned",
+        "description": "กล่าวถึง fine-tune"
+      },
+      {
+        "id": "rag_advantage",
+        "description": "มีข้อดีของ RAG"
+      },
+      {
+        "id": "rag_disadvantage",
+        "description": "มีข้อเสียของ RAG"
+      },
+      {
+        "id": "finetune_disadvantage",
+        "description": "มีข้อเสียของ fine-tuning"
+      }
+    ],
+    "missing_points": [
+      {
+        "id": "finetune_advantage",
+        "description": "มีข้อดีของ fine-tuning"
+      }
+    ],
+    "rationale": "matched 5/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "achieved": null,
+  "execution_sequence_index": 53,
+  "network_commands": [
+    {
+      "action": "apply",
+      "result": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "cmd": "tc qdisc add dev eth0 root handle 1: netem loss 15%",
+        "clear_before_apply": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "Error: Cannot delete qdisc with handle of zero.\n",
+          "cmd": "tc qdisc del dev eth0 root",
+          "note": "clear skipped: no existing qdisc"
+        },
+        "tbf": null
+      }
+    },
+    {
+      "action": "clear",
+      "result": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "cmd": "tc qdisc del dev eth0 root"
+      }
+    }
+  ],
+  "ended_at": 1785643583.1261504
+}

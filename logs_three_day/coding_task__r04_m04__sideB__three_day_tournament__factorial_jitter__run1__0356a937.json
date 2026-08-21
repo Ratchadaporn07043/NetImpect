@@ -1,0 +1,126 @@
+{
+  "run_id": "0356a937",
+  "task_name": "coding_task",
+  "run_index": 1,
+  "started_at": 1783589785.8732102,
+  "network_condition": {
+    "name": "factorial_jitter",
+    "scenario_type": "factorial",
+    "delay_ms": 50,
+    "requested_delay_ms": 0,
+    "jitter_ms": 30,
+    "loss_pct": 0,
+    "factors": {
+      "delay": "off",
+      "loss": "off",
+      "jitter": "on"
+    },
+    "note": "requested delay=0ms แต่ jitter=30ms ต้องใช้ delay=50ms ขั้นต่ำ เพราะ netem ต้องมี delay>0",
+    "experiment_phase": "three_day_tournament",
+    "tournament": {
+      "match_id": "r04_m04",
+      "round_index": 4,
+      "pair_index": 4,
+      "side": "B",
+      "opponent": "factorial_delay_loss_jitter",
+      "pair": [
+        "factorial_delay_loss_jitter",
+        "factorial_jitter"
+      ]
+    },
+    "trial_key": "three_day_tournament::r04_m04::B::factorial_jitter::coding_task::run1"
+  },
+  "messages": [
+    {
+      "timestamp": 1783589786.0883937,
+      "from": "Planner",
+      "to": "group",
+      "content": "งานที่ต้องทำ: เขียนฟังก์ชัน Python ชื่อ `is_prime(n)` ที่รับจำนวนเต็ม แล้วคืนค่า True/False ว่าเป็นจำนวนเฉพาะหรือไม่ พร้อมอธิบายหลักการสั้นๆ",
+      "tokens": 35
+    },
+    {
+      "timestamp": 1783590129.0075057,
+      "from": "Worker",
+      "to": "group",
+      "content": "```python\ndef is_prime(n):\n    if n < 2:\n        return False\n    if n == 2:\n        return True\n    if n % 2 == 0:\n        return False\n    max_divisor = int(n**0.5) + 1\n    for d in range(3, max_divisor, 2):\n        if n % d == 0:\n            return False\n    return True\n```\n\n### หลักการ:\n1. **กรณีพิเศษ**: \n   - หาก `n < 2` ไม่ใช่จำนวนเฉพาะ (คืนค่า `False`)\n   - หาก `n == 2` เป็นจำนวนเฉพาะ (คืนค่า `True`)\n2. **ตรวจสอบจำนวนคู่**: \n   - หาก `n` เป็นจำนวนคู่ (ยกเว้น 2) ไม่ใช่จำนวนเฉพาะ (คืนค่า `False`)\n3. **ตรวจสอบตัวหาร**: \n   - ตรวจสอบตัวหารจาก `3` ถึง `sqrt(n)` โดยเพิ่มขึ้นทีละ `2` (เพื่อข้ามจำนวนคู่) \n   - หากพบตัวหารที่หารลงตัว คืนค่า `False`\n   - หากไม่พบตัวหารใดๆ คืนค่า `True` (เป็นจำนวนเฉพาะ)\n\n### ตัวอย่าง:\n- `is_prime(2)` → `True`\n- `is_prime(9)` → `False`\n- `is_prime(17)` → `True`",
+      "tokens": 200
+    },
+    {
+      "timestamp": 1783590175.2176034,
+      "from": "Reviewer",
+      "to": "group",
+      "content": "APPROVED ฟังก์ชันทำงานถูกต้องตามหลักการตรวจสอบจำนวนเฉพาะ ใช้การตรวจสอบตัวหารเฉพาะที่เป็นคี่เพื่อเพิ่มประสิทธิภาพ  \nSCORE: 5",
+      "tokens": 30
+    }
+  ],
+  "errors": [],
+  "resource_snapshots": [
+    {
+      "timestamp": 1783589785.8732455,
+      "tag": "start",
+      "cpu_percent": 0.0,
+      "ram_percent": 8.3,
+      "ram_used_mb": 504.6
+    },
+    {
+      "timestamp": 1783590175.2313936,
+      "tag": "end",
+      "cpu_percent": 0.9,
+      "ram_percent": 8.3,
+      "ram_used_mb": 504.7
+    }
+  ],
+  "outcome": {
+    "success": true,
+    "rounds": 3,
+    "reviewer_rejections": 0,
+    "elapsed_seconds": 389.23,
+    "total_tokens": 265,
+    "quality_score": 5,
+    "ground_truth_score": 5,
+    "ground_truth_passed": true,
+    "retry_count": 0,
+    "timeout_count": 0,
+    "total_error_count": 0
+  },
+  "evaluation": {
+    "enabled": true,
+    "mode": "heuristic",
+    "task_name": "coding_task",
+    "score": 5,
+    "max_score": 5,
+    "pass_score": 4,
+    "passed": true,
+    "coverage": 1.0,
+    "matched_points": [
+      {
+        "id": "function_name",
+        "description": "ระบุฟังก์ชัน is_prime"
+      },
+      {
+        "id": "boolean_return",
+        "description": "คืนค่า True/False"
+      },
+      {
+        "id": "n_le_1",
+        "description": "อธิบาย/จัดการ n <= 1"
+      },
+      {
+        "id": "two_case",
+        "description": "จัดการเลข 2"
+      },
+      {
+        "id": "sqrt_bound",
+        "description": "ตรวจถึงรากที่สองหรือ i*i <= n"
+      },
+      {
+        "id": "explanation",
+        "description": "มีคำอธิบายหลักการ"
+      }
+    ],
+    "missing_points": [],
+    "rationale": "matched 6/6 rubric checks",
+    "elapsed_seconds": 0.0
+  },
+  "ended_at": 1783590175.3370447
+}

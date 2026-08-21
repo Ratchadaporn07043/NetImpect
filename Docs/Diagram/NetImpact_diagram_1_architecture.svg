@@ -1,0 +1,68 @@
+<svg viewBox="0 0 1160 780" xmlns="http://www.w3.org/2000/svg" font-family="Tahoma, 'Segoe UI', sans-serif" role="img">
+  <title>NetImpact — ภาพรวมสถาปัตยกรรมระบบ</title>
+  <desc>Host machine รัน Ollama ส่งต่อเข้า Docker container ที่มี 3 ชั้น: Network Simulation, System (multi-agent), Logging &amp; Analysis พร้อม Ground-Truth Evaluator แยกอิสระ แล้วออกเป็นไฟล์ JSON log ต่อ trial</desc>
+  <defs>
+    <marker id="arrow1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#444"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1160" height="780" fill="#ffffff"/>
+
+  <text x="580" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#1a1a1a">NetImpact — ภาพรวมสถาปัตยกรรมระบบ</text>
+
+  <!-- Host box -->
+  <rect x="380" y="58" width="400" height="72" rx="8" fill="#eaf2fb" stroke="#2f6fb0" stroke-width="2"/>
+  <text x="580" y="84" text-anchor="middle" font-size="15" font-weight="bold" fill="#1c3d5c">Host Machine</text>
+  <text x="580" y="104" text-anchor="middle" font-size="12" fill="#1c3d5c">Ollama serve + Qwen3:8b</text>
+  <text x="580" y="119" text-anchor="middle" font-size="11" fill="#4a6a8a">(OpenAI-compatible API)</text>
+
+  <line x1="580" y1="130" x2="580" y2="166" stroke="#444" stroke-width="2" marker-end="url(#arrow1)"/>
+
+  <!-- Container dashed box -->
+  <rect x="40" y="172" width="1080" height="470" rx="10" fill="none" stroke="#888" stroke-width="2" stroke-dasharray="8,5"/>
+  <rect x="330" y="162" width="500" height="24" fill="#ffffff"/>
+  <text x="580" y="180" text-anchor="middle" font-size="13" font-weight="bold" fill="#555">Docker Container — cap_add: NET_ADMIN</text>
+
+  <!-- 3 boxes row -->
+  <rect x="70" y="230" width="300" height="150" rx="8" fill="#fdf1de" stroke="#c9820a" stroke-width="2"/>
+  <text x="220" y="258" text-anchor="middle" font-size="14" font-weight="bold" fill="#6b4a05">1. Network Simulation</text>
+  <text x="220" y="276" text-anchor="middle" font-size="14" font-weight="bold" fill="#6b4a05">Layer</text>
+  <text x="220" y="304" text-anchor="middle" font-size="11.5" fill="#6b4a05">จำลอง delay / loss / jitter</text>
+  <text x="220" y="322" text-anchor="middle" font-size="11.5" fill="#6b4a05">ด้วย Linux tc/netem</text>
+  <text x="220" y="352" text-anchor="middle" font-size="10.5" font-style="italic" fill="#8a6a2a">apply() ก่อนรัน → clear() หลังจบ</text>
+
+  <line x1="370" y1="305" x2="424" y2="305" stroke="#444" stroke-width="2" marker-end="url(#arrow1)"/>
+
+  <rect x="430" y="230" width="300" height="150" rx="8" fill="#eaf7ee" stroke="#2f8f4e" stroke-width="2"/>
+  <text x="580" y="258" text-anchor="middle" font-size="14" font-weight="bold" fill="#1d4d2c">2. System Layer</text>
+  <text x="580" y="276" text-anchor="middle" font-size="14" font-weight="bold" fill="#1d4d2c">(Multi-Agent)</text>
+  <text x="580" y="304" text-anchor="middle" font-size="11.5" fill="#1d4d2c">Planner → Worker → Reviewer</text>
+  <text x="580" y="322" text-anchor="middle" font-size="11.5" fill="#1d4d2c">คุยกันเป็นรอบ (round-based)</text>
+  <text x="580" y="352" text-anchor="middle" font-size="10.5" font-style="italic" fill="#3a6a4a">รายละเอียดเต็มดู Diagram 2</text>
+
+  <line x1="730" y1="305" x2="784" y2="305" stroke="#444" stroke-width="2" marker-end="url(#arrow1)"/>
+
+  <rect x="790" y="230" width="300" height="150" rx="8" fill="#f1f1f3" stroke="#6b6f76" stroke-width="2"/>
+  <text x="940" y="258" text-anchor="middle" font-size="14" font-weight="bold" fill="#333333">3. Logging &amp; Analysis</text>
+  <text x="940" y="276" text-anchor="middle" font-size="14" font-weight="bold" fill="#333333">Layer</text>
+  <text x="940" y="304" text-anchor="middle" font-size="11.5" fill="#333333">บันทึก 6 กลุ่มข้อมูล</text>
+  <text x="940" y="322" text-anchor="middle" font-size="11.5" fill="#333333">ต่อ 1 trial</text>
+  <text x="940" y="352" text-anchor="middle" font-size="10.5" font-style="italic" fill="#555">รายละเอียดเต็มดู Diagram 4</text>
+
+  <!-- ground truth evaluator -->
+  <line x1="580" y1="380" x2="580" y2="424" stroke="#444" stroke-width="2" marker-end="url(#arrow1)"/>
+  <rect x="430" y="430" width="300" height="100" rx="8" fill="#f1eafc" stroke="#7a4fc4" stroke-width="2"/>
+  <text x="580" y="458" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#402a6b">Ground-Truth Evaluator</text>
+  <text x="580" y="478" text-anchor="middle" font-size="11" fill="#402a6b">ตรวจคำตอบสุดท้ายกับ rubric</text>
+  <text x="580" y="496" text-anchor="middle" font-size="11" fill="#402a6b">อิสระจาก Reviewer ในทีม</text>
+
+  <line x1="730" y1="480" x2="890" y2="440" stroke="#444" stroke-width="1.6" marker-end="url(#arrow1)"/>
+  <text x="895" y="435" font-size="10" fill="#555">→ บันทึกใน Logging Layer</text>
+
+  <!-- output below container -->
+  <line x1="580" y1="642" x2="580" y2="686" stroke="#444" stroke-width="2" marker-end="url(#arrow1)"/>
+  <rect x="410" y="692" width="340" height="76" rx="8" fill="#fdeaec" stroke="#c2415a" stroke-width="2"/>
+  <text x="580" y="722" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#6b1f2c">1 ไฟล์ JSON ต่อ 1 trial</text>
+  <text x="580" y="742" text-anchor="middle" font-size="11" fill="#6b1f2c">→ วิ่งเข้าสู่ pipeline วิเคราะห์ผล (Diagram 4)</text>
+</svg>
